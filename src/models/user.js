@@ -2,7 +2,6 @@ const mongoose = require('mongoose')
 const validator = require('validator')
 const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
-const mongoosePaginate = require('mongoose-paginate-v2')
 
 const userSchema = mongoose.Schema({
     email: {
@@ -41,18 +40,22 @@ const userSchema = mongoose.Schema({
     
     // stores username
     followers: [{
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
     }],
     followings: [{
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
     }],
 
-    // stores post id
+    // stores tweet id
     bookmarks: [{
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Tweet"
     }],
     likes: [{
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Tweet"
     }],
 
     tokens: [{
@@ -65,7 +68,7 @@ const userSchema = mongoose.Schema({
 
 userSchema.methods.generateAuthToken = async function () {
     const user = this
-    const token = jwt.sign({ _id: user._id.toString() }, "chetori joone del sare keyfi?")
+    const token = jwt.sign({ _id: user._id.toString() }, process.env.JWT_STRING)
 
     user.tokens = user.tokens.concat({ token })
     await user.save()
@@ -91,15 +94,26 @@ userSchema.statics.findByCredentials = async (email, password) => {
 
 userSchema.pre("save", async function (next) {
     const user = this
-
     if (user.isModified("password")) {
         user.password = await bcrypt.hash(user.password, 8)
     }
-
     next()
 })
 
-userSchema.plugin(mongoosePaginate)
+userSchema.pre("findOneAndUpdate", async function (next) {
+    const user = this
+    user._update.password = await bcrypt.hash(user._update.password, 8)
+    next()
+})
+
+userSchema.virtual("tweets", {
+    ref: "Tweet",
+    localField: "_id",
+    foreignField: "owner"
+})
+
+userSchema.set('toObject', { virtuals: true })
+userSchema.set('toJSON', { virtuals: true })
 
 const User = mongoose.model('User', userSchema)
 
