@@ -4,8 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "env-cmd -f ./config/dev.env nodemon app.js",
-    "start": "node src/app.js"
+    "dev": "env-cmd -f ./config/dev.env nodemon server.js",
+    "start": "node src/server.js",
+    "test": "env-cmd -f ./config/test.env jest"
+  },
+  "jest": {
+    "testEnvironment": "node"
   },
   "author": "",
   "license": "ISC",
@@ -15,5 +19,9 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.12.10",
     "validator": "^13.6.0"
+  },
+  "devDependencies": {
+    "jest": "^26.6.3",
+    "supertest": "^6.1.3"
   }
 }

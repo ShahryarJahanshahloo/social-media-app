@@ -115,7 +115,6 @@ module.exports.get_bookmarks = async (req, res) => {
         const options = {
             skip: req.params.skip,
             limit: 10,
-            sort: -1,
         }
         await req.user.populate({
             path: "bookmarks",

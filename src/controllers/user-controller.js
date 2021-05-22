@@ -11,9 +11,9 @@ module.exports.post_sign_in = async (req, res) => {
         const user = await User.findByCredentials(req.body.email, req.body.password)
         if (!user) return res.status(404).send({ error: 'User not found' })
         const token = await user.generateAuthToken()
-        res.send({ user, token })
+        res.status(200).send({ token })
     } catch (e) {
-        res.status(500).send()
+        res.status(500).send({ e })
     }
 }
 
@@ -24,13 +24,13 @@ module.exports.post_sign_up = async (req, res) => {
     try {
         await user.save()
         const token = await user.generateAuthToken()
-        res.send({ user, token })
+        res.status(200).send({ token })
     } catch (e) {
-        res.status(400).send(e)
+        res.status(400).send({ e })
     }
 }
 
-//FIX username should be _id
+
 module.exports.patch_follow = async (req, res) => {
     try {
         const isFollowed = req.user.followings.includes(req.body._id)
@@ -41,9 +41,9 @@ module.exports.patch_follow = async (req, res) => {
             req.user.followings.push(req.body._id)
             await req.user.save()
         }
-        res.send()
+        res.status(200).send()
     } catch (e) {
-        res.status(500).send()
+        res.status(500).send({ e })
     }
 
 }
@@ -88,6 +88,9 @@ module.exports.get_profile_username = async (req, res) => {
             const options = {
                 skip: parseInt(req.query.skip) * 2,
                 limit: 2,
+                sort: {
+                    createdAt: -1
+                },
             }
             await user.populate({
                 path: "tweets",
