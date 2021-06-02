@@ -1,11 +1,6 @@
 const User = require('../models/user')
 const Tweet = require('../models/tweet')
 
-
-module.exports.get_login_status = async (req, res) => {
-    res.status(200).send({ isLoggedIn: true })
-}
-
 module.exports.post_sign_in = async (req, res) => {
     try {
         const user = await User.findByCredentials(req.body.email, req.body.password)
@@ -33,48 +28,54 @@ module.exports.post_sign_up = async (req, res) => {
 
 module.exports.patch_follow = async (req, res) => {
     try {
+        const targetUser = await User.findOne({ _id: req.body._id})
         const isFollowed = req.user.followings.includes(req.body._id)
+        let message;
         if (isFollowed) {
-            req.user.bookmarks = req.user.bookmarks.filter(item => item !== req.body._id)
+            req.user.followings.splice(req.user.followings.indexOf(req.body._id), 1)
             await req.user.save()
+            targetUser.followers.splice(targetUser.followers.indexOf(req.user._id), 1)
+            console.log(targetUser);
+            await targetUser.save()
+            message = "user unfollowed!"
         } else {
             req.user.followings.push(req.body._id)
             await req.user.save()
+            targetUser.followers.push(req.user._id)
+            await targetUser.save()
+            message = "user followed!"
         }
-        res.status(200).send()
+        res.status(200).send({ message, })
     } catch (e) {
+        console.log(e);
         res.status(500).send({ e })
     }
 
 }
 
 module.exports.get_followers = async (req, res) => {
-    const followers = req.user.followers
+    //must show username, displayname, avatar, bio
     const options = {
-        skip: req.params.skip,
+        skip: +req.query.skip,
         limit: 10,
     }
     await req.user.populate({
         path: "followers",
-        match: {
-            owner: { $in: followers }
-        },
         options,
     }).execPopulate()
-    res.send(req.user.followers)
+
+    console.log(req.user.followers);
+    res.status(200).send(req.user.followers)
 }
 
 module.exports.get_followings = async (req, res) => {
-    const followings = req.user.followings
+    //must show username, displayname, avatar, bio
     const options = {
-        skip: req.params.skip,
+        skip: +req.query.skip,
         limit: 10,
     }
     await req.user.populate({
         path: "followings",
-        match: {
-            owner: { $in: followings }
-        },
         options,
     }).execPopulate()
     res.send(req.user.followings)

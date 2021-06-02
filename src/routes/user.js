@@ -4,10 +4,6 @@ const controller = require("../controllers/user-controller")
 const router = new express.Router()
 
 
-//CHECK LOGIN
-router.get("/login-status", auth, controller.get_login_status)
-
-
 //SIGN-IN
 router.post("/sign-in", controller.post_sign_in)
 
