@@ -100,12 +100,6 @@ userSchema.pre("save", async function (next) {
     next()
 })
 
-userSchema.pre("findOneAndUpdate", async function (next) {
-    const user = this
-    user._update.password = await bcrypt.hash(user._update.password, 8)
-    next()
-})
-
 userSchema.virtual("tweets", {
     ref: "Tweet",
     localField: "_id",

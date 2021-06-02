@@ -39,7 +39,7 @@ router.post("/logout", auth, controller.post_logout)
 
 
 //SEARCH
-router.get("/search", auth, controller.get_search)
+router.get("/search", controller.get_search)
 
 //suggestions
 
