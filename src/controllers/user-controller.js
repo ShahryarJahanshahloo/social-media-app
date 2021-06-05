@@ -63,6 +63,7 @@ module.exports.get_followers = async (req, res) => {
             username: 1,
             displayName: 1,
             bio: 1,
+            _id: 0
         }
     }).execPopulate()
     res.status(200).send(req.user.followers)
@@ -80,6 +81,7 @@ module.exports.get_followings = async (req, res) => {
             username: 1,
             displayName: 1,
             bio: 1,
+            _id: 0
         }
     }).execPopulate()
     res.send(req.user.followings)

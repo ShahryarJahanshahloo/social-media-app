@@ -17,7 +17,7 @@ const tweetSchema = mongoose.Schema({
     }
 }, {
     timestamps: true,
-    toJSON: { virtuals: true },
+    // toJSON: { virtuals: true },
 })
 
 
