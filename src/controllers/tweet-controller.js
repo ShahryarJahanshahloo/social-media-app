@@ -2,26 +2,32 @@ const User = require('../models/user')
 const Tweet = require('../models/tweet')
 
 module.exports.get_home = async (req, res) => {
-    const followings = req.user.followings
-    followings.push(req.user._id)
-    const options = {
-        skip: req.params.skip,
-        limit: 5,
-        sort: {
-            createdAt: -1
-        },
+    //sends one user multiple times!
+    //try catch
+    const tweets = await Tweet
+        .find({ owner: { $in: req.user.homeTweetIDs } }, "likes body owner createdAt", {
+            skip: +req.query.skip,
+            limit: 10,
+            sort: {
+                createdAt: -1
+            }
+        })
+    for (const tweet of tweets) {
+        await tweet.populate({
+            path: "owner",
+            select: {
+                username: 1,
+                displayName: 1
+            }
+        }).execPopulate()
     }
-    await req.user.populate({
-        path: "tweets",
-        match: {
-            owner: { $in: followings }
-        },
-        options,
-    }).execPopulate()
-    res.send(req.user.tweets)
+    res.status(200).send({ tweets })
 }
 
+
 module.exports.post_compose = async (req, res) => {
+    const isValidOperation = JSON.stringify(Object.keys(req.body)) == JSON.stringify(["body"])
+    if (!isValidOperation) return res.status(400).send({ e: "invalid operation" })
     const tweet = new Tweet({
         ...req.body,
         owner: req.user._id

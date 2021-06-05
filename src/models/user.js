@@ -37,7 +37,7 @@ const userSchema = mongoose.Schema({
         required: false,
         default: "",
     },
-    
+
     // stores username
     followers: [{
         type: mongoose.Schema.Types.ObjectId,
@@ -68,11 +68,11 @@ const userSchema = mongoose.Schema({
 
 userSchema.methods.generateAuthToken = async function () {
     const user = this
-    const token = jwt.sign({ _id: user._id.toString() }, process.env.JWT_STRING)
-
+    const token = jwt.sign({ _id: user._id.toString() }, process.env.JWT_SECRET, {
+        expiresIn: process.env.JWT_LIFE_TIME
+    })
     user.tokens = user.tokens.concat({ token })
     await user.save()
-
     return token
 }
 
@@ -106,8 +106,14 @@ userSchema.virtual("tweets", {
     foreignField: "owner"
 })
 
-userSchema.set('toObject', { virtuals: true })
-userSchema.set('toJSON', { virtuals: true })
+userSchema.virtual('homeTweetIDs').get(function () {
+    const homeTweetIDs = this.followings
+    homeTweetIDs.push(this._id)
+    return homeTweetIDs
+})
+
+// userSchema.set('toObject', { virtuals: true })
+// userSchema.set('toJSON', { virtuals: true })
 
 const User = mongoose.model('User', userSchema)
 
