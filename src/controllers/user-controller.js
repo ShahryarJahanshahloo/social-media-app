@@ -1,7 +1,8 @@
-const User = require('../models/user')
-const Tweet = require('../models/tweet')
+'use strict'
 
-module.exports.post_sign_in = async (req, res) => {
+const User = require('../models/user')
+
+async function post_sign_in(req, res) {
     try {
         const user = await User.findByCredentials(req.body.email, req.body.password)
         if (!user) return res.status(404).send({ error: 'User not found' })
@@ -12,8 +13,7 @@ module.exports.post_sign_in = async (req, res) => {
     }
 }
 
-
-module.exports.post_sign_up = async (req, res) => {
+async function post_sign_up(req, res) {
     const user = new User(req.body)
 
     try {
@@ -26,7 +26,7 @@ module.exports.post_sign_up = async (req, res) => {
 }
 
 
-module.exports.patch_follow = async (req, res) => {
+async function patch_follow(req, res) {
     try {
         const targetUser = await User.findOne({ _id: req.body._id })
         const isFollowed = req.user.followings.includes(req.body._id)
@@ -51,7 +51,8 @@ module.exports.patch_follow = async (req, res) => {
 
 }
 
-module.exports.get_followers = async (req, res) => {
+
+async function get_followers(req, res) {
     const options = {
         skip: +req.query.skip,
         limit: 10,
@@ -69,7 +70,7 @@ module.exports.get_followers = async (req, res) => {
     res.status(200).send(req.user.followers)
 }
 
-module.exports.get_followings = async (req, res) => {
+async function get_followings(req, res) {
     const options = {
         skip: +req.query.skip,
         limit: 10,
@@ -88,7 +89,7 @@ module.exports.get_followings = async (req, res) => {
 }
 
 
-module.exports.get_profile_username = async (req, res) => {
+async function get_profile_username(req, res) {
     const user = await User.findOne({ username: req.params.username })
     try {
         if (user) {
@@ -121,7 +122,7 @@ module.exports.get_profile_username = async (req, res) => {
 }
 
 
-module.exports.post_settings_profile = async (req, res) => {
+async function post_settings_profile(req, res) {
     try {
 
         const validKeys = ["bio", "displayName"]
@@ -145,7 +146,7 @@ module.exports.post_settings_profile = async (req, res) => {
 }
 
 
-module.exports.get_search = async (req, res) => {
+async function get_search(req, res) {
     try {
         const query = req.body.query
         const result = await User.find({ username: new RegExp(query) },
@@ -161,7 +162,7 @@ module.exports.get_search = async (req, res) => {
 }
 
 
-module.exports.post_logout = async (req, res) => {
+async function post_logout(req, res) {
     try {
         req.user.tokens = req.user.tokens.filter((token) => {
             return token.token != req.token
@@ -171,4 +172,16 @@ module.exports.post_logout = async (req, res) => {
     } catch (e) {
         res.status(500).send()
     }
+}
+
+module.exports = {
+    post_sign_in ,
+    post_sign_up ,
+    patch_follow ,
+    get_followers,
+    get_followings ,
+    get_profile_username,
+    post_settings_profile,
+    get_search,
+    post_logout,
 }

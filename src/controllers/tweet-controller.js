@@ -1,7 +1,8 @@
-const User = require('../models/user')
+'use strict'
+
 const Tweet = require('../models/tweet')
 
-module.exports.get_home = async (req, res) => {
+async function get_home(req, res) {
     //sends one user multiple times!
     //try catch
     const tweets = await Tweet
@@ -25,8 +26,7 @@ module.exports.get_home = async (req, res) => {
     res.status(200).send({ tweets })
 }
 
-
-module.exports.post_compose = async (req, res) => {
+async function post_compose(req, res) {
     const isValidOperation = JSON.stringify(Object.keys(req.body)) == JSON.stringify(["body"])
     if (!isValidOperation) return res.status(400).send({ e: "invalid operation" })
     const tweet = new Tweet({
@@ -42,7 +42,7 @@ module.exports.post_compose = async (req, res) => {
 }
 
 
-module.exports.delete_delete_tweet = async (req, res) => {
+async function delete_delete_tweet(req, res) {
     const tweet = await Tweet.findOne({ _id: req.body.tweetID })
     try {
         if (!tweet.owner.equals(req.user._id)) return res.status(400).send()
@@ -54,7 +54,7 @@ module.exports.delete_delete_tweet = async (req, res) => {
 }
 
 
-module.exports.patch_edit_tweet = async (req, res) => {
+async function patch_edit_tweet(req, res) {
     //keys should be in the same order: needs update!
     const isValidOperation = JSON.stringify(Object.keys(req.body)) == JSON.stringify(["body", "tweetID"])
     if (!isValidOperation) return res.status(400).send({ e: "invalid operation" })
@@ -70,7 +70,7 @@ module.exports.patch_edit_tweet = async (req, res) => {
 }
 
 
-module.exports.patch_like = async (req, res) => {
+async function patch_like(req, res) {
     try {
         const tweet = await Tweet.findById(req.body.tweetID)
         const isLiked = await req.user.likes.includes(req.body.tweetID)
@@ -95,7 +95,7 @@ module.exports.patch_like = async (req, res) => {
 }
 
 
-module.exports.patch_bookmark = async (req, res) => {
+async function patch_bookmark(req, res) {
     try {
         const isBookmarked = await req.user.bookmarks.includes(req.body.tweetID)
         let message;
@@ -115,7 +115,7 @@ module.exports.patch_bookmark = async (req, res) => {
 }
 
 
-module.exports.get_bookmarks = async (req, res) => {
+async function get_bookmarks(req, res) {
     try {
         const options = {
             skip: +req.query.skip,
@@ -144,4 +144,14 @@ module.exports.get_bookmarks = async (req, res) => {
     } catch (e) {
         res.status(500).send()
     }
+}
+
+module.exports = {
+    get_home ,
+    post_compose ,
+    delete_delete_tweet,
+    patch_edit_tweet ,
+    patch_like ,
+    patch_bookmark,
+    get_bookmarks,
 }
