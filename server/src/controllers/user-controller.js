@@ -2,11 +2,11 @@
 
 const User = require('../models/user')
 
-module.exports.ping = async (req, res) => {
+async function ping(req, res) {
     res.status(200).send({ ping: "pong" })
 }
 
-module.exports.post_sign_in = async (req, res) => {
+async function post_sign_in (req, res) {
     try {
         const user = await User.findByCredentials(req.body.email, req.body.password)
         if (!user) return res.status(404).send({ error: 'User not found' })
@@ -179,6 +179,7 @@ async function post_logout(req, res) {
 }
 
 module.exports = {
+    ping,
     post_sign_in ,
     post_sign_up ,
     patch_follow ,
