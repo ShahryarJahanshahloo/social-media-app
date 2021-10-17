@@ -1,6 +1,10 @@
 const User = require('../models/user')
 const Tweet = require('../models/tweet')
 
+module.exports.ping = async (req, res) => {
+    res.status(200).send({ ping: "pong" })
+}
+
 module.exports.post_sign_in = async (req, res) => {
     try {
         const user = await User.findByCredentials(req.body.email, req.body.password)
