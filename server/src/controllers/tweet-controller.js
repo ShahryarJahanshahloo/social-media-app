@@ -3,27 +3,29 @@
 const Tweet = require('../models/tweet')
 
 async function get_home(req, res) {
-    //sends one user multiple times!
-    //try catch
-    const tweets = await Tweet
-        .find({ owner: { $in: req.user.homeTweetIDs } }, "likes body owner createdAt", {
-            skip: +req.query.skip,
-            limit: 10,
-            sort: {
-                createdAt: -1
-            }
-        })
-    for (const tweet of tweets) {
-        await tweet.populate({
-            path: "owner",
-            select: {
-                username: 1,
-                displayName: 1,
-                _id: 0
-            }
-        }).execPopulate()
+    try {
+        const tweets = await Tweet
+            .find({ owner: { $in: req.user.homeTweetIDs } }, "likes body owner createdAt", {
+                skip: +req.query.skip,
+                limit: 10,
+                sort: {
+                    createdAt: -1
+                }
+            })
+        for (const tweet of tweets) {
+            await tweet.populate({
+                path: "owner",
+                select: {
+                    username: 1,
+                    displayName: 1,
+                    _id: 0
+                }
+            }).execPopulate()
+        }
+        res.status(200).send({ tweets })
+    } catch (e) {
+        res.status(400).send({ e })
     }
-    res.status(200).send({ tweets })
 }
 
 async function post_compose(req, res) {
@@ -147,11 +149,11 @@ async function get_bookmarks(req, res) {
 }
 
 module.exports = {
-    get_home ,
-    post_compose ,
+    get_home,
+    post_compose,
     delete_delete_tweet,
-    patch_edit_tweet ,
-    patch_like ,
+    patch_edit_tweet,
+    patch_like,
     patch_bookmark,
     get_bookmarks,
 }

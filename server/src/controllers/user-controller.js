@@ -6,12 +6,16 @@ async function ping(req, res) {
     res.status(200).send({ ping: "pong" })
 }
 
-async function post_sign_in (req, res) {
+async function post_sign_in(req, res) {
     try {
         const user = await User.findByCredentials(req.body.email, req.body.password)
         if (!user) return res.status(404).send({ error: 'User not found' })
         const token = await user.generateAuthToken()
-        res.status(200).send({ token })
+        res.status(200).send({
+            token,
+            username: user.username,
+            displayName: user.displayName
+        })
     } catch (e) {
         res.status(500).send({ e })
     }
@@ -23,7 +27,11 @@ async function post_sign_up(req, res) {
     try {
         await user.save()
         const token = await user.generateAuthToken()
-        res.status(200).send({ token })
+        res.status(200).send({
+            token,
+            username: user.username,
+            displayName: user.displayName
+        })
     } catch (e) {
         res.status(400).send({ e })
     }
@@ -178,15 +186,24 @@ async function post_logout(req, res) {
     }
 }
 
+async function post_authenticate(req, res) {
+    try {
+        res.status(200).send({ isAuthenticated: true })
+    } catch (e) {
+        res.status(500).send({ e })
+    }
+}
+
 module.exports = {
     ping,
-    post_sign_in ,
-    post_sign_up ,
-    patch_follow ,
+    post_sign_in,
+    post_sign_up,
+    patch_follow,
     get_followers,
-    get_followings ,
+    get_followings,
     get_profile_username,
     post_settings_profile,
     get_search,
     post_logout,
+    post_authenticate,
 }
