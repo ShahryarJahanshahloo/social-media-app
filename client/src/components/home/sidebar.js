@@ -3,8 +3,20 @@ import { Link, useHistory } from "react-router-dom";
 import { useSelector } from 'react-redux';
 import axios from "axios"
 
+import {
+    FiHome as HomeIcon,
+    FiHash as ExploreIcon,
+} from "react-icons/fi"
+import {
+    CgBookmark as BookmarkIcon,
+    CgProfile as ProfileIcon,
+} from "react-icons/cg"
+import {
+    FaKiwiBird as BirdIcon,
+} from "react-icons/fa"
+
 const Sidebar = (props) => {
-    const username = useSelector(state => state.userReducer.username)
+    const user = useSelector(state => state.userReducer)
     const jwt = localStorage.getItem("jwt")
     const history = useHistory()
 
@@ -27,15 +39,37 @@ const Sidebar = (props) => {
             })
     }
 
+    const iconStyle = {
+        fontSize: "20px"
+    }
+
     return (
-        <div className="sidebar">
-            <Link to="/home">home</Link><br />
-            <Link to="/bookmarks">bookmarks</Link><br />
-            <Link to={"/profile/" + username}>profile</Link><br />
-            <Link to="/explore">explore</Link>
-            <button onClick={logoutHandler}>logout</button>
+        <div className="sidebar-wrapper">
+            <div className="sidebar">
+                <div className="sidebar-upper">
+                    <div className="sidebar-item-wrapper">
+                        <HomeIcon style={iconStyle}/>
+                        <Link className="sidebar-item" to="/home">Home</Link>
+                    </div>
+                    <div className="sidebar-item-wrapper">
+                        <BookmarkIcon style={iconStyle}/>
+                        <Link className="sidebar-item" to="/bookmarks">Bookmarks</Link>
+                    </div>
+                    <div className="sidebar-item-wrapper">
+                        <ProfileIcon style={iconStyle}/>
+                        <Link className="sidebar-item" to={`profile/${user.username}`}>Profile</Link>
+                    </div>
+                    <div className="sidebar-item-wrapper">
+                        <ExploreIcon style={iconStyle}/>
+                        <Link className="sidebar-item" to="/explore">Explore</Link>
+                    </div>
+                </div>
+                <div className="sidebar-bottom">
+                    <button onClick={logoutHandler}>Logout</button>
+                </div>
+            </div>
         </div>
     )
-};
+}
 
 export default Sidebar

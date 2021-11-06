@@ -54,7 +54,7 @@ const Signup = (props) => {
 
 
     return (
-        <>
+        <div>
             <label>Email </label>
             <input type="text" onChange={onEmailChange} /><br />
 
@@ -72,7 +72,7 @@ const Signup = (props) => {
 
             <input type="submit" value="create account" onClick={handleSignup} />
             <label onClick={handleRedirectClick}>already have an account? </label>
-        </>
+        </div>
     )
 };
 

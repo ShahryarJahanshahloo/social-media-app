@@ -1,5 +1,5 @@
-import React , {useRef} from 'react';
-import {useHistory} from "react-router-dom";
+import React, { useRef } from 'react';
+import { useHistory } from "react-router-dom";
 import axios from "axios"
 
 const Login = (props) => {
@@ -16,23 +16,27 @@ const Login = (props) => {
             email: emailInput.current.value,
             password: passwordInput.current.value
         })
-        .then((res) => {
-            localStorage.setItem("jwt" , res.data.token)
-            history.push("/home")
-        })
-        .catch((e) => {
-            console.log(e)
-        })
+            .then((res) => {
+                localStorage.setItem("jwt", res.data.token)
+                history.push("/home")
+            })
+            .catch((e) => {
+                console.log(e)
+            })
     }
 
     return (
-        <div>
-            <label>Email </label>
-            <input type="text" ref={emailInput}/><br/>
-            <label>Password </label>
-            <input type="text" ref={passwordInput}/><br/>
-            <input type="submit" value="login" onClick={handleLogin}/>
-            <label onClick={handleRedirectClick}>dont have an account? </label>
+        <div className="login-box-container">
+            <div className="login-box">
+                <label className="topic">Sign In</label>
+                <input type="text" ref={emailInput} placeholder="Email"/>
+                <input type="text" ref={passwordInput} placeholder="Password"/>
+                <input type="submit" value="Sign in" onClick={handleLogin} />
+                <div className="signup-link">
+                <label>no account?</label>
+                <button onClick={handleRedirectClick}> Signup </button>
+                </div>
+            </div>
         </div>
     )
 };

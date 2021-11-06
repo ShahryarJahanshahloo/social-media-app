@@ -128,6 +128,8 @@ async function get_bookmarks(req, res) {
             select: {
                 body: 1,
                 owner: 1,
+                likes: 1,
+                createdAt: 1,
             }
         }
         await req.user.populate({
@@ -142,7 +144,7 @@ async function get_bookmarks(req, res) {
                 }
             }
         }).execPopulate()
-        res.send(req.user.bookmarks)
+        res.send({ tweets:req.user.bookmarks })
     } catch (e) {
         res.status(500).send()
     }

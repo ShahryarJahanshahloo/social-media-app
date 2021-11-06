@@ -1,16 +1,18 @@
 const initialState = {
-    username: "mamad",
-    displayName: ""
+    username: "",
+    displayName: "",
+    // add profile pic later
 }
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
-        case "setUser":
+        case "setUser": {
             return {
+                ...state,
                 username: action.payload.username,
                 displayName: action.payload.displayName,
-                ...state
             }
+        }
         default:
             return state
     }

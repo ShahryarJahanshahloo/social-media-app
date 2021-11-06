@@ -37,7 +37,6 @@ async function post_sign_up(req, res) {
     }
 }
 
-
 async function patch_follow(req, res) {
     try {
         const targetUser = await User.findOne({ _id: req.body._id })
@@ -62,7 +61,6 @@ async function patch_follow(req, res) {
     }
 
 }
-
 
 async function get_followers(req, res) {
     const options = {
@@ -100,16 +98,20 @@ async function get_followings(req, res) {
     res.send(req.user.followings)
 }
 
-
-async function get_profile_username(req, res) {
-    const user = await User.findOne({ username: req.params.username })
+async function get_profileTweets(req, res) {
+    const user = await User.findOne({ username: req.query.username },)
     try {
         if (user) {
             const options = {
                 skip: +req.query.skip,
                 limit: 10,
+                select: {
+                    updatedAt: 0,
+                    // owner: 0,
+                    __v: 0,
+                },
                 sort: {
-                    createdAt: -1
+                    createdAt: -1,
                 },
             }
             await user.populate({
@@ -125,14 +127,28 @@ async function get_profile_username(req, res) {
                 followings: user.followings.length
             })
         } else {
-            return res.status(404).send()
+            return res.status(404).send({ error:"user not found!"})
         }
     } catch (e) {
         res.status(500).send({ e })
     }
-
 }
 
+async function get_profileInfo(req, res) {
+    const user = req.user
+    try {
+        if (user) {
+            res.status(200).send({
+                username: user.username,
+                displayName: user.displayName,
+            })
+        } else {
+            res.status(404).send("no user found")
+        }
+    } catch (e) {
+        res.status(500).send({ e })
+    }
+}
 
 async function post_settings_profile(req, res) {
     try {
@@ -157,7 +173,6 @@ async function post_settings_profile(req, res) {
     }
 }
 
-
 async function get_search(req, res) {
     try {
         const query = req.body.query
@@ -172,7 +187,6 @@ async function get_search(req, res) {
         res.status(500).send()
     }
 }
-
 
 async function post_logout(req, res) {
     try {
@@ -201,7 +215,8 @@ module.exports = {
     patch_follow,
     get_followers,
     get_followings,
-    get_profile_username,
+    get_profileInfo,
+    get_profileTweets,
     post_settings_profile,
     get_search,
     post_logout,

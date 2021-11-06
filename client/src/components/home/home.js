@@ -4,11 +4,18 @@ import axios from "axios"
 import Sidebar from "./sidebar";
 import Compose from "./compose"
 import TweetList from './tweetList';
+import FollowSuggestion from './followSuggestion';
 
 const Home = (props) => {
-    const [tweets, setTweets] = useState({ data: [{ body: "", likes: "", owner: { displayName: "" } }] })
+    const [tweets, setTweets] = useState({ data: [{ body: "", likes: "", owner: { displayName: "", username: "" } , createdAt: ""}] })
     const [skip, setSkip] = useState(0)
     const jwt = localStorage.getItem("jwt")
+
+    const setTweetsHandler = (response) => {
+        setTweets((prevState) => {
+            return { data: response.data.tweets }
+        })
+    }
 
     const LoadClickHandler = () => {
         axios({
@@ -37,12 +44,18 @@ const Home = (props) => {
     }
 
     return (
-        <div>
-            <p>homepage</p>
-            <Sidebar />
-            <Compose />
-            <TweetList tweets={tweets.data} setTweets={setTweets} />
-            <br /><button onClick={() => LoadClickHandler()}>load more</button>
+        <div className="main-app">
+            <div className="side-section left">
+                <Sidebar />
+            </div>
+            <div className="middle-section">
+                <Compose setTweets={setTweets} />
+                <TweetList tweets={tweets.data} setTweetsHandler={setTweetsHandler} url="/api/home" />
+                <br /><button onClick={() => LoadClickHandler()}>load more</button>
+            </div>
+            <div className="side-section right">
+                <FollowSuggestion />
+            </div>
         </div>
     )
 };

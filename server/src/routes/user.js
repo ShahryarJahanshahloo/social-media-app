@@ -10,7 +10,8 @@ const {
     patch_follow,
     get_followers,
     get_followings,
-    get_profile_username,
+    get_profileInfo,
+    get_profileTweets,
     post_settings_profile,
     post_logout,
     get_search,
@@ -23,9 +24,8 @@ router.post("/sign-up", post_sign_up)
 router.patch("/follow", auth, patch_follow)
 router.get("/followers", auth, get_followers)
 router.get("/followings", auth, get_followings)
-//VIEW PROFILE
-router.get("/profile/:username", get_profile_username)
-//EDIT PROFILE
+router.get("/profileInfo", auth, get_profileInfo)
+router.get("/profileTweets", get_profileTweets)
 router.post("/settings/profile", auth, post_settings_profile)
 router.post("/logout", auth, post_logout)
 router.get("/search", get_search)
