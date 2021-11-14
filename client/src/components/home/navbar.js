@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { useSelector } from 'react-redux';
 import axios from "axios"
 
@@ -16,6 +16,7 @@ import {
 } from "react-icons/fa"
 
 const Navbar = (props) => {
+
     const user = useSelector(state => state.userReducer)
     const jwt = localStorage.getItem("jwt")
     const history = useHistory()
@@ -48,20 +49,28 @@ const Navbar = (props) => {
             <div className="navbar">
                 <div className="navbar-upper">
                     <div className="navbar-item-wrapper">
-                        <HomeIcon style={iconStyle}/>
-                        <Link className="navbar-item" to="/home">Home</Link>
+                        <div className="navbar-item" onClick={() => {history.push("/home")}}>
+                            <HomeIcon style={iconStyle} />
+                            <label className="navbar-item-text">Home</label>
+                        </div>
                     </div>
                     <div className="navbar-item-wrapper">
-                        <BookmarkIcon style={iconStyle}/>
-                        <Link className="navbar-item" to="/bookmarks">Bookmarks</Link>
+                        <div className="navbar-item" onClick={() => {history.push("/bookmarks")}}>
+                            <BookmarkIcon style={iconStyle} />
+                            <label className="navbar-item-text">Bookmarks</label>
+                        </div>
                     </div>
                     <div className="navbar-item-wrapper">
-                        <ProfileIcon style={iconStyle}/>
-                        <Link className="navbar-item" to={`profile/${user.username}`}>Profile</Link>
+                        <div className="navbar-item" onClick={() => {history.push(`profile/${user.username}`)}}>
+                            <ProfileIcon style={iconStyle} />
+                            <label className="navbar-item-text">Profile</label>
+                        </div>
                     </div>
                     <div className="navbar-item-wrapper">
-                        <ExploreIcon style={iconStyle}/>
-                        <Link className="navbar-item" to="/explore">Explore</Link>
+                        <div className="navbar-item" onClick={() => {history.push("/explore")}}>
+                            <ExploreIcon style={iconStyle} />
+                            <label className="navbar-item-text">Explore</label>
+                        </div>
                     </div>
                 </div>
                 <div className="navbar-bottom">
