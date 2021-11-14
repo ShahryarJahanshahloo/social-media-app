@@ -7,10 +7,7 @@
 
 .side-section {
     width: 100%;
-    height: 8.5%;
-}
-
-.side-section.navbar {
+    height: 7.5%;
 }
 
 .side-section.suggestion {
@@ -19,7 +16,7 @@
 
 .middle-section {
     width: 100%;
-    height: 91.5%;
+    height: 92.5%;
     overflow-y: scroll;
     display: flex;
     flex-flow: column nowrap;

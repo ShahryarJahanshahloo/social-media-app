@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from "axios"
 
-import Sidebar from "./sidebar";
+import Navbar from "./navbar";
 import Compose from "./compose"
 import TweetList from './tweetList';
 import FollowSuggestion from './followSuggestion';
@@ -46,8 +46,8 @@ const Home = (props) => {
 
     return (
         <div className="main-app">
-            <div className="side-section navbar">
-                <Sidebar />
+            <div className="side-section">
+                <Navbar />
             </div>
             <div className="middle-section">
                 <TitleBar />

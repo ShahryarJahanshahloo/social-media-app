@@ -15,7 +15,7 @@ import {
     FaKiwiBird as BirdIcon,
 } from "react-icons/fa"
 
-const Sidebar = (props) => {
+const Navbar = (props) => {
     const user = useSelector(state => state.userReducer)
     const jwt = localStorage.getItem("jwt")
     const history = useHistory()
@@ -44,27 +44,27 @@ const Sidebar = (props) => {
     }
 
     return (
-        <div className="sidebar-wrapper">
-            <div className="sidebar">
-                <div className="sidebar-upper">
-                    <div className="sidebar-item-wrapper">
+        <div className="navbar-wrapper">
+            <div className="navbar">
+                <div className="navbar-upper">
+                    <div className="navbar-item-wrapper">
                         <HomeIcon style={iconStyle}/>
-                        <Link className="sidebar-item" to="/home">Home</Link>
+                        <Link className="navbar-item" to="/home">Home</Link>
                     </div>
-                    <div className="sidebar-item-wrapper">
+                    <div className="navbar-item-wrapper">
                         <BookmarkIcon style={iconStyle}/>
-                        <Link className="sidebar-item" to="/bookmarks">Bookmarks</Link>
+                        <Link className="navbar-item" to="/bookmarks">Bookmarks</Link>
                     </div>
-                    <div className="sidebar-item-wrapper">
+                    <div className="navbar-item-wrapper">
                         <ProfileIcon style={iconStyle}/>
-                        <Link className="sidebar-item" to={`profile/${user.username}`}>Profile</Link>
+                        <Link className="navbar-item" to={`profile/${user.username}`}>Profile</Link>
                     </div>
-                    <div className="sidebar-item-wrapper">
+                    <div className="navbar-item-wrapper">
                         <ExploreIcon style={iconStyle}/>
-                        <Link className="sidebar-item" to="/explore">Explore</Link>
+                        <Link className="navbar-item" to="/explore">Explore</Link>
                     </div>
                 </div>
-                <div className="sidebar-bottom">
+                <div className="navbar-bottom">
                     <button onClick={logoutHandler}>Logout</button>
                 </div>
             </div>
@@ -72,4 +72,4 @@ const Sidebar = (props) => {
     )
 }
 
-export default Sidebar
+export default Navbar

@@ -1,5 +1,9 @@
 import React from 'react';
 
+import Avatar from './avatar';
+
+import mamadAvatar from "../../mamad.jpg"
+
 import {
     BiHeart as HeartIcon,
     BiComment as CommentIcon,
@@ -18,7 +22,7 @@ const TweetCompact = ({ body, likes, owner }) => {
     return (
         <div className="tweet-compact">
             <div className="tweet-sidebar">
-
+                <Avatar img={mamadAvatar} size="48" />
             </div>
             <div className="tweet-main">
                 <div className="tweet-author-info">

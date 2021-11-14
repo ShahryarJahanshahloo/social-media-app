@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
-import Sidebar from './sidebar';
-import axios from "axios"
+import axios from "axios";
 
+import Navbar from "./navbar";
 import TweetList from './tweetList';
+import FollowSuggestion from './followSuggestion';
+import TitleBar from './titleBar';
 
 const Bookmarks = (props) => {
     const [tweets, setTweets] = useState({ data: [{ body: "", likes: "", owner: { displayName: "", username: "" }, createdAt: "" }] })
@@ -42,10 +44,24 @@ const Bookmarks = (props) => {
     }
 
     return (
-        <div>
-            <Sidebar />
-            <TweetList tweets={tweets.data} setTweetsHandler={setTweetsHandler} url="/api/bookmarks"></TweetList>
-            <br /><button onClick={() => LoadClickHandler()}>load more</button>
+        // <div>
+        //     <Sidebar />
+        //     <TweetList tweets={tweets.data} setTweetsHandler={setTweetsHandler} url="/api/bookmarks"></TweetList>
+        //     <br /><button onClick={() => LoadClickHandler()}>load more</button>
+        // </div>
+
+        <div className="main-app">
+            <div className="side-section">
+                <Navbar />
+            </div>
+            <div className="middle-section">
+                <TitleBar />
+                <TweetList tweets={tweets.data} setTweetsHandler={setTweetsHandler} url="/api/bookmarks" />
+                <button onClick={() => LoadClickHandler()}>load more</button>
+            </div>
+            <div className="side-section suggestion">
+                <FollowSuggestion />
+            </div>
         </div>
     )
 }

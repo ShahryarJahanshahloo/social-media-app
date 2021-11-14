@@ -1,12 +1,4 @@
 .avatar-wrapper {
-    width: 25px;
+    width: 32px;
     height: 100px;
-    /* overflow: hidden; */
-}
-
-.avatar-img {
-    background-image: url("../../bull.jpg");
-    width: 25px;
-    height: 100px;
-    object-fit: cover;
 }
