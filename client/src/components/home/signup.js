@@ -54,24 +54,23 @@ const Signup = (props) => {
 
 
     return (
-        <div>
-            <label>Email </label>
-            <input type="text" onChange={onEmailChange} /><br />
+        <div className="login-box-container">
+            <div className="login-box signup">
+                <label className="topic">Sign Up</label>
 
-            <label>Username </label>
-            <input type="text" onChange={onUsernameChange} /><br />
+                <div className="form">
+                    <input type="text" onChange={onEmailChange} placeholder="Email" />
+                    <input type="text" onChange={onUsernameChange} placeholder="Username" />
+                    <input type="text" onChange={onDisplayNameChange} placeholder="Display Name" />
+                    <input type="text" onChange={onPasswordChange} placeholder="Password" />
+                    <input type="text" onChange={onPassword2Change} placeholder="Repeat Password" />
+                    <input type="submit" value="create account" onClick={handleSignup} />
+                </div>
 
-            <label>Display Name </label>
-            <input type="text" onChange={onDisplayNameChange} /><br />
-
-            <label>Password </label>
-            <input type="text" onChange={onPasswordChange} /><br />
-
-            <label>Repeat Password </label>
-            <input type="text" onChange={onPassword2Change} /><br />
-
-            <input type="submit" value="create account" onClick={handleSignup} />
-            <label onClick={handleRedirectClick}>already have an account? </label>
+                <div className="signup-link">
+                    <label onClick={handleRedirectClick}>already have an account? </label>
+                </div>
+            </div>
         </div>
     )
 };

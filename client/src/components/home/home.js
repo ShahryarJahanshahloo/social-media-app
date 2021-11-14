@@ -5,6 +5,7 @@ import Sidebar from "./sidebar";
 import Compose from "./compose"
 import TweetList from './tweetList';
 import FollowSuggestion from './followSuggestion';
+import TitleBar from './titleBar';
 
 const Home = (props) => {
     const [tweets, setTweets] = useState({ data: [{ body: "", likes: "", owner: { displayName: "", username: "" } , createdAt: ""}] })
@@ -45,15 +46,16 @@ const Home = (props) => {
 
     return (
         <div className="main-app">
-            <div className="side-section left">
+            <div className="side-section navbar">
                 <Sidebar />
             </div>
             <div className="middle-section">
+                <TitleBar />
                 <Compose setTweets={setTweets} />
                 <TweetList tweets={tweets.data} setTweetsHandler={setTweetsHandler} url="/api/home" />
-                <br /><button onClick={() => LoadClickHandler()}>load more</button>
+                <button onClick={() => LoadClickHandler()}>load more</button>
             </div>
-            <div className="side-section right">
+            <div className="side-section suggestion">
                 <FollowSuggestion />
             </div>
         </div>

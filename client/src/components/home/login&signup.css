@@ -1,0 +1,89 @@
+.login-box.signup {
+    min-height: 80%;
+}
+
+.login-box-container {
+    background: linear-gradient(120deg, #36d1dc, #5b86e5);
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-box {
+    display: flex;
+    flex-flow: column wrap;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    height: 100%;
+    width: 100%;
+    background-color: white;
+    box-shadow: 0px 1px 6px 2px silver;
+}
+
+.form {
+    display: flex;
+    flex-flow: column wrap;
+    align-items: center;
+    justify-content: center;
+    width: 80%;
+}
+
+.login-box input[type="text"] {
+    border: 1px silver;
+    background-color: gainsboro;
+    border-radius: 5px;
+    height: 50px;
+    width: 100%;
+    padding: 5px;
+    margin: 5px;
+    outline: none;
+}
+
+.login-box input[type="submit"] {
+    width: 100%;
+    border: none;
+    height: 40px;
+    color: white;
+    font-weight: 500;
+    border-radius: 20px;
+    background-color: #00adba;
+    cursor: pointer;
+}
+
+.topic {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 40px;
+}
+
+.signup-link {
+    background-color: gainsboro;
+    padding: 10px;
+    text-align: center;
+    width: 100%;
+    height: 40px;
+    position: absolute;
+    bottom: 0;
+}
+
+.signup-link button {
+    border: none;
+    background-color: inherit;
+    cursor: pointer;
+}
+
+.signup-link button:hover {
+    text-decoration: underline;
+}
+
+@media only screen and (min-width: 480px) {
+    .login-box {
+        width: 400px;
+        height: 60%;
+        border-radius: 2%;
+    }
+}

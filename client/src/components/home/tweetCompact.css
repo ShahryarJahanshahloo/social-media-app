@@ -1,0 +1,55 @@
+
+.tweet-compact {
+    padding: 5px 5px;
+    display: flex;
+    flex-flow: row nowrap;
+    min-height: 50px;
+    width: 100%;
+    position: relative;
+    z-index: 0;
+}
+
+.tweet-main {
+    width: 100%;
+    height: 100%;
+    padding-left: 5px;
+}
+
+.tweet-sidebar {
+    width: 48px;
+    height: 100%;
+}
+
+.tweet-author-info {
+    height: 20px;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: baseline;
+}
+
+.tweet-actions {
+    width: 100%;
+    height: 20px;
+    display: flex;
+    flex-flow: row nowrap;
+}
+
+.tweet-icon-wrapper {
+    width: 33%;
+}
+
+.tweet-username {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.tweet-username > label {
+    font-size: 0.8rem;
+    color: rgb(83, 100, 113);
+}
+
+.tweet-displayName {
+    font-weight: 550;
+}

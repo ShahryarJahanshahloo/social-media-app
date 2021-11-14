@@ -27,13 +27,19 @@ const TweetList = ({ tweets, setTweetsHandler, url, queryUsername = "" }) => {
             })
     }, [])
 
-    const tweetList = tweets.map((value, index) => {
-        return (
-            <div key={index} style={{minHeight: "100px"}}>
-                <TweetCompact body={value.body} likes={value.likes} owner={value.owner} createdAt={value.createdAt}/>
-            </div>
-        )
-    })
+    const isTweetListEmpty = (tweets[0].body === "")
+
+    let tweetList = <div className="alert">No tweets to show!</div>
+
+    if (!isTweetListEmpty) {
+        tweetList = tweets.map((value, index) => {
+            return (
+                <div key={index} className="tweet-list-item">
+                    <TweetCompact body={value.body} likes={value.likes} owner={value.owner} createdAt={value.createdAt} />
+                </div>
+            )
+        })
+    }
 
     return (
         <div className="tweet-list">{tweetList}</div>

@@ -1,13 +1,22 @@
 import React from 'react';
 
 import {
-    CgHeart as HeartIcon,
-} from "react-icons/cg"
+    BiHeart as HeartIcon,
+    BiComment as CommentIcon,
+} from "react-icons/bi"
+import {
+    FaRetweet as RetweetIcon,
+} from "react-icons/fa"
+
+const iconStyle = {
+    fontSize: "15px",
+    color: "rgb(83, 100, 113)",
+}
 
 const TweetCompact = ({ body, likes, owner }) => {
 
     return (
-        <div className="tweet">
+        <div className="tweet-compact">
             <div className="tweet-sidebar">
 
             </div>
@@ -17,14 +26,22 @@ const TweetCompact = ({ body, likes, owner }) => {
                         {owner.displayName}
                     </div>
                     <div className="tweet-username">
-                        {owner.username}
+                        <label>@{owner.username}</label>
                     </div>
                 </div>
                 <div className="tweet-body">
                     {body}
                 </div>
                 <div className="tweet-actions">
-                    <HeartIcon /> {likes}
+                    <div className="tweet-icon-wrapper">
+                        <CommentIcon style={iconStyle} />
+                    </div>
+                    <div className="tweet-icon-wrapper">
+                        <RetweetIcon style={iconStyle} />
+                    </div>
+                    <div className="tweet-icon-wrapper">
+                        <HeartIcon style={iconStyle} /> {likes}
+                    </div>
                 </div>
             </div>
         </div>

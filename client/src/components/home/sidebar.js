@@ -40,7 +40,7 @@ const Sidebar = (props) => {
     }
 
     const iconStyle = {
-        fontSize: "20px"
+        fontSize: "1.6em"
     }
 
     return (

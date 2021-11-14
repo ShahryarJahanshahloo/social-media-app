@@ -8,24 +8,28 @@ const Redirect = (props) => {
 
     useEffect(() => {
         if (jwt !== null) {
-            axios({
-                method: "post",
-                url: "/api/authenticate",
-                headers: {
-                    // "Accept": "application/json",
-                    "Authorization": `Bearer ${jwt}`,
-                    "Access-Control-Allow-Origin": "*",
-                    "Access-Control-Allow-Credentials": true
-                },
-            })
-                .then((res) => {
-                    if (res.data.isAuthenticated === true) {
-                        history.push("/home")
-                    } else {
-                        history.push("/login")
-                    }
+            try {
+                axios({
+                    method: "post",
+                    url: "/api/authenticate",
+                    headers: {
+                        // "Accept": "application/json",
+                        "Authorization": `Bearer ${jwt}`,
+                        "Access-Control-Allow-Origin": "*",
+                        "Access-Control-Allow-Credentials": true
+                    },
                 })
-                .catch((e) => console.log(e))
+                    .then((res) => {
+                        if (res.data.isAuthenticated === true) {
+                            history.push("/home")
+                        } else {
+                            history.push("/login")
+                        }
+                    })
+                    .catch((e) => console.log(e))
+            } catch (e) {
+                history.push("/login")
+            }
         } else {
             history.push("/login")
         }

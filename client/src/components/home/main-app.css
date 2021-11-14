@@ -1,0 +1,35 @@
+.main-app {
+    display: flex;
+    flex-flow: column-reverse wrap;
+    width: 100%;
+    height: 100%;
+}
+
+.side-section {
+    width: 100%;
+    height: 8.5%;
+}
+
+.side-section.navbar {
+}
+
+.side-section.suggestion {
+    display: none;
+}
+
+.middle-section {
+    width: 100%;
+    height: 91.5%;
+    overflow-y: scroll;
+    display: flex;
+    flex-flow: column nowrap;
+    position: relative;
+}
+
+
+/*
+    media bara zire 480px mishe amoodi
+    baraye balaye 480 ke desktop o inast marhale marhale
+    avavl left side koochik mishe
+    baad right side pak mishe
+*/

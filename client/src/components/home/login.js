@@ -29,12 +29,16 @@ const Login = (props) => {
         <div className="login-box-container">
             <div className="login-box">
                 <label className="topic">Sign In</label>
-                <input type="text" ref={emailInput} placeholder="Email"/>
-                <input type="text" ref={passwordInput} placeholder="Password"/>
-                <input type="submit" value="Sign in" onClick={handleLogin} />
+
+                <div className="form">
+                    <input type="text" ref={emailInput} placeholder="Email" />
+                    <input type="text" ref={passwordInput} placeholder="Password" />
+                    <input type="submit" value="Sign in" onClick={handleLogin} />
+                </div>
+
                 <div className="signup-link">
-                <label>no account?</label>
-                <button onClick={handleRedirectClick}> Signup </button>
+                    <label>no account?</label>
+                    <button onClick={handleRedirectClick}> Signup </button>
                 </div>
             </div>
         </div>

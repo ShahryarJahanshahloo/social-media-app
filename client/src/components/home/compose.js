@@ -47,7 +47,7 @@ const Compose = ({ setTweets }) => {
     }
 
     return (
-        <div>
+        <div className="compose">
             <input type="text" placeholder="What's happeening?" 
             onChange={inputHandler} 
             ref={inputRef}></input>
