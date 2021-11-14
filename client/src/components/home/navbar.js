@@ -61,7 +61,7 @@ const Navbar = (props) => {
                         </div>
                     </div>
                     <div className="navbar-item-wrapper">
-                        <div className="navbar-item" onClick={() => {history.push(`profile/${user.username}`)}}>
+                        <div className="navbar-item" onClick={() => {history.push(`/profile/${user.username}`)}}>
                             <ProfileIcon style={iconStyle} />
                             <label className="navbar-item-text">Profile</label>
                         </div>

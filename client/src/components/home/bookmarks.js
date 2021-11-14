@@ -57,7 +57,7 @@ const Bookmarks = (props) => {
             <div className="middle-section">
                 <TitleBar />
                 <TweetList tweets={tweets.data} setTweetsHandler={setTweetsHandler} url="/api/bookmarks" />
-                <button onClick={() => LoadClickHandler()}>load more</button>
+                <button className="load-more" onClick={() => LoadClickHandler()}>:</button>
             </div>
             <div className="side-section suggestion">
                 <FollowSuggestion />

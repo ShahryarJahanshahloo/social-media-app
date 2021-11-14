@@ -57,7 +57,7 @@ const Profile = (props) => {
                     setTweetsHandler={setTweetsHandler}
                     url="/api/profileTweets"
                     queryUsername={profileUsername} />
-                <button onClick={() => LoadClickHandler()}>load more</button>
+                <button className="load-more" onClick={() => LoadClickHandler()}>:</button>
             </div>
             <div className="side-section suggestion">
                 <FollowSuggestion />

@@ -53,7 +53,7 @@ const Home = (props) => {
                 <TitleBar />
                 <Compose setTweets={setTweets} />
                 <TweetList tweets={tweets.data} setTweetsHandler={setTweetsHandler} url="/api/home" />
-                <button onClick={() => LoadClickHandler()}>load more</button>
+                <button className="load-more" onClick={() => LoadClickHandler()}>:</button>
             </div>
             <div className="side-section suggestion">
                 <FollowSuggestion />
