@@ -29,6 +29,6 @@ router.get("/profileTweets", get_profileTweets)
 router.post("/settings/profile", auth, post_settings_profile)
 router.post("/logout", auth, post_logout)
 router.get("/search", get_search)
-router.get("/authenticate", auth, post_authenticate)
+router.post("/authenticate", auth, post_authenticate)
 
 module.exports = router

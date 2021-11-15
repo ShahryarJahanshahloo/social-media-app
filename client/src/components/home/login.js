@@ -1,11 +1,13 @@
 import React, { useRef } from 'react';
 import { useHistory } from "react-router-dom";
 import axios from "axios"
+import { useDispatch } from 'react-redux';
 
 const Login = (props) => {
     let history = useHistory()
     const emailInput = useRef(null)
     const passwordInput = useRef(null)
+    const dispatch = useDispatch()
 
     const handleRedirectClick = () => {
         history.push("/signup")
@@ -17,6 +19,16 @@ const Login = (props) => {
             password: passwordInput.current.value
         })
             .then((res) => {
+                dispatch({
+                    type: "updateLoginStatus"
+                })
+                dispatch({
+                    type: "setUser",
+                    payload: {
+                      username: res.data.username,
+                      displayName: res.data.displayName,
+                    }
+                  })
                 localStorage.setItem("jwt", res.data.token)
                 history.push("/home")
             })

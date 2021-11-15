@@ -20,13 +20,13 @@ const Redirect = (props) => {
                     },
                 })
                     .then((res) => {
-                        if (res.data.isAuthenticated === true) {
+                        if (res.data.isAuthenticated == true) {
                             history.push("/home")
                         } else {
                             history.push("/login")
                         }
                     })
-                    .catch((e) => console.log(e))
+                    .catch((e) => history.push("/login"))
             } catch (e) {
                 history.push("/login")
             }
@@ -37,7 +37,7 @@ const Redirect = (props) => {
 
 
     return (
-        <div>this is loading animation</div>
+        <div>please wait...</div>
     )
 }
 

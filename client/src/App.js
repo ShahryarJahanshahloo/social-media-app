@@ -40,10 +40,14 @@ function App() {
       })
         .then((res) => {
           dispatch({
-            type: "setUser", payload: {
+            type: "setUser",
+            payload: {
               username: res.data.username,
               displayName: res.data.displayName,
             }
+          })
+          dispatch({
+            type: "updateLoginStatus"
           })
         })
         .catch((e) => {
