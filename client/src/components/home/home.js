@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import axios from "axios"
+import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router';
 
 import Navbar from "./navbar";
 import Compose from "./compose"
@@ -7,13 +9,20 @@ import TweetList from './tweetList';
 import FollowSuggestion from './followSuggestion';
 import TitleBar from './titleBar';
 
-const Home = (props) => {
+const Home = () => {
+    const history = useHistory()
+    const isLoggedIn = useSelector(state => state.loginStatusReducer)
+
+    if (!isLoggedIn) {
+        history.push("/login")
+    }
+
     const [tweets, setTweets] = useState({ data: [{ body: "", likes: "", owner: { displayName: "", username: "" } , createdAt: ""}] })
     const [skip, setSkip] = useState(0)
     const jwt = localStorage.getItem("jwt")
 
     const setTweetsHandler = (response) => {
-        setTweets((prevState) => {
+        setTweets(() => {
             return { data: response.data.tweets }
         })
     }
