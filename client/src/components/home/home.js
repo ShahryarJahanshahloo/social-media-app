@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from "axios"
 import { useSelector } from 'react-redux';
-import { useHistory } from 'react-router';
+import { useHistory } from 'react-router-dom';
 
 import Navbar from "./navbar";
 import Compose from "./compose"

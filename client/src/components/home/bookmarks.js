@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import axios from "axios";
+import { useHistory } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 import Navbar from "./navbar";
 import TweetList from './tweetList';
@@ -7,6 +9,13 @@ import FollowSuggestion from './followSuggestion';
 import TitleBar from './titleBar';
 
 const Bookmarks = (props) => {
+    const history = useHistory()
+    const isLoggedIn = useSelector(state => state.loginStatusReducer)
+
+    if (!isLoggedIn) {
+        history.push("/login")
+    }
+
     const [tweets, setTweets] = useState({ data: [{ body: "", likes: "", owner: { displayName: "", username: "" }, createdAt: "" }] })
     const [skip, setSkip] = useState(0)
     const jwt = localStorage.getItem("jwt")
@@ -44,12 +53,6 @@ const Bookmarks = (props) => {
     }
 
     return (
-        // <div>
-        //     <Sidebar />
-        //     <TweetList tweets={tweets.data} setTweetsHandler={setTweetsHandler} url="/api/bookmarks"></TweetList>
-        //     <br /><button onClick={() => LoadClickHandler()}>load more</button>
-        // </div>
-
         <div className="main-app">
             <div className="side-section">
                 <Navbar />

@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { BrowserRouter, Switch, Route } from 'react-router-dom'
+import { useHistory, BrowserRouter, Switch, Route } from 'react-router-dom'
 import axios from "axios"
 import { useDispatch } from 'react-redux';
 
@@ -25,6 +25,7 @@ import TweetExtended from './components/home/tweetExtended';
 
 function App() {
   const jwt = localStorage.getItem("jwt")
+  let history = useHistory()
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -51,27 +52,25 @@ function App() {
           })
         })
         .catch((e) => {
-          console.log(e)
+          history.push("/login")
         })
     }
   }, [])
 
   return (
-    <BrowserRouter>
-      <div className="App">
-        <Switch>
-          <Route path="/login" component={Login} />
-          <Route path="/signup" component={Signup} />
-          <Route path="/home" component={Home} />
-          <Route path="/bookmarks" component={Bookmarks}></Route>
-          <Route path="/explore" component={Explore}></Route>
-          <Route path="/tweet/:tweetID" component={TweetExtended}></Route>
-          <Route path="/profile/:username" component={Profile}></Route>
-          <Route exact path="/" component={Redirect} />
-          <Route path="*" component={NoMatch404}></Route>
-        </Switch>
-      </div>
-    </BrowserRouter >
+    <div className="App">
+      <Switch>
+        <Route path="/login" component={Login} />
+        <Route path="/signup" component={Signup} />
+        <Route path="/home" component={Home} />
+        <Route path="/bookmarks" component={Bookmarks}></Route>
+        <Route path="/explore" component={Explore}></Route>
+        <Route path="/tweet/:tweetID" component={TweetExtended}></Route>
+        <Route path="/profile/:username" component={Profile}></Route>
+        <Route exact path="/" component={Redirect} />
+        <Route path="*" component={NoMatch404}></Route>
+      </Switch>
+    </div>
   )
 }
 
