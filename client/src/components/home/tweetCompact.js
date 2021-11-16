@@ -17,7 +17,7 @@ const iconStyle = {
     color: "rgb(83, 100, 113)",
 }
 
-const TweetCompact = ({ body, likes, owner }) => {
+const TweetCompact = ({ body, likesNumber, user }) => {
 
     return (
         <div className="tweet-compact">
@@ -27,10 +27,10 @@ const TweetCompact = ({ body, likes, owner }) => {
             <div className="tweet-main">
                 <div className="tweet-author-info">
                     <div className="tweet-displayName">
-                        {owner.displayName}
+                        {user.displayName}
                     </div>
                     <div className="tweet-username">
-                        <label>@{owner.username}</label>
+                        <label>@{user.username}</label>
                     </div>
                 </div>
                 <div className="tweet-body">
@@ -44,7 +44,7 @@ const TweetCompact = ({ body, likes, owner }) => {
                         <RetweetIcon style={iconStyle} />
                     </div>
                     <div className="tweet-icon-wrapper">
-                        <HeartIcon style={iconStyle} /> {likes}
+                        <HeartIcon style={iconStyle} /> {likesNumber}
                     </div>
                 </div>
             </div>

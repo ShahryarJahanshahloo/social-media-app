@@ -1,5 +1,3 @@
-'use strict'
-
 const User = require('../models/user')
 
 async function ping(req, res) {
@@ -16,14 +14,11 @@ async function post_sign_in(req, res) {
             username: user.username,
             displayName: user.displayName
         })
-    } catch (e) {
-        res.status(500).send({ e })
-    }
+    } catch (e) { res.status(500).send({ e }) }
 }
 
 async function post_sign_up(req, res) {
     const user = new User(req.body)
-
     try {
         await user.save()
         const token = await user.generateAuthToken()
@@ -32,34 +27,14 @@ async function post_sign_up(req, res) {
             username: user.username,
             displayName: user.displayName
         })
-    } catch (e) {
-        res.status(400).send({ e })
-    }
+    } catch (e) { res.status(400).send({ e }) }
 }
 
 async function patch_follow(req, res) {
     try {
-        const targetUser = await User.findOne({ _id: req.body._id })
-        const isFollowed = req.user.followings.includes(req.body._id)
-        let message;
-        if (isFollowed) {
-            req.user.followings.splice(req.user.followings.indexOf(req.body._id), 1)
-            await req.user.save()
-            targetUser.followers.splice(targetUser.followers.indexOf(req.user._id), 1)
-            await targetUser.save()
-            message = "user unfollowed!"
-        } else {
-            req.user.followings.push(req.body._id)
-            await req.user.save()
-            targetUser.followers.push(req.user._id)
-            await targetUser.save()
-            message = "user followed!"
-        }
-        res.status(200).send({ message, })
-    } catch (e) {
-        res.status(500).send({ e })
-    }
-
+        const message = await User.toggleFollow(req.user, req.body._id)
+        res.status(200).send({ message })
+    } catch (e) { res.status(500).send({ e }) }
 }
 
 async function get_followers(req, res) {
@@ -107,7 +82,6 @@ async function get_profileTweets(req, res) {
                 limit: 10,
                 select: {
                     updatedAt: 0,
-                    // owner: 0,
                     __v: 0,
                 },
                 sort: {
@@ -127,7 +101,7 @@ async function get_profileTweets(req, res) {
                 followings: user.followings.length
             })
         } else {
-            return res.status(404).send({ error:"user not found!"})
+            return res.status(404).send({ error: "user not found!" })
         }
     } catch (e) {
         res.status(500).send({ e })
@@ -152,13 +126,10 @@ async function get_profileInfo(req, res) {
 
 async function post_settings_profile(req, res) {
     try {
-
         const validKeys = ["bio", "displayName"]
         const keys = Object.keys(req.body)
         const isValidOperation = keys.every((item) => {
-            if (validKeys.includes(item)) {
-                return true
-            }
+            if (validKeys.includes(item)) return true
             else return false
         })
         if (isValidOperation) {
@@ -201,11 +172,8 @@ async function post_logout(req, res) {
 }
 
 async function post_authenticate(req, res) {
-    try {
-        res.status(200).send({ isAuthenticated: true })
-    } catch (e) {
-        res.status(500).send({ e })
-    }
+    try { res.status(200).send({ isAuthenticated: true }) }
+    catch (e) { res.status(500).send({ e }) }
 }
 
 module.exports = {

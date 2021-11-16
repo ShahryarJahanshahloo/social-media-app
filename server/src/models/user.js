@@ -1,5 +1,3 @@
-'use strict'
-
 const mongoose = require('mongoose')
 const validator = require('validator')
 const bcrypt = require("bcryptjs")
@@ -39,8 +37,6 @@ const userSchema = mongoose.Schema({
         required: false,
         default: "",
     },
-
-    // stores username
     followers: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"
@@ -49,8 +45,6 @@ const userSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"
     }],
-
-    // stores tweet id
     bookmarks: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Tweet"
@@ -59,7 +53,10 @@ const userSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Tweet"
     }],
-
+    // tweets : number
+    //comment
+    //retweets
+    //avatar
     tokens: [{
         token: {
             type: String,
@@ -68,28 +65,57 @@ const userSchema = mongoose.Schema({
     }],
 })
 
-userSchema.methods.generateAuthToken = async function () {
-    const user = this
-    const token = jwt.sign({ _id: user._id.toString() }, process.env.JWT_SECRET)
-    user.tokens = user.tokens.concat({ token })
-    await user.save()
-    return token
+userSchema.methods = {
+    generateAuthToken: async function () {
+        const user = this
+        const token = jwt.sign({ _id: user._id.toString() }, process.env.JWT_SECRET)
+        user.tokens = user.tokens.concat({ token })
+        await user.save()
+        return token
+    },
+    toggleBookmarkTweet: async function (tweetID) {
+        const user = this
+        const isBookmarked = await user.bookmarks.includes(tweetID)
+        let message;
+        if (isBookmarked) {
+            user.bookmarks = user.bookmarks.filter(item => item !== tweetID)
+            await user.save()
+            message = "removed from bookmarks"
+        } else {
+            user.bookmarks.push(tweetID)
+            await user.save()
+            message = "added to bookmarks"
+        }
+    }
 }
 
-userSchema.statics.findByCredentials = async (email, password) => {
-
-    const user = await User.findOne({ email })
-
-    if (!user) {
-        throw new Error("incorrect email")
-    }
-
-    const isValidPassword = await bcrypt.compare(password, user.password)
-
-    if (!isValidPassword) {
-        throw new Error("incorrect password")
-    }
-    return user
+userSchema.statics = {
+    findByCredentials: async (email, password) => {
+        const user = await User.findOne({ email })
+        if (!user) throw new Error("incorrect email")
+        const isValidPassword = await bcrypt.compare(password, user.password)
+        if (!isValidPassword) throw new Error("incorrect password")
+        return user
+    },
+    toggleFollow: async (followerUser, targetUserID) => {
+        const targetUser = await User.findOne({ _id: targetUserID })
+        const isFollowed = followerUser.followings.includes(targetUserID)
+        let message;
+        if (isFollowed) {
+            followerUser.followings.splice(followerUser.followings.indexOf(targetUserID), 1)
+            await followerUser.save()
+            targetUser.followers.splice(targetUser.followers.indexOf(followerUser._id), 1)
+            await targetUser.save()
+            message = "user unfollowed!"
+        } else {
+            followerUser.followings.push(targetUserID)
+            await followerUser.save()
+            targetUser.followers.push(followerUser._id)
+            await targetUser.save()
+            message = "user followed!"
+        }
+        return message
+    },
 }
 
 userSchema.pre("save", async function (next) {
@@ -103,7 +129,7 @@ userSchema.pre("save", async function (next) {
 userSchema.virtual("tweets", {
     ref: "Tweet",
     localField: "_id",
-    foreignField: "owner"
+    foreignField: "user"
 })
 
 userSchema.virtual('homeTweetIDs').get(function () {
@@ -112,9 +138,5 @@ userSchema.virtual('homeTweetIDs').get(function () {
     return homeTweetIDs
 })
 
-// userSchema.set('toObject', { virtuals: true })
-// userSchema.set('toJSON', { virtuals: true })
-
 const User = mongoose.model('User', userSchema)
-
 module.exports = User
