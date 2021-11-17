@@ -73,9 +73,29 @@ async function get_followings(req, res) {
     res.send(req.user.followings)
 }
 
-async function get_profileTweets(req, res) {
-    const user = await User.findOne({ username: req.query.username },)
+async function get_profileInfo(req, res) {
+    const username = req.body.username
     try {
+        const user = await User.findOne({ username })
+        if (user) {
+            res.status(200).send({
+                username: user.username,
+                bio: user.bio,
+                displayName: user.displayName,
+                followersNumber: user.followersNumber.length,
+                followingsNumber: user.followingsNumber.length,
+            })
+        } else {
+            return res.status(404).send({ error: "user not found!" })
+        }
+    } catch (e) {
+        res.status(500).send({ e })
+    }
+}
+
+async function get_profileTweets(req, res) {
+    try {
+        const user = await User.findOne({ username: req.query.username },)
         if (user) {
             const options = {
                 skip: +req.query.skip,
@@ -92,14 +112,7 @@ async function get_profileTweets(req, res) {
                 path: "tweets",
                 options,
             }).execPopulate()
-            res.status(200).send({
-                tweets: user.tweets,
-                username: user.username,
-                bio: user.bio,
-                displayName: user.displayName,
-                followers: user.followers.length,
-                followings: user.followings.length
-            })
+            res.status(200).send({ tweets: user.tweets })
         } else {
             return res.status(404).send({ error: "user not found!" })
         }
@@ -108,7 +121,7 @@ async function get_profileTweets(req, res) {
     }
 }
 
-async function get_profileInfo(req, res) {
+async function get_userInfo(req, res) {
     const user = req.user
     try {
         if (user) {
@@ -117,11 +130,9 @@ async function get_profileInfo(req, res) {
                 displayName: user.displayName,
             })
         } else {
-            res.status(404).send("no user found")
+            res.status(404).send({ e: "user not found" })
         }
-    } catch (e) {
-        res.status(500).send({ e })
-    }
+    } catch (e) { res.status(500).send({ e }) }
 }
 
 async function post_settings_profile(req, res) {
@@ -176,6 +187,12 @@ async function post_authenticate(req, res) {
     catch (e) { res.status(500).send({ e }) }
 }
 
+async function post_uploadAvatar(req, res) {
+    req.user.avatar = req.file.buffer
+    await req.user.save()
+    res.status(200).send()
+}
+
 module.exports = {
     ping,
     post_sign_in,
@@ -183,10 +200,12 @@ module.exports = {
     patch_follow,
     get_followers,
     get_followings,
+    get_userInfo,
     get_profileInfo,
     get_profileTweets,
     post_settings_profile,
     get_search,
     post_logout,
     post_authenticate,
+    post_uploadAvatar,
 }

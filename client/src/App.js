@@ -32,7 +32,7 @@ function App() {
     if (jwt !== null) {
       axios({
         method: "get",
-        url: "/api/profileInfo",
+        url: "/api/userInfo",
         headers: {
           "Authorization": `Bearer ${jwt}`,
           "Access-Control-Allow-Origin": "*",

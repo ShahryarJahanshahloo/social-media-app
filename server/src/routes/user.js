@@ -1,5 +1,6 @@
 const express = require("express")
 const auth = require("../middleware/auth")
+const { upload, uploadErrorHandler } = require("../middleware/upload")
 const router = new express.Router()
 const {
     ping,
@@ -8,11 +9,13 @@ const {
     patch_follow,
     get_followers,
     get_followings,
+    get_userInfo,
     get_profileInfo,
     get_profileTweets,
     post_settings_profile,
     post_logout,
     get_search,
+    post_uploadAvatar,
     post_authenticate,
 } = require("../controllers/user-controller")
 
@@ -22,7 +25,9 @@ router.post("/sign-up", post_sign_up)
 router.patch("/follow", auth, patch_follow)
 router.get("/followers", auth, get_followers)
 router.get("/followings", auth, get_followings)
-router.get("/profileInfo", auth, get_profileInfo)
+router.post("/uploadAvatar", auth, upload.single('avatar'),  post_uploadAvatar, uploadErrorHandler)
+router.get("/userInfo", auth, get_userInfo)
+router.get("/profileInfo", get_profileInfo)
 router.get("/profileTweets", get_profileTweets)
 router.post("/settings/profile", auth, post_settings_profile)
 router.post("/logout", auth, post_logout)

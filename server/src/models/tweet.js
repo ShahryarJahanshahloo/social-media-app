@@ -11,18 +11,34 @@ const tweetSchema = mongoose.Schema({
         required: true,
         ref: "User"
     },
-    //likes
     likesNumber: {
         type: Number,
         default: 0,
-    }
-    // comments
-    //retweet number
+    },
+    replies: [{
+            user: {
+                type: mongoose.Schema.Types.ObjectId,
+                required: true,
+                ref: "User"
+            },
+            body: {
+                type: String,
+                maxlength: 255
+            }
+    }, { timestamps: true }],
+    repliesCount: {
+        type: Number,
+        default: 0,
+    },
+    retweetCount: {
+        type: Number,
+        default: 0,
+    },
 }, {
     timestamps: true,
 })
 
-//pre save for likes number
+//pre save reply count
 
 tweetSchema.statics = {
     toggleLikeTweet: async (user, tweetID) => {
@@ -42,6 +58,7 @@ tweetSchema.statics = {
             await tweet.save()
             message = "added to liked tweets"
         }
+        return message
     },
 }
 

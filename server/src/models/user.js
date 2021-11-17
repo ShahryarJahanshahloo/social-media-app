@@ -18,18 +18,21 @@ const userSchema = mongoose.Schema({
         type: String,
         required: true,
         trim: true,
+        maxlength: 31,
         unique: true,
+        lowercase: true,
     },
     displayName: {
         type: String,
         required: true,
-        maxlength: 15,
+        maxlength: 31,
     },
     password: {
         type: String,
         required: true,
         trim: true,
         minlength: 7,
+        maxlength: 23,
     },
     bio: {
         type: String,
@@ -53,16 +56,37 @@ const userSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Tweet"
     }],
-    // tweets : number
-    //comment
-    //retweets
-    //avatar
+    tweetsCount : {
+        type: Number,
+        default: 0,
+    },
+    retweets: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Tweet"
+    }],
+    avatar: {
+        type: Buffer,
+    },
     tokens: [{
         token: {
             type: String,
             required: true
         }
     }],
+})
+
+// pre remove delete all tweets
+
+userSchema.virtual("tweets", {
+    ref: "Tweet",
+    localField: "_id",
+    foreignField: "user"
+})
+
+userSchema.virtual('homeTweetIDs').get(function () {
+    const homeTweetIDs = this.followings
+    homeTweetIDs.push(this._id)
+    return homeTweetIDs
 })
 
 userSchema.methods = {
@@ -86,6 +110,7 @@ userSchema.methods = {
             await user.save()
             message = "added to bookmarks"
         }
+        return message
     }
 }
 
@@ -124,18 +149,6 @@ userSchema.pre("save", async function (next) {
         user.password = await bcrypt.hash(user.password, 8)
     }
     next()
-})
-
-userSchema.virtual("tweets", {
-    ref: "Tweet",
-    localField: "_id",
-    foreignField: "user"
-})
-
-userSchema.virtual('homeTweetIDs').get(function () {
-    const homeTweetIDs = this.followings
-    homeTweetIDs.push(this._id)
-    return homeTweetIDs
 })
 
 const User = mongoose.model('User', userSchema)
