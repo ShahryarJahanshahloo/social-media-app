@@ -15,17 +15,27 @@ const tweetSchema = mongoose.Schema({
         type: Number,
         default: 0,
     },
-    replies: [{
-            user: {
-                type: mongoose.Schema.Types.ObjectId,
-                required: true,
-                ref: "User"
-            },
-            body: {
-                type: String,
-                maxlength: 255
-            }
-    }, { timestamps: true }],
+    // replies: [{
+    //         user: {
+    //             type: mongoose.Schema.Types.ObjectId,
+    //             required: true,
+    //             ref: "User"
+    //         },
+    //         body: {
+    //             type: String,
+    //             maxlength: 255
+    //         }
+    // }, { timestamps: true }],
+    tweetType: {
+        type: String,
+        required: true,
+        default: "original",
+    },
+    replyTo: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: false,
+        ref: "Tweet"
+    },
     repliesCount: {
         type: Number,
         default: 0,
