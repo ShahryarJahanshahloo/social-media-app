@@ -16,7 +16,7 @@ const Bookmarks = (props) => {
         history.push("/login")
     }
 
-    const [tweets, setTweets] = useState({ data: [{ body: "", likesNumber: "", user: { displayName: "", username: "" }, createdAt: "" }] })
+    const [tweets, setTweets] = useState({ data: [{ body: "", likesCount: "", user: { displayName: "", username: "" }, createdAt: "" }] })
     const [skip, setSkip] = useState(0)
     const jwt = localStorage.getItem("jwt")
 

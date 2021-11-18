@@ -11,21 +11,6 @@ const tweetSchema = mongoose.Schema({
         required: true,
         ref: "User"
     },
-    likesNumber: {
-        type: Number,
-        default: 0,
-    },
-    // replies: [{
-    //         user: {
-    //             type: mongoose.Schema.Types.ObjectId,
-    //             required: true,
-    //             ref: "User"
-    //         },
-    //         body: {
-    //             type: String,
-    //             maxlength: 255
-    //         }
-    // }, { timestamps: true }],
     tweetType: {
         type: String,
         required: true,
@@ -35,6 +20,10 @@ const tweetSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         required: false,
         ref: "Tweet"
+    },
+    likesCount: {
+        type: Number,
+        default: 0,
     },
     repliesCount: {
         type: Number,
@@ -53,18 +42,18 @@ const tweetSchema = mongoose.Schema({
 tweetSchema.statics = {
     toggleLikeTweet: async (user, tweetID) => {
         const tweet = await Tweet.findById(tweetID)
-        const isLiked = await user.likesNumber.includes(tweetID)
+        const isLiked = await user.likes.includes(tweetID)
         let message;
         if (isLiked) {
-            user.likesNumber = user.likesNumber.filter(item => item !== tweetID)
+            user.likes = user.likes.filter(item => item !== tweetID)
             await user.save()
-            tweet.likesNumber -= 1
+            tweet.likesCount -= 1
             await tweet.save()
             message = "removed from liked tweets"
         } else {
-            user.likesNumber.push(tweetID)
+            user.likes.push(tweetID)
             await user.save()
-            tweet.likesNumber += 1
+            tweet.likesCount += 1
             await tweet.save()
             message = "added to liked tweets"
         }

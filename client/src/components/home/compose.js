@@ -35,7 +35,7 @@ const Compose = ({ setTweets }) => {
                     newState.data.push(...prevState.data)
                     newState.data.unshift({
                         body: res.data.body,
-                        likesNumber: 0,
+                        likesCount: 0,
                         user: {
                             displayName: user.displayName,
                     }

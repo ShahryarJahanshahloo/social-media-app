@@ -17,7 +17,7 @@ const iconStyle = {
     color: "rgb(83, 100, 113)",
 }
 
-const TweetCompact = ({ body, likesNumber, user }) => {
+const TweetCompact = ({ body, likesCount, user }) => {
 
     return (
         <div className="tweet-compact">
@@ -44,7 +44,7 @@ const TweetCompact = ({ body, likesNumber, user }) => {
                         <RetweetIcon style={iconStyle} />
                     </div>
                     <div className="tweet-icon-wrapper">
-                        <HeartIcon style={iconStyle} /> {likesNumber}
+                        <HeartIcon style={iconStyle} /> {likesCount}
                     </div>
                 </div>
             </div>

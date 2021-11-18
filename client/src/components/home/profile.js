@@ -10,7 +10,7 @@ import FollowSuggestion from './followSuggestion';
 
 const Profile = (props) => {
     const [skip, setSkip] = useState(0)
-    const [tweets, setTweets] = useState({ data: [{ body: "", likesNumber: "", user: { displayName: "", username: "" }, createdAt: "" }] })
+    const [tweets, setTweets] = useState({ data: [{ body: "", likesCount: "", user: { displayName: "", username: "" }, createdAt: "" }] })
     const profileUsername = useParams().username
     const user = useSelector(state => state.userReducer)
     const isUserProfile = (profileUsername === user.username)

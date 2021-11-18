@@ -3,7 +3,8 @@ const Tweet = require('../models/tweet')
 async function get_home(req, res) {
     try {
         const tweets = await Tweet
-            .find({ user: { $in: req.user.homeTweetIDs } }, "likesNumber body user createdAt", {
+            .find({ user: { $in: req.user.homeTweetIDs }, tweetType: "original" },
+                "likesCount body user createdAt repliesCount retweetCount", {
                 skip: +req.query.skip,
                 limit: 10,
                 sort: {
@@ -16,13 +17,14 @@ async function get_home(req, res) {
                 select: {
                     username: 1,
                     displayName: 1,
+                    avatar: 1,
                     _id: 0
                 }
             }).execPopulate()
         }
         res.status(200).send({ tweets })
     } catch (e) {
-        res.status(400).send({ e })
+        res.status(500).send({ e })
     }
 }
 
@@ -31,7 +33,7 @@ async function post_compose(req, res) {
     if (!isValidOperation) return res.status(400).send({ e: "invalid operation" })
     const tweet = new Tweet({
         ...req.body,
-        user: req.user._id
+        user: req.user._id,
     })
     try {
         await tweet.save()
@@ -44,6 +46,7 @@ async function post_compose(req, res) {
 async function delete_delete_tweet(req, res) {
     const tweet = await Tweet.findOne({ _id: req.body.tweetID })
     try {
+        if (!tweet) return res.status(404).send()
         if (!tweet.user.equals(req.user._id)) return res.status(400).send()
         const deletedTweet = await Tweet.deleteOne({ _id: req.body.tweetID })
         res.status(200).send(deletedTweet)
@@ -53,12 +56,13 @@ async function delete_delete_tweet(req, res) {
 }
 
 async function patch_edit_tweet(req, res) {
-    //keys should be in the same order: needs update!
-    const isValidOperation = JSON.stringify(Object.keys(req.body)) == JSON.stringify(["body", "tweetID"])
+    // order of keys may matter
+    const isValidOperation = JSON.stringify(Object.keys(req.body).sort()) == JSON.stringify(["body", "tweetID"])
     if (!isValidOperation) return res.status(400).send({ e: "invalid operation" })
     try {
-        const tweet = await Tweet.findOne({ _id: req.body.tweetID, user: req.user._id })
+        const tweet = await Tweet.findOne({ _id: req.body.tweetID })
         if (!tweet) return res.status(404).send()
+        if (!tweet.user.equals(req.user._id)) return res.status(400).send()
         tweet.body = req.body.body
         await tweet.save()
         res.status(200).send(tweet)
@@ -96,7 +100,9 @@ async function get_bookmarks(req, res) {
             select: {
                 body: 1,
                 user: 1,
-                likesNumber: 1,
+                likesCount: 1,
+                retweetCount: 1,
+                repliesCount: 1,
                 createdAt: 1,
             }
         }
@@ -108,6 +114,7 @@ async function get_bookmarks(req, res) {
                 select: {
                     username: 1,
                     displayName: 1,
+                    avatar: 1,
                     _id: 0
                 }
             }
