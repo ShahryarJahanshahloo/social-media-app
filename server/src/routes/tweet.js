@@ -8,6 +8,9 @@ const {
     patch_edit_tweet,
     patch_like,
     patch_bookmark,
+    post_reply,
+    get_getReplies,
+
     get_bookmarks,
 } = require("../controllers/tweet-controller")
 

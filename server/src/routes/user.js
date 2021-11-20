@@ -16,6 +16,11 @@ const {
     post_logout,
     get_search,
     post_uploadAvatar,
+    get_getAvatar,
+    delete_deleteAvatar,
+    post_retweet,
+    get_profileRetweets,
+    delete_deleteUser,
     post_authenticate,
 } = require("../controllers/user-controller")
 
