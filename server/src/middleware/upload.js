@@ -12,7 +12,6 @@ const fileFilter = (req, file, cb) => {
 }
 
 const multerOptions = {
-    dest: "/public/upload",
     fileFilter,
 }
 
