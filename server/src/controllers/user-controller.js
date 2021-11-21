@@ -278,6 +278,40 @@ async function delete_deleteUser(req, res) {
     }
 }
 
+async function get_profileLikes(req, res) {
+    try {
+        const user = await User.findOne({ username: req.body.username })
+        if (!user) return res.status(404).send()
+        const options = {
+            skip: +req.query.skip,
+            limit: 10,
+            select: {
+                updatedAt: 0,
+                __v: 0,
+            },
+            sort: {
+                createdAt: -1,
+            },
+        }
+        await user.populate({
+            path: "likes",
+            options,
+            populate: {
+                path: "user",
+                select: {
+                    username: 1,
+                    displayName: 1,
+                    avatar: 1,
+                    _id: 0,
+                    password: 0,
+                }
+            }
+        }).execPopulate()
+        res.status(200).send({ tweets: user.likes })
+    } catch (e) {
+        res.status(500).send()
+    }
+}
 
 module.exports = {
     ping,
@@ -288,14 +322,15 @@ module.exports = {
     get_followings,
     get_userInfo,
     get_profileInfo,
+    get_profileRetweets,
     get_profileTweets,
+    get_profileLikes,
     post_settings_profile,
     get_search,
     post_logout,
     post_authenticate,
     post_uploadAvatar,
     get_getAvatar,
-    get_profileRetweets,
     delete_deleteAvatar,
     delete_deleteUser,
 }

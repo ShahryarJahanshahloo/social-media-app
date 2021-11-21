@@ -12,13 +12,14 @@ const {
     get_userInfo,
     get_profileInfo,
     get_profileTweets,
+    get_profileRetweets,
+    get_profileLikes,
     post_settings_profile,
     post_logout,
     get_search,
     post_uploadAvatar,
     get_getAvatar,
     delete_deleteAvatar,
-    get_profileRetweets,
     delete_deleteUser,
     post_authenticate,
 } = require("../controllers/user-controller")
@@ -31,6 +32,7 @@ router.get("/followers", get_followers)
 router.get("/followings", get_followings)
 router.post("/uploadAvatar", auth, upload.single('avatar'), post_uploadAvatar, uploadErrorHandler)
 router.get("/getAvatar", get_getAvatar)
+router.get("/profileLikes", get_profileLikes)
 router.get("/profileRetweets", get_profileRetweets)
 router.delete("/deleteAvatar", auth, delete_deleteAvatar)
 router.delete("/deleteUser", auth, delete_deleteUser)
