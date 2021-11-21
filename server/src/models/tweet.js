@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const User = require('./user')
 
 const tweetSchema = mongoose.Schema({
     body: {
@@ -37,8 +38,6 @@ const tweetSchema = mongoose.Schema({
     timestamps: true,
 })
 
-//pre save reply count
-
 tweetSchema.statics = {
     toggleLikeTweet: async (user, tweetID) => {
         const tweet = await Tweet.findById(tweetID)
@@ -59,7 +58,48 @@ tweetSchema.statics = {
         }
         return message
     },
+    toggleRetweet: async (user, tweetID) => {
+        const tweet = await Tweet.findById(tweetID)
+        if (!user.retweets.includes(tweetID)) {
+            tweet.retweetCount += 1
+            await tweet.save()
+            user.retweets.push(tweetID)
+            await user.save()
+        } else {
+            tweet.retweetCount -= 1
+            await tweet.save()
+            user.retweets = user.retweets.filter((item) => {
+                return item != tweetID
+            })
+            await user.save()
+        }
+    }
 }
+
+tweetSchema.pre("save", async function (next) {
+    const tweet = this
+    if (tweet.isNew && tweet.tweetType == "original") {
+        const user = await User.findById(tweet.user)
+        user.tweetsCount += 1
+        await user.save()
+    }
+    next()
+})
+
+tweetSchema.pre("remove", async function (next) {
+    const tweet = this
+    if (tweet.tweetType == "original") {
+        const user = await User.findById(tweet.user)
+        user.tweetsCount -= 1
+        await user.save()
+    } else if (tweet.tweetType == "reply") {
+        const targetTweet = await Tweet.findById(tweet.replyTo)
+        targetTweet.repliesCount -= 1
+        await targetTweet.save()
+    }
+    await Tweet.deleteMany({ replyTo: tweet._id })
+    next()
+})
 
 const Tweet = mongoose.model('Tweet', tweetSchema)
 module.exports = Tweet

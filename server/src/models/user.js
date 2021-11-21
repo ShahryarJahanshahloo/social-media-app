@@ -2,6 +2,7 @@ const mongoose = require('mongoose')
 const validator = require('validator')
 const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
+const Tweet = require('./tweet')
 
 const userSchema = mongoose.Schema({
     email: {
@@ -75,18 +76,16 @@ const userSchema = mongoose.Schema({
     }],
 })
 
-// pre remove delete all tweets
-
 userSchema.virtual("tweets", {
     ref: "Tweet",
     localField: "_id",
     foreignField: "user"
 })
 
-userSchema.virtual('homeTweetIDs').get(function () {
-    const homeTweetIDs = this.followings
-    homeTweetIDs.push(this._id)
-    return homeTweetIDs
+userSchema.virtual('homeUserIDs').get(function () {
+    const homeUserIDs = this.followings
+    homeUserIDs.push(this._id)
+    return homeUserIDs
 })
 
 userSchema.methods = {
@@ -148,6 +147,12 @@ userSchema.pre("save", async function (next) {
     if (user.isModified("password")) {
         user.password = await bcrypt.hash(user.password, 8)
     }
+    next()
+})
+
+userSchema.pre("remove", async function (next) {
+    const user = this
+    await Tweet.deleteMany({ user: user._id })
     next()
 })
 

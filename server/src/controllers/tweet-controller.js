@@ -3,14 +3,15 @@ const Tweet = require('../models/tweet')
 async function get_home(req, res) {
     try {
         const tweets = await Tweet
-            .find({ user: { $in: req.user.homeTweetIDs }, tweetType: "original" },
-                "likesCount body user createdAt repliesCount retweetCount", {
-                skip: +req.query.skip,
-                limit: 10,
-                sort: {
-                    createdAt: -1
-                }
-            })
+            .find({ user: { $in: req.user.homeUserIDs }, tweetType: "original" },
+                "likesCount body user createdAt repliesCount retweetCount",
+                {
+                    skip: +req.query.skip,
+                    limit: 10,
+                    sort: {
+                        createdAt: -1
+                    }
+                })
         for (const tweet of tweets) {
             await tweet.populate({
                 path: "user",
@@ -125,6 +126,63 @@ async function get_bookmarks(req, res) {
     }
 }
 
+async function post_retweet(req, res) {
+    try {
+        const message = await Tweet.toggleRetweet(req.user, req.body.tweetID)
+        res.status(200).send({ message })
+    } catch (e) {
+        res.status(500).send()
+    }
+}
+
+async function post_reply(req, res) {
+    const isValidOperation = JSON.stringify(Object.keys(req.body).sort()) == JSON.stringify(["body", "tweetID"])
+    if (!isValidOperation) return res.status(400).send({ e: "invalid operation" })
+    const tweet = new Tweet({
+        body: req.body.body,
+        user: req.user._id,
+        tweetType: "reply",
+        replyTo: req.body.tweetID,
+    })
+    try {
+        await tweet.save()
+        const targetTweet = await Tweet.findById(req.body.tweetID)
+        targetTweet.repliesCount += 1
+        await targetTweet.save()
+        res.status(200).send()
+    } catch (e) {
+        res.status(500).send()
+    }
+}
+
+async function get_getReplies(req, res) {
+    try {
+        const replies = await Tweet.find({ replyTo: req.body.tweetID },
+            "likesCount body user createdAt repliesCount retweetCount",
+            {
+                skip: +req.query.skip,
+                limit: 10,
+                sort: {
+                    createdAt: -1
+                }
+            })
+        for (const reply of replies) {
+            await reply.populate({
+                path: "user",
+                select: {
+                    username: 1,
+                    displayName: 1,
+                    avatar: 1,
+                    _id: 0
+                }
+            }).execPopulate()
+        }
+        res.status(200).send(replies)
+    } catch (e) {
+        res.status(500).send()
+    }
+}
+
 module.exports = {
     get_home,
     post_compose,
@@ -133,4 +191,7 @@ module.exports = {
     patch_like,
     patch_bookmark,
     get_bookmarks,
+    post_reply,
+    get_getReplies,
+    post_retweet,
 }

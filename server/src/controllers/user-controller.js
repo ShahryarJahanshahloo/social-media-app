@@ -60,6 +60,7 @@ async function get_followers(req, res) {
                 bio: 1,
                 avatar: 1,
                 _id: 0
+                //pre remove delete all replies and fix number of tweets
             }
         }).execPopulate()
         res.status(200).send()
@@ -212,6 +213,72 @@ async function post_uploadAvatar(req, res) {
     }
 }
 
+async function get_getAvatar(req, res) {
+    try {
+        const user = await User.findById(req.body.user)
+        if (!user || !user.avatar) throw new Error()
+        res.set('Content-Type', 'image/jpg')
+        res.send(user.avatar)
+    } catch (e) {
+        res.status(500).send()
+    }
+}
+
+async function get_profileRetweets(req, res) {
+    try {
+        const user = await User.findOne({ username: req.body.username })
+        if (!user) return res.status(404).send()
+        const options = {
+            skip: +req.query.skip,
+            limit: 10,
+            select: {
+                updatedAt: 0,
+                __v: 0,
+            },
+            sort: {
+                createdAt: -1,
+            },
+        }
+        await user.populate({
+            path: "retweets",
+            options,
+            populate: {
+                path: "user",
+                select: {
+                    username: 1,
+                    displayName: 1,
+                    avatar: 1,
+                    _id: 0,
+                    password: 0,
+                }
+            },
+        }).execPopulate()
+        res.status(200).send()
+    } catch (e) {
+        res.status(500).send()
+    }
+}
+
+async function delete_deleteAvatar(req, res) {
+    try {
+        req.user.avatar = undefined
+        await req.user.save()
+        res.status(200).send()
+    } catch (e) {
+        res.status(500).send()
+    }
+}
+
+async function delete_deleteUser(req, res) {
+    try {
+        const deletedUser = User.deleteOne({ _id: req.user._id })
+        res.status(200).send(deletedUser)
+    } catch (e) {
+        res.status(500).send()
+    }
+}
+
+
 module.exports = {
     ping,
     post_signin,
@@ -227,4 +294,8 @@ module.exports = {
     post_logout,
     post_authenticate,
     post_uploadAvatar,
+    get_getAvatar,
+    get_profileRetweets,
+    delete_deleteAvatar,
+    delete_deleteUser,
 }
