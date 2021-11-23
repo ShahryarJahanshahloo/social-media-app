@@ -22,16 +22,24 @@ const tweetSchema = mongoose.Schema({
         required: false,
         ref: "Tweet"
     },
+    retweetData: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: false,
+        ref: "Tweet"
+    },
     likesCount: {
         type: Number,
+        required: false,
         default: 0,
     },
     repliesCount: {
         type: Number,
+        required: false,
         default: 0,
     },
     retweetCount: {
         type: Number,
+        required: false,
         default: 0,
     },
 }, {
@@ -96,6 +104,11 @@ tweetSchema.pre("remove", async function (next) {
         const targetTweet = await Tweet.findById(tweet.replyTo)
         targetTweet.repliesCount -= 1
         await targetTweet.save()
+    } else if (tweet.tweetType == "retweet") {
+        const targetTweet = await Tweet.findById(tweet.retweetData)
+        targetTweet.retweetCount -= 1
+        await targetTweet.save()
+        next()
     }
     await Tweet.deleteMany({ replyTo: tweet._id })
     next()

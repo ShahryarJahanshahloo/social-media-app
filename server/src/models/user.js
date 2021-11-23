@@ -33,7 +33,7 @@ const userSchema = mongoose.Schema({
         required: true,
         trim: true,
         minlength: 7,
-        maxlength: 23,
+        maxlength: 63,
     },
     bio: {
         type: String,
@@ -61,10 +61,6 @@ const userSchema = mongoose.Schema({
         type: Number,
         default: 0,
     },
-    retweets: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Tweet"
-    }],
     avatar: {
         type: Buffer,
     },

@@ -25,8 +25,8 @@ const {
 } = require("../controllers/user-controller")
 
 router.get("/ping", ping)
-router.post("/sign-in", post_signin)
-router.post("/sign-up", post_signup)
+router.post("/signin", post_signin)
+router.post("/signup", post_signup)
 router.patch("/follow", auth, patch_follow)
 router.get("/followers", get_followers)
 router.get("/followings", get_followings)

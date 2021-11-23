@@ -1,32 +1,32 @@
 const Tweet = require('../models/tweet')
 
 async function get_home(req, res) {
-    try {
-        const tweets = await Tweet
-            .find({ user: { $in: req.user.homeUserIDs }, tweetType: "original" },
-                "likesCount body user createdAt repliesCount retweetCount",
-                {
-                    skip: +req.query.skip,
-                    limit: 10,
-                    sort: {
-                        createdAt: -1
-                    }
-                })
-        for (const tweet of tweets) {
-            await tweet.populate({
-                path: "user",
-                select: {
-                    username: 1,
-                    displayName: 1,
-                    avatar: 1,
-                    _id: 0
-                }
-            }).execPopulate()
-        }
-        res.status(200).send({ tweets })
-    } catch (e) {
-        res.status(500).send({ e })
-    }
+    // try {
+    //     const tweets = await Tweet
+    //         .find({ user: { $in: req.user.homeUserIDs }, tweetType: "original" },
+    //             "likesCount body user createdAt repliesCount retweetCount",
+    //             {
+    //                 skip: +req.query.skip,
+    //                 limit: 10,
+    //                 sort: {
+    //                     createdAt: -1
+    //                 }
+    //             })
+    //     for (const tweet of tweets) {
+    //         await tweet.populate({
+    //             path: "user",
+    //             select: {
+    //                 username: 1,
+    //                 displayName: 1,
+    //                 avatar: 1,
+    //                 _id: 0
+    //             }
+    //         }).execPopulate()
+    //     }
+    //     res.status(200).send({ tweets })
+    // } catch (e) {
+    //     res.status(500).send({ e })
+    // }
 }
 
 async function post_compose(req, res) {

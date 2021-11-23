@@ -19,7 +19,7 @@ const Signup = (props) => {
     }
 
     const handleSignup = () => {
-        axios.post("/api/sign-up", {
+        axios.post("/api/signup", {
             email,
             username,
             displayName,

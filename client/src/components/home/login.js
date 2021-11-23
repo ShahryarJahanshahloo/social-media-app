@@ -14,7 +14,7 @@ const Login = (props) => {
     }
 
     const handleLogin = () => {
-        axios.post("/api/sign-in", {
+        axios.post("/api/signin", {
             email: emailInput.current.value,
             password: passwordInput.current.value
         })

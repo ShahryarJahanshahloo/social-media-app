@@ -2,6 +2,16 @@ const User = require('../models/user')
 
 async function ping(req, res) {
     res.status(200).send({ ping: "pong" })
+    // const users = await User
+    //     .aggregate()
+    //     .match({
+    //         $or: [
+    //             { displayName: "mamad" },
+    //             { displayName: "shish" }
+    //         ]
+    //     })
+    //     .exec()
+    // res.send(users)
 }
 
 async function post_signin(req, res) {
