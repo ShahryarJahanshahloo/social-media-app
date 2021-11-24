@@ -4,7 +4,7 @@ const User = require('./user')
 const tweetSchema = mongoose.Schema({
     body: {
         type: String,
-        required: true,
+        required: false,
         maxlength: 511,
     },
     user: {
@@ -67,19 +67,28 @@ tweetSchema.statics = {
         return message
     },
     toggleRetweet: async (user, tweetID) => {
-        const tweet = await Tweet.findById(tweetID)
-        if (!user.retweets.includes(tweetID)) {
-            tweet.retweetCount += 1
-            await tweet.save()
-            user.retweets.push(tweetID)
-            await user.save()
-        } else {
-            tweet.retweetCount -= 1
-            await tweet.save()
-            user.retweets = user.retweets.filter((item) => {
-                return item != tweetID
+        const retweet = await Tweet.findOne({
+            tweetType: "retweet",
+            user: user._id,
+            retweetData: tweetID
+        })
+        if (!retweet) {
+            const newTweet = new Tweet({
+                user: user._id,
+                tweetType: "retweet",
+                retweetData: tweetID
             })
-            await user.save()
+            const targetTweet = await Tweet.findById(tweetID)
+            targetTweet.retweetCount += 1
+            await targetTweet.save()
+            await newTweet.save()
+            return "added retweet"
+        } else {
+            await Tweet.findByIdAndDelete(retweet._id)
+            const targetTweet = await Tweet.findById(tweetID)
+            targetTweet.retweetCount -= 1
+            await targetTweet.save()
+            return "removed retweet"
         }
     }
 }

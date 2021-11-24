@@ -27,6 +27,37 @@ async function get_home(req, res) {
     // } catch (e) {
     //     res.status(500).send({ e })
     // }
+    try {
+        const tweets = await Tweet.find({
+            $or: [{
+                user: { $in: req.user.homeUserIDs }, tweetType: "original" 
+            }, {
+                user: { $in: req.user.followings }, tweetType: "retweet"
+            }]
+        },
+            "likesCount body user createdAt repliesCount retweetCount retweetData",
+            {
+                skip: +req.query.skip,
+                limit: 10,
+                sort: {
+                    createdAt: -1
+                }
+            })
+        for (const tweet of tweets) {
+            //populate retweetdata
+            await tweet.populate({
+                path: "user",
+                select: {
+                    username: 1,
+                    displayName: 1,
+                    avatar: 1,
+                    _id: 0
+                }
+            }).execPopulate()
+        }
+    } catch (e) {
+        res.status(500).send({ e })
+    }
 }
 
 async function post_compose(req, res) {
@@ -35,6 +66,7 @@ async function post_compose(req, res) {
     const tweet = new Tweet({
         ...req.body,
         user: req.user._id,
+        tweetType: "original"
     })
     try {
         await tweet.save()
@@ -57,13 +89,13 @@ async function delete_delete_tweet(req, res) {
 }
 
 async function patch_edit_tweet(req, res) {
-    // order of keys may matter
     const isValidOperation = JSON.stringify(Object.keys(req.body).sort()) == JSON.stringify(["body", "tweetID"])
     if (!isValidOperation) return res.status(400).send({ e: "invalid operation" })
     try {
         const tweet = await Tweet.findOne({ _id: req.body.tweetID })
         if (!tweet) return res.status(404).send()
         if (!tweet.user.equals(req.user._id)) return res.status(400).send()
+        if (tweet.tweetType == "retweet") return res.status(400).send()
         tweet.body = req.body.body
         await tweet.save()
         res.status(200).send(tweet)

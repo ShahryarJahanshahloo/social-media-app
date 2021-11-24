@@ -1,17 +1,8 @@
+const Tweet = require('../models/tweet')
 const User = require('../models/user')
 
 async function ping(req, res) {
     res.status(200).send({ ping: "pong" })
-    // const users = await User
-    //     .aggregate()
-    //     .match({
-    //         $or: [
-    //             { displayName: "mamad" },
-    //             { displayName: "shish" }
-    //         ]
-    //     })
-    //     .exec()
-    // res.send(users)
 }
 
 async function post_signin(req, res) {
@@ -70,7 +61,6 @@ async function get_followers(req, res) {
                 bio: 1,
                 avatar: 1,
                 _id: 0
-                //pre remove delete all replies and fix number of tweets
             }
         }).execPopulate()
         res.status(200).send()
@@ -125,25 +115,55 @@ async function get_profileInfo(req, res) {
 }
 
 async function get_profileTweets(req, res) {
+    // try {
+    //     const user = await User.findOne({ username: req.query.username })
+    //     if (!user) return res.status(404).send({ error: "user not found!" })
+    //     const options = {
+    //         skip: +req.query.skip,
+    //         limit: 10,
+    //         select: {
+    //             updatedAt: 0,
+    //             __v: 0,
+    //         },
+    //         sort: {
+    //             createdAt: -1,
+    //         },
+    //     }
+    //     await user.populate({
+    //         path: "tweets",
+    //         options,
+    //     }).execPopulate()
+    //     res.status(200).send({ tweets: user.tweets })
+    // } catch (e) {
+    //     res.status(500).send({ e })
+    // }
     try {
-        const user = await User.findOne({ username: req.query.username })
-        if (!user) return res.status(404).send({ error: "user not found!" })
-        const options = {
-            skip: +req.query.skip,
-            limit: 10,
-            select: {
-                updatedAt: 0,
-                __v: 0,
-            },
-            sort: {
-                createdAt: -1,
-            },
+        const tweets = await Tweet.find({
+            user: req.body.userID,
+            tweetType: {
+                $in: ["original", "retweet"]
+            }
+        },
+            "likesCount body user createdAt repliesCount retweetCount retweetData",
+            {
+                skip: +req.query.skip,
+                limit: 10,
+                sort: {
+                    createdAt: -1
+                }
+            })
+        for (const tweet of tweets) {
+            //populate retweetdata
+            await tweet.populate({
+                path: "user",
+                select: {
+                    username: 1,
+                    displayName: 1,
+                    avatar: 1,
+                    _id: 0
+                }
+            }).execPopulate()
         }
-        await user.populate({
-            path: "tweets",
-            options,
-        }).execPopulate()
-        res.status(200).send({ tweets: user.tweets })
     } catch (e) {
         res.status(500).send({ e })
     }
@@ -236,33 +256,18 @@ async function get_getAvatar(req, res) {
 
 async function get_profileRetweets(req, res) {
     try {
-        const user = await User.findOne({ username: req.body.username })
-        if (!user) return res.status(404).send()
-        const options = {
-            skip: +req.query.skip,
-            limit: 10,
-            select: {
-                updatedAt: 0,
-                __v: 0,
-            },
-            sort: {
-                createdAt: -1,
-            },
-        }
-        await user.populate({
-            path: "retweets",
-            options,
-            populate: {
-                path: "user",
-                select: {
-                    username: 1,
-                    displayName: 1,
-                    avatar: 1,
-                    _id: 0,
-                    password: 0,
+        const retweets = await Tweet.find({
+            user: req.user._id,
+            tweetType: "retweet"
+        },
+            "retweetData",
+            {
+                limit: 10,
+                skip: +req.query.skip,
+                sort: {
+                    createdAt: -1
                 }
-            },
-        }).execPopulate()
+            })
         res.status(200).send()
     } catch (e) {
         res.status(500).send()
