@@ -38,7 +38,7 @@ async function post_signup(req, res) {
 
 async function patch_follow(req, res) {
     try {
-        const message = await User.toggleFollow(req.user, req.body._id)
+        const message = await User.toggleFollow(req.user, req.body.username)
         res.status(200).send({ message })
     } catch (e) { res.status(500).send({ e }) }
 }
@@ -63,7 +63,7 @@ async function get_followers(req, res) {
                 _id: 0
             }
         }).execPopulate()
-        res.status(200).send()
+        res.status(200).send({ users: user.followers })
     } catch (e) {
         res.status(500).send()
     }
@@ -89,7 +89,7 @@ async function get_followings(req, res) {
                 _id: 0
             }
         }).execPopulate()
-        res.status(200).send()
+        res.status(200).send({ users: user.followings })
     } catch (e) {
         res.status(500).send()
     }
@@ -100,14 +100,15 @@ async function get_profileInfo(req, res) {
     try {
         const user = await User.findOne({ username })
         if (!user) return res.status(404).send({ error: "user not found!" })
+        console.log("mamad");
         res.status(200).send({
             username: user.username,
             bio: user.bio,
             displayName: user.displayName,
             avatar: user.avatar,
             tweetsCount: user.tweetsCount,
-            followersNumber: user.followersNumber.length,
-            followingsNumber: user.followingsNumber.length,
+            followersNumber: user.followers.length,
+            followingsNumber: user.followings.length,
         })
     } catch (e) {
         res.status(500).send({ e })
@@ -115,28 +116,6 @@ async function get_profileInfo(req, res) {
 }
 
 async function get_profileTweets(req, res) {
-    // try {
-    //     const user = await User.findOne({ username: req.query.username })
-    //     if (!user) return res.status(404).send({ error: "user not found!" })
-    //     const options = {
-    //         skip: +req.query.skip,
-    //         limit: 10,
-    //         select: {
-    //             updatedAt: 0,
-    //             __v: 0,
-    //         },
-    //         sort: {
-    //             createdAt: -1,
-    //         },
-    //     }
-    //     await user.populate({
-    //         path: "tweets",
-    //         options,
-    //     }).execPopulate()
-    //     res.status(200).send({ tweets: user.tweets })
-    // } catch (e) {
-    //     res.status(500).send({ e })
-    // }
     try {
         const tweets = await Tweet.find({
             user: req.body.userID,
@@ -153,7 +132,6 @@ async function get_profileTweets(req, res) {
                 }
             })
         for (const tweet of tweets) {
-            //populate retweetdata
             await tweet.populate({
                 path: "user",
                 select: {
@@ -163,7 +141,30 @@ async function get_profileTweets(req, res) {
                     _id: 0
                 }
             }).execPopulate()
+            if (tweet.tweetType == "retweet") {
+                await tweet.populate({
+                    path: "retweetData",
+                    select: {
+                        likesCount: 1,
+                        body: 1,
+                        user: 1,
+                        createdAt: 1,
+                        repliesCount: 1,
+                        retweetCount: 1,
+                    },
+                    populate: {
+                        path: "user",
+                        select: {
+                            username: 1,
+                            displayName: 1,
+                            avatar: 1,
+                            _id: 0
+                        }
+                    }
+                }).execPopulate()
+            }
         }
+        res.status(200).send({ tweets })
     } catch (e) {
         res.status(500).send({ e })
     }
@@ -172,13 +173,15 @@ async function get_profileTweets(req, res) {
 async function get_userInfo(req, res) {
     const user = req.user
     try {
-        if (user) res.status(404).send({ e: "user not found" })
+        if (!user) res.status(404).send({ e: "user not found" })
         res.status(200).send({
             username: user.username,
             displayName: user.displayName,
             avatar: user.avatar,
         })
-    } catch (e) { res.status(500).send({ e }) }
+    } catch (e) {
+        res.status(500).send({ e })
+    }
 }
 
 async function post_settings_profile(req, res) {
@@ -256,8 +259,9 @@ async function get_getAvatar(req, res) {
 
 async function get_profileRetweets(req, res) {
     try {
+        const user = await User.findOne({ username: req.body.username })
         const retweets = await Tweet.find({
-            user: req.user._id,
+            user: user._id,
             tweetType: "retweet"
         },
             "retweetData",
@@ -268,7 +272,7 @@ async function get_profileRetweets(req, res) {
                     createdAt: -1
                 }
             })
-        res.status(200).send()
+        res.status(200).send({ retweets })
     } catch (e) {
         res.status(500).send()
     }

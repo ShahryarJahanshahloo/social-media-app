@@ -117,18 +117,18 @@ userSchema.statics = {
         if (!isValidPassword) throw new Error("incorrect password")
         return user
     },
-    toggleFollow: async (followerUser, targetUserID) => {
-        const targetUser = await User.findOne({ _id: targetUserID })
-        const isFollowed = followerUser.followings.includes(targetUserID)
+    toggleFollow: async (followerUser, targetUsername) => {
+        const targetUser = await User.findOne({ username: targetUsername })
+        const isFollowed = followerUser.followings.includes(targetUser._id)
         let message;
         if (isFollowed) {
-            followerUser.followings.splice(followerUser.followings.indexOf(targetUserID), 1)
+            followerUser.followings.splice(followerUser.followings.indexOf(targetUser._id), 1)
             await followerUser.save()
             targetUser.followers.splice(targetUser.followers.indexOf(followerUser._id), 1)
             await targetUser.save()
             message = "user unfollowed!"
         } else {
-            followerUser.followings.push(targetUserID)
+            followerUser.followings.push(targetUser._id)
             await followerUser.save()
             targetUser.followers.push(followerUser._id)
             await targetUser.save()
