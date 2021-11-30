@@ -290,10 +290,29 @@ async function delete_deleteAvatar(req, res) {
 
 async function delete_deleteUser(req, res) {
     try {
-        const deletedUser = User.deleteOne({ _id: req.user._id })
+        const userTweets = await Tweet.find({
+            user: req.user._id,
+            tweetType: {
+                $in: ["original", "reply"]
+            }
+        })
+        for (const tweet of userTweets) {
+            if (tweet.retweetCount != 0) {
+                await Tweet.deleteMany({ retweetData: tweet._id })
+            }
+            if (tweet.tweetType == "reply") {
+                const targetTweet = await Tweet.findById(tweet.replyTo)
+                if (targetTweet) {
+                    targetTweet.repliesCount -= 1
+                    await targetTweet.save()
+                }
+            }
+        }
+        await Tweet.deleteMany({ user: req.user._id })
+        const deletedUser = await User.deleteOne({ _id: req.user._id })
         res.status(200).send(deletedUser)
     } catch (e) {
-        res.status(500).send()
+        res.status(500).send({e})
     }
 }
 

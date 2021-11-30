@@ -74,8 +74,5 @@ tweetSchema.statics = {
     }
 }
 
-tweetSchema.pre("remove", async function (next) {
-})
-
 const Tweet = mongoose.model('Tweet', tweetSchema)
 module.exports = Tweet
