@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
 import Navbar from "./navbar";
-import Compose from "./compose"
+import ComposeCompact from "./composeCompact"
 import TweetList from './tweetList';
 import FollowSuggestion from './followSuggestion';
 import TitleBar from './titleBar';
@@ -17,7 +17,19 @@ const Home = () => {
         history.push("/login")
     }
 
-    const [tweets, setTweets] = useState({ data: [{ body: "", likesCount: "", user: { displayName: "", username: "" } , createdAt: ""}] })
+    const [tweets, setTweets] = useState({
+        data: [{
+            body: "",
+            likesCount: "",
+            retweetCount: "",
+            repliesCount: "",
+            retweetData: {
+                user: { displayName: "" }
+            },
+            user: { displayName: "", username: "" },
+            createdAt: ""
+        }]
+    })
     const [skip, setSkip] = useState(0)
     const jwt = localStorage.getItem("jwt")
 
@@ -60,7 +72,7 @@ const Home = () => {
             </div>
             <div className="middle-section">
                 <TitleBar />
-                <Compose setTweets={setTweets} />
+                <ComposeCompact setTweets={setTweets} />
                 <TweetList tweets={tweets.data} setTweetsHandler={setTweetsHandler} url="/api/home" />
                 <button className="load-more" onClick={() => LoadClickHandler()}>:</button>
             </div>

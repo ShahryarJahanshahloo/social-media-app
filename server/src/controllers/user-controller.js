@@ -44,7 +44,7 @@ async function patch_follow(req, res) {
 }
 
 async function get_followers(req, res) {
-    const username = req.body.username
+    const username = req.query.username
     try {
         const user = await User.findOne({ username })
         if (!user) return res.status(404).send()
@@ -70,7 +70,7 @@ async function get_followers(req, res) {
 }
 
 async function get_followings(req, res) {
-    const username = req.body.username
+    const username = req.query.username
     try {
         const user = await User.findOne({ username })
         if (!user) return res.status(404).send()
@@ -96,19 +96,18 @@ async function get_followings(req, res) {
 }
 
 async function get_profileInfo(req, res) {
-    const username = req.body.username
+    const username = req.query.username
     try {
         const user = await User.findOne({ username })
         if (!user) return res.status(404).send({ error: "user not found!" })
-        console.log("mamad");
         res.status(200).send({
             username: user.username,
             bio: user.bio,
             displayName: user.displayName,
             avatar: user.avatar,
             tweetsCount: user.tweetsCount,
-            followersNumber: user.followers.length,
-            followingsNumber: user.followings.length,
+            followersCount: user.followers.length,
+            followingsCount: user.followings.length,
         })
     } catch (e) {
         res.status(500).send({ e })
@@ -118,7 +117,7 @@ async function get_profileInfo(req, res) {
 async function get_profileTweets(req, res) {
     try {
         const tweets = await Tweet.find({
-            user: req.body.userID,
+            user: req.query.userID,
             tweetType: {
                 $in: ["original", "retweet"]
             }
@@ -205,7 +204,7 @@ async function post_settings_profile(req, res) {
 
 async function get_search(req, res) {
     try {
-        const query = req.body.query
+        const query = req.query.query
         const result = await User.find({ username: new RegExp(query) },
             "bio username displayName avatar",
             {
@@ -248,7 +247,7 @@ async function post_uploadAvatar(req, res) {
 
 async function get_getAvatar(req, res) {
     try {
-        const user = await User.findById(req.body.user)
+        const user = await User.findById(req.query.user)
         if (!user || !user.avatar) throw new Error()
         res.set('Content-Type', 'image/jpg')
         res.send(user.avatar)
@@ -259,7 +258,7 @@ async function get_getAvatar(req, res) {
 
 async function get_profileRetweets(req, res) {
     try {
-        const user = await User.findOne({ username: req.body.username })
+        const user = await User.findOne({ username: req.query.username })
         const retweets = await Tweet.find({
             user: user._id,
             tweetType: "retweet"
@@ -318,7 +317,7 @@ async function delete_deleteUser(req, res) {
 
 async function get_profileLikes(req, res) {
     try {
-        const user = await User.findOne({ username: req.body.username })
+        const user = await User.findOne({ username: req.query.username })
         if (!user) return res.status(404).send()
         const options = {
             skip: +req.query.skip,

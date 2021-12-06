@@ -5,15 +5,15 @@ import axios from "axios"
 
 import {
     FiHome as HomeIcon,
-    FiHash as ExploreIcon,
+    FiSearch as ExploreIcon,
 } from "react-icons/fi"
 import {
     CgBookmark as BookmarkIcon,
     CgProfile as ProfileIcon,
 } from "react-icons/cg"
 import {
-    FaKiwiBird as BirdIcon,
-} from "react-icons/fa"
+    SiTwitter as BirdIcon,
+} from "react-icons/si"
 
 const Navbar = (props) => {
 
@@ -41,7 +41,8 @@ const Navbar = (props) => {
     }
 
     const iconStyle = {
-        fontSize: "1.6em"
+        fontSize: "1.6em",
+        color: "black",
     }
 
     return (
@@ -61,15 +62,15 @@ const Navbar = (props) => {
                         </div>
                     </div>
                     <div className="navbar-item-wrapper">
-                        <div className="navbar-item" onClick={() => {history.push(`/profile/${user.username}`)}}>
-                            <ProfileIcon style={iconStyle} />
-                            <label className="navbar-item-text">Profile</label>
-                        </div>
-                    </div>
-                    <div className="navbar-item-wrapper">
                         <div className="navbar-item" onClick={() => {history.push("/explore")}}>
                             <ExploreIcon style={iconStyle} />
                             <label className="navbar-item-text">Explore</label>
+                        </div>
+                    </div>
+                    <div className="navbar-item-wrapper">
+                        <div className="navbar-item" onClick={() => {history.push(`/profile/${user.username}`)}}>
+                            <ProfileIcon style={iconStyle} />
+                            <label className="navbar-item-text">Profile</label>
                         </div>
                     </div>
                 </div>

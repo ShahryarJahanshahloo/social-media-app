@@ -3,10 +3,10 @@ body, html {
     padding: 0;
 }
 
-  .App {
+.App {
       height: 100vh;
       overflow: hidden;
-  }
+}
 
 * {
     box-sizing: border-box;
@@ -25,4 +25,5 @@ a {text-decoration: none}
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
+    outline: none;
 }

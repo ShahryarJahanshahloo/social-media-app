@@ -9,7 +9,7 @@ async function get_home(req, res) {
                 user: { $in: req.user.followings }, tweetType: "retweet"
             }]
         },
-            "likesCount body user createdAt repliesCount retweetCount retweetData",
+            "likesCount body user createdAt repliesCount retweetCount retweetData tweetType",
             {
                 skip: +req.query.skip,
                 limit: 10,
@@ -219,7 +219,7 @@ async function post_reply(req, res) {
 
 async function get_getReplies(req, res) {
     try {
-        const replies = await Tweet.find({ replyTo: req.body.tweetID },
+        const replies = await Tweet.find({ replyTo: req.query.tweetID },
             "likesCount body user createdAt repliesCount retweetCount",
             {
                 skip: +req.query.skip,

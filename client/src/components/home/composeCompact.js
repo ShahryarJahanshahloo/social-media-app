@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import axios from "axios"
 import { useSelector } from 'react-redux';
 
-const Compose = ({ setTweets }) => {
+const ComposeCompact = ({ setTweets }) => {
     const [tweetBody, setTweetBody] = useState(null)
     const user = useSelector(state => state.userReducer)
     const inputRef = useRef()
@@ -47,7 +47,7 @@ const Compose = ({ setTweets }) => {
     }
 
     return (
-        <div className="compose">
+        <div className="composeCompact">
             <input type="text" placeholder="What's happeening?" 
             onChange={inputHandler} 
             ref={inputRef}></input>
@@ -56,4 +56,4 @@ const Compose = ({ setTweets }) => {
     )
 }
 
-export default Compose;
+export default ComposeCompact;

@@ -35,7 +35,7 @@ const TweetList = ({ tweets, setTweetsHandler, url, queryUsername = "" }) => {
         tweetList = tweets.map((value, index) => {
             return (
                 <div key={index} className="tweet-list-item">
-                    <TweetCompact body={value.body} likesCount={value.likesCount} user={value.user} createdAt={value.createdAt} />
+                    <TweetCompact tweet={value} />
                 </div>
             )
         })

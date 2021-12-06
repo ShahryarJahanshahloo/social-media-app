@@ -58,7 +58,7 @@ const Bookmarks = (props) => {
                 <Navbar />
             </div>
             <div className="middle-section">
-                <TitleBar />
+                <TitleBar title="Bookmarks" composeDisplay="none"/>
                 <TweetList tweets={tweets.data} setTweetsHandler={setTweetsHandler} url="/api/bookmarks" />
                 <button className="load-more" onClick={() => LoadClickHandler()}>:</button>
             </div>

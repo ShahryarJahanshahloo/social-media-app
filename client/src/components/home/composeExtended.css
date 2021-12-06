@@ -1,0 +1,97 @@
+.composeExtended {
+    display: flex;
+    flex-flow: column wrap;
+    width: 100%;
+    height: 100%;
+}
+
+.compose-main {
+    width: 100%;
+    height: 90%;
+    display: flex;
+    flex-flow: column nowrap;
+    position: relative;
+    padding: 10px 10px;
+}
+
+.top-bar {
+    width: 100%;
+    height: 10%;
+    padding: 0 10px;
+}
+
+.top-bar-flex {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    /* margin: 0 10px; */
+}
+
+
+.compose-box {
+    width: 100%;
+    height: 50%;
+    display: flex;
+    flex-flow: row nowrap;
+}
+
+.compose-avatar {
+    width: 48px;
+}
+
+.compose-avatar-bar {
+    height: 100%;
+    width: 48px;
+}
+
+.compose-area-wrapper {
+    height: 100%;
+    flex-grow: 5;
+    padding: 15px 10px;
+}
+
+.compose-text-area {
+    height: 100%;
+    width: 100%;
+    border: none;
+    outline: none;
+    resize: none;
+}
+
+.top-bar-flex-item-side {
+    height: 100%;
+    width: 25%;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: center;
+}
+
+.top-bar-flex-item-middle {
+    height: 100%;
+    width: 50%;
+}
+
+.tweet-button {
+    background-color:rgb(29, 155, 240);
+    border: none;
+    color: white;
+    padding: 10px 16px;
+    border-radius: 25px;
+    font-weight: bold;
+}
+
+.back-button {
+    padding: 5px;
+}
+
+.back-button-wrapper {
+    width: 100%;
+}
+
+.disabledButton {
+    opacity: 40%;
+}

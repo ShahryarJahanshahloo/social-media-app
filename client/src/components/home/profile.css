@@ -1,0 +1,91 @@
+.profile-stats-wrapper {
+    width: 100%;
+    height: 40%;
+    display: flex;
+    flex-flow: column nowrap;
+    padding: 10px 10px;
+}
+
+.profile-stats-box {
+    width: 100%;
+    height: 90%;
+    display: flex;
+    flex-flow: column nowrap;
+}
+
+.user-stats-box {
+    width: 100%;
+    height: 80%;
+    display: flex;
+    flex-flow: row nowrap;
+}
+
+.profile-avatar-box {
+    height: 100%;
+    width: 40%;
+}
+
+.profile-text-box {
+    height: 100%;
+    width: 60%;
+}
+
+.follow-stats-box {
+    width: 100%;
+    height: 20%;
+    display: flex;
+    flex-flow: row nowrap;
+}
+
+.follow-stats-item {
+    height: 100%;
+    width: 33.3%;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.follow-stats-item > div {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.tweets-navbar {
+    width: 100%;
+    height: 10%;
+    display: flex;
+    flex-flow: row nowrap;
+}
+
+.tweets-navbar-item {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.top-bar-profile {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: center;
+    padding: 10px ;
+}
+
+.top-bar-displayName {
+    width: 100%;
+    height: 50%;
+}
+
+.top-bar-tweetCount {
+    width: 100%;
+    height: 50%;
+}
