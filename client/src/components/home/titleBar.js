@@ -1,5 +1,6 @@
 import React from "react"
 import { useHistory } from "react-router"
+import { useSelector } from 'react-redux';
 
 import Avatar from "./avatar"
 
@@ -16,6 +17,7 @@ const iconStyle = {
 
 const TitleBar = ({ title = "Home", composeDisplay = "block" }) => {
     const history = useHistory()
+    const username = useSelector(state => state.userReducer.username)
 
     const composeHandler = () => {
         history.push("/compose")
@@ -26,7 +28,7 @@ const TitleBar = ({ title = "Home", composeDisplay = "block" }) => {
             <div className="title-bar-flex">
                 <div className="title-bar-flex-item-side">
                     <div className="avatar-box">
-                        <Avatar img={myAvatar} size="32" />
+                        <Avatar username={username} size="32" />
                     </div>
                 </div>
                 <div className="title-bar-flex-item-middle">

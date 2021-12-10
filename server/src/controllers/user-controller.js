@@ -173,9 +173,15 @@ async function get_userInfo(req, res) {
     const user = req.user
     try {
         if (!user) res.status(404).send({ e: "user not found" })
+        const retweets = await Tweet.find({
+            user: user._id,
+            tweetType: "retweet"
+        }, "retweetData")
         res.status(200).send({
             username: user.username,
             displayName: user.displayName,
+            likes: user.likes,
+            retweets: retweets,
             avatar: user.avatar,
         })
     } catch (e) {
@@ -220,9 +226,7 @@ async function get_search(req, res) {
 
 async function post_logout(req, res) {
     try {
-        req.user.tokens = req.user.tokens.filter((token) => {
-            return token.token != req.token
-        })
+        req.user.tokens.pull(req.token._id)
         await req.user.save()
         res.status(200).send()
     } catch (e) {
@@ -247,7 +251,7 @@ async function post_uploadAvatar(req, res) {
 
 async function get_getAvatar(req, res) {
     try {
-        const user = await User.findById(req.query.user)
+        const user = await User.findOne({ username: req.query.username })
         if (!user || !user.avatar) throw new Error()
         res.set('Content-Type', 'image/jpg')
         res.send(user.avatar)

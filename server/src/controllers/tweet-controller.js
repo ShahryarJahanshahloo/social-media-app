@@ -120,22 +120,21 @@ async function patch_edit_tweet(req, res) {
 async function patch_like(req, res) {
     try {
         const tweetID = req.body.tweetID
-        const user = req.user
         const tweet = await Tweet.findById(tweetID)
-        const isLiked = await user.likes.includes(tweetID)
+        const isLiked = req.user.likes.includes(tweet._id)
         let message;
         if (isLiked) {
-            user.likes = user.likes.filter(item => item !== tweetID)
-            await user.save()
+            req.user.likes.pull(tweet._id)
+            await req.user.save()
             tweet.likesCount -= 1
             await tweet.save()
-            message = "removed from liked tweets"
+            message = "removed"
         } else {
-            user.likes.push(tweetID)
-            await user.save()
+            req.user.likes.push(tweet._id)
+            await req.user.save()
             tweet.likesCount += 1
             await tweet.save()
-            message = "added to liked tweets"
+            message = "added"
         }
         res.status(200).send({ message })
     } catch (e) {
@@ -245,6 +244,26 @@ async function get_getReplies(req, res) {
     }
 }
 
+async function get_tweetInfo(req, res) {
+    try {
+        const tweet = await Tweet.findById(req.query.tweetID,
+            "likesCount body user createdAt repliesCount retweetCount retweetData tweetType")
+        if (!tweet) return res.status(400).send()
+        await tweet.populate({
+            path: "user",
+            select: {
+                username: 1,
+                displayName: 1,
+                avatar: 1,
+                _id: 0
+            }
+        }).execPopulate()
+        res.status(200).send(tweet)
+    } catch (e) {
+        res.status(500).send({ e })
+    }
+}
+
 module.exports = {
     get_home,
     post_compose,
@@ -256,4 +275,5 @@ module.exports = {
     post_reply,
     get_getReplies,
     post_retweet,
+    get_tweetInfo,
 }

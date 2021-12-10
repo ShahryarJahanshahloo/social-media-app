@@ -1,0 +1,15 @@
+.tweet-title {
+    height: 100%;
+    width: 100%;
+    font-size: 1.25em;
+    font-weight: 550;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: center;
+}
+
+.tweet-title > div {
+    font-size: inherit;
+    padding-bottom: 5px;
+}

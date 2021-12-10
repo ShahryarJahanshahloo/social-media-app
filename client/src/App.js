@@ -31,6 +31,10 @@ function App() {
   let history = useHistory()
   const dispatch = useDispatch()
 
+  const appHeight = () => document.documentElement.style.setProperty('--app-height', `${window.innerHeight}px`)
+  window.addEventListener('resize', appHeight)
+  appHeight()
+
   useEffect(() => {
     if (jwt !== null) {
       axios({
@@ -43,11 +47,17 @@ function App() {
         },
       })
         .then((res) => {
+          const retweets = []
+          for (const i of res.data.retweets) {
+            retweets.push(i.retweetData)
+          }
           dispatch({
             type: "setUser",
             payload: {
               username: res.data.username,
               displayName: res.data.displayName,
+              likedTweets: res.data.likes,
+              retweets: retweets,
             }
           })
           dispatch({

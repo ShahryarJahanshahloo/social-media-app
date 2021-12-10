@@ -97,7 +97,7 @@ userSchema.methods = {
         const isBookmarked = await user.bookmarks.includes(tweetID)
         let message;
         if (isBookmarked) {
-            user.bookmarks = user.bookmarks.filter(item => item !== tweetID)
+            user.bookmarks.pull(tweetID)
             await user.save()
             message = "removed from bookmarks"
         } else {

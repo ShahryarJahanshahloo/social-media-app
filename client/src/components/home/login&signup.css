@@ -4,7 +4,7 @@
 
 .login-box-container {
     background: linear-gradient(120deg, #36d1dc, #5b86e5);
-    height: 100vh;
+    height: 100%;
     width: 100%;
     display: flex;
     flex-flow: column nowrap;
@@ -14,7 +14,7 @@
 
 .login-box {
     display: flex;
-    flex-flow: column wrap;
+    flex-flow: column nowrap;
     align-items: center;
     justify-content: center;
     position: relative;

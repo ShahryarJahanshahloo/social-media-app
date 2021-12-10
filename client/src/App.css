@@ -4,8 +4,8 @@ body, html {
 }
 
 .App {
-      height: 100vh;
-      overflow: hidden;
+    height: var(--app-height);
+    overflow: hidden;
 }
 
 * {

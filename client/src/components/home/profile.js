@@ -8,13 +8,11 @@ import myAvatar from "../../bull.jpg"
 import Avatar from "./avatar"
 import TweetList from './tweetList';
 import Navbar from './navbar';
-import TitleBar from './titleBar';
 import FollowSuggestion from './followSuggestion';
 
 import {
     BiArrowBack as BackIcon,
 } from "react-icons/bi"
-
 
 const Profile = (props) => {
     const [skip, setSkip] = useState(0)
@@ -83,7 +81,6 @@ const Profile = (props) => {
                         displayName: res.data.displayName,
                         bio: res.data.bio,
                         tweetsCount: res.data.tweetsCount,
-                        avatar: res.data.avatar,
                         followersCount: res.data.followersCount,
                         followingsCount: res.data.followingsCount,
                     }
@@ -124,7 +121,7 @@ const Profile = (props) => {
                         <div className="user-stats-box">
                             <div className="profile-avatar-box">
                                 <div className="avatar-box">
-                                    <Avatar img={myAvatar} size="128" />
+                                    <Avatar username={profileUsername} size="128" />
                                 </div>
                             </div>
                             <div className="profile-text-box">

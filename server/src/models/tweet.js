@@ -63,13 +63,13 @@ tweetSchema.statics = {
             targetTweet.retweetCount += 1
             await targetTweet.save()
             await newTweet.save()
-            return "added retweet"
+            return "added"
         } else {
             await Tweet.findByIdAndDelete(retweet._id)
             const targetTweet = await Tweet.findById(tweetID)
             targetTweet.retweetCount -= 1
             await targetTweet.save()
-            return "removed retweet"
+            return "removed"
         }
     }
 }

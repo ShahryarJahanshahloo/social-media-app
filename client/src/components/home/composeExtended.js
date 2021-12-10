@@ -1,17 +1,16 @@
 import React, { useState, useRef } from 'react';
 import axios from "axios"
 import { useHistory } from 'react-router';
+import { useSelector } from 'react-redux';
 
 import Avatar from "./avatar"
-
-import myAvatar from "../../bull.jpg"
-
 
 import {
     BiArrowBack as BackIcon,
 } from "react-icons/bi"
 
 const ComposeExtended = () => {
+    const username = useSelector(state => state.userReducer.username)
     const jwt = localStorage.getItem("jwt")
     const history = useHistory()
     const [tweetBody, setTweetBody] = useState("")
@@ -81,7 +80,7 @@ const ComposeExtended = () => {
                 <div className="compose-box">
                     <div className="compose-avatar-bar">
                         <div className="compose-avatar">
-                            <Avatar img={myAvatar} size="48" />
+                            <Avatar username={username} size="48" />
                         </div>
                     </div>
                     <div className="compose-area-wrapper">
