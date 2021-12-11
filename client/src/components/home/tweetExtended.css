@@ -13,3 +13,8 @@
     font-size: inherit;
     padding-bottom: 5px;
 }
+
+.compose-reply-box {
+    width: 100%;
+    height: 150px;
+}

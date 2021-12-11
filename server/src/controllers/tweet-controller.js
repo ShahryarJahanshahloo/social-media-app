@@ -1,4 +1,5 @@
 const Tweet = require('../models/tweet')
+const User = require('../models/user')
 
 async function get_home(req, res) {
     try {
@@ -23,7 +24,6 @@ async function get_home(req, res) {
                 select: {
                     username: 1,
                     displayName: 1,
-                    avatar: 1,
                     _id: 0
                 }
             }).execPopulate()
@@ -43,7 +43,6 @@ async function get_home(req, res) {
                         select: {
                             username: 1,
                             displayName: 1,
-                            avatar: 1,
                             _id: 0
                         }
                     }
@@ -187,6 +186,60 @@ async function get_bookmarks(req, res) {
     }
 }
 
+async function get_profileTweets(req, res) {
+    try {
+        const user = await User.findOne({ username: req.query.username }, "_id")
+        const tweets = await Tweet.find({
+            user: user._id,
+            tweetType: {
+                $in: ["original", "retweet"]
+            }
+        },
+            "likesCount body user createdAt repliesCount retweetCount retweetData tweetType",
+            {
+                skip: +req.query.skip,
+                limit: 10,
+                sort: {
+                    createdAt: -1
+                }
+            })
+        for (const tweet of tweets) {
+            await tweet.populate({
+                path: "user",
+                select: {
+                    username: 1,
+                    displayName: 1,
+                    _id: 0
+                }
+            }).execPopulate()
+            if (tweet.tweetType == "retweet") {
+                await tweet.populate({
+                    path: "retweetData",
+                    select: {
+                        likesCount: 1,
+                        body: 1,
+                        user: 1,
+                        createdAt: 1,
+                        repliesCount: 1,
+                        retweetCount: 1,
+                    },
+                    populate: {
+                        path: "user",
+                        select: {
+                            username: 1,
+                            displayName: 1,
+                            _id: 0
+                        }
+                    }
+                }).execPopulate()
+            }
+        }
+        res.status(200).send({ tweets })
+    } catch (e) {
+        res.status(500).send({ e })
+    }
+}
+
 async function post_retweet(req, res) {
     try {
         const message = await Tweet.toggleRetweet(req.user, req.body.tweetID)
@@ -219,7 +272,7 @@ async function post_reply(req, res) {
 async function get_getReplies(req, res) {
     try {
         const replies = await Tweet.find({ replyTo: req.query.tweetID },
-            "likesCount body user createdAt repliesCount retweetCount",
+            "likesCount body user createdAt repliesCount retweetCount tweetType",
             {
                 skip: +req.query.skip,
                 limit: 10,
@@ -233,12 +286,11 @@ async function get_getReplies(req, res) {
                 select: {
                     username: 1,
                     displayName: 1,
-                    avatar: 1,
                     _id: 0
                 }
             }).execPopulate()
         }
-        res.status(200).send(replies)
+        res.status(200).send({ tweets: replies })
     } catch (e) {
         res.status(500).send()
     }
@@ -272,6 +324,7 @@ module.exports = {
     patch_like,
     patch_bookmark,
     get_bookmarks,
+    get_profileTweets,
     post_reply,
     get_getReplies,
     post_retweet,

@@ -3,23 +3,23 @@ import axios from "axios"
 
 import TweetCompact from './tweetCompact';
 
-const TweetList = ({ tweets, setTweetsHandler, url, queryUsername = "" }) => {
+const TweetList = ({ tweets, setTweetsHandler, url, query = {} }) => {
     const jwt = localStorage.getItem("jwt")
 
     useEffect(() => {
         axios({
             url: url,
-            method: 'get',
+            method: 'GET',
             headers: {
                 "Authorization": `Bearer ${jwt}`,
                 "Access-Control-Allow-Origin": "*",
                 "Access-Control-Allow-Credentials": true
             },
-            params: { skip: 0, username: queryUsername }
+            params: { skip: 0, ...query }
         })
-            .then((response) => {
-                if (response.data.tweets.length !== 0) {
-                    setTweetsHandler(response)
+            .then((res) => {
+                if (res.data.tweets.length !== 0) {
+                    setTweetsHandler(res)
                 }
             })
             .catch((e) => {

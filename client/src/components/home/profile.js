@@ -17,7 +17,17 @@ import {
 const Profile = (props) => {
     const [skip, setSkip] = useState(0)
     const [tweets, setTweets] = useState({
-        data: [{ body: "", likesCount: "", user: { displayName: "", username: "" }, createdAt: "" }]
+        data: [{
+            body: "",
+            likesCount: "",
+            retweetCount: "",
+            repliesCount: "",
+            retweetData: {
+                user: { displayName: "" }
+            },
+            user: { displayName: "", username: "" },
+            createdAt: ""
+        }]
     })
     const [profile, setProfile] = useState({
         displayName: "",
@@ -37,10 +47,12 @@ const Profile = (props) => {
     }
 
     const setTweetsHandler = (response) => {
-        setTweets((prevState) => {
+        setTweets(() => {
             return { data: response.data.tweets }
         })
     }
+
+    console.log("profile rendering");
 
     const LoadClickHandler = () => {
         axios({
@@ -50,7 +62,7 @@ const Profile = (props) => {
                 "Access-Control-Allow-Origin": "*",
                 "Access-Control-Allow-Credentials": true
             },
-            params: { skip: (skip + 1) * 10 }
+            params: { skip: (skip + 1) * 10, username: profileUsername }
         })
             .then((response) => {
                 setTweets((prevState) => {
@@ -164,7 +176,9 @@ const Profile = (props) => {
                 <TweetList tweets={tweets.data}
                     setTweetsHandler={setTweetsHandler}
                     url="/api/profileTweets"
-                    queryUsername={profileUsername} />
+                    query={{
+                        username: profileUsername
+                    }} />
                 <button className="load-more" onClick={() => LoadClickHandler()}>:</button>
             </div>
 

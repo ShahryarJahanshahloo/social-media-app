@@ -3,8 +3,8 @@ import { useParams, useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import axios from "axios"
 
-import Avatar from "./avatar"
 import TweetList from './tweetList';
+import ComposeCompact from "./composeCompact"
 import Navbar from './navbar';
 import FollowSuggestion from './followSuggestion';
 import TweetCompact from './tweetCompact';
@@ -23,11 +23,56 @@ const TweetExtended = (props) => {
         retweetCount: "",
         repliesCount: "",
         user: { displayName: "", username: "" },
-        createdAt: ""
+        createdAt: "",
+        _id: ""
     })
+    const [tweets, setTweets] = useState({
+        data: [{
+            body: "",
+            likesCount: "",
+            retweetCount: "",
+            repliesCount: "",
+            retweetData: {
+                user: { displayName: "" }
+            },
+            user: { displayName: "", username: "" },
+            createdAt: ""
+        }]
+    })
+    const [skip, setSkip] = useState(0)
 
     const backButtonHandler = () => {
         history.push("/home")
+    }
+
+    const setTweetsHandler = (response) => {
+        setTweets(() => {
+            return { data: response.data.tweets }
+        })
+    }
+
+    const LoadClickHandler = () => {
+        axios({
+            url: "/api/getReplies",
+            method: 'get',
+            headers: {
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Credentials": true
+            },
+            params: { skip: (skip + 1) * 10, tweetID:tweet._id }
+        })
+            .then((response) => {
+                setTweets((prevState) => {
+                    const newState = { data: [] }
+                    newState.data.push(...prevState.data)
+                    newState.data.push(...response.data.tweets)
+                    return newState
+                })
+                setSkip((prevState) => prevState + 1)
+            })
+            .catch((e) => {
+                console.log(e)
+            })
     }
 
     useEffect(() => {
@@ -72,17 +117,22 @@ const TweetExtended = (props) => {
                             </div>
                         </div>
                         <div className="top-bar-flex-item-middle">
-                                <div className="tweet-title">
-                                    <div>Tweet</div>
-                                </div>
+                            <div className="tweet-title">
+                                <div>Tweet</div>
+                            </div>
                         </div>
                         <div className="top-bar-flex-item-side"></div>
                     </div>
                 </div>
                 {tweet.body == "" || user.username == "" ? null : <TweetCompact tweet={tweet} extend={true} />}
-                <div className="">
-
+                <div className="compose-reply-box">
+                    {tweet.body == "" || user.username == "" ? null : <ComposeCompact setTweets="" replyTo={{
+                        tweetID: tweet._id,
+                    }} />}
                 </div>
+                {tweet._id == "" ? null : <TweetList tweets={tweets.data} setTweetsHandler={setTweetsHandler}
+                    url="/api/getReplies" query={{ tweetID: tweet._id }} />}
+                <button className="load-more" onClick={() => LoadClickHandler()}>:</button>
             </div>
             <div className="side-section suggestion">
                 <FollowSuggestion />

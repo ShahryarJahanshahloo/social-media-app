@@ -1,57 +1,76 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import axios from "axios"
 import { useSelector } from 'react-redux';
 
-const ComposeCompact = ({ setTweets }) => {
-    const [tweetBody, setTweetBody] = useState(null)
+import Avatar from "./avatar"
+
+const ComposeCompact = ({ setTweets, replyTo = null }) => {
+    const [tweetBody, setTweetBody] = useState("")
+    const [tweetBtnClass, setTweetBtnClass] = useState("tweet-button disabledButton")
     const user = useSelector(state => state.userReducer)
-    const inputRef = useRef()
     const jwt = localStorage.getItem("jwt")
 
-    const inputHandler = (e) => {
-        setTweetBody((prevState) => {
-            return (e.target.value)
-        })
-    }
-
-    const buttonHandler = () => {
+    const tweetBtnHandler = () => {
+        //validate tweet body!
         axios({
             method: "post",
-            url: "/api/compose",
-            body: {
-                body: tweetBody,
-            },
+            url: "/api/" + replyTo == null ? "compose" : "reply",
             headers: {
                 "Authorization": `Bearer ${jwt}`,
                 "Access-Control-Allow-Origin": "*",
                 "Access-Control-Allow-Credentials": true
             },
+            data: replyTo == null ? {
+                body: tweetBody
+            } : {
+                body: tweetBody, tweetID: replyTo.tweetID
+            },
         })
             .then((res) => {
-                setTweetBody("")
-                inputRef.current.value = ""
-                setTweets((prevState) => {
-                    const newState = { data: [] }
-                    newState.data.push(...prevState.data)
-                    newState.data.unshift({
-                        body: res.data.body,
-                        likesCount: 0,
-                        user: {
-                            displayName: user.displayName,
-                    }
-                    })
-                    return newState
-                })
+                //setTweets
+                console.log("helloww");
             })
-            .catch((e) => console.log(e))
+            .catch((e) => {
+                console.log(e)
+            })
+    }
+
+    const textAreaOnChange = (e) => {
+        let bodyLength = e.target.value.length
+        if (e.target.value.trim() != "") {
+            setTweetBtnClass("tweet-button")
+        } else {
+            setTweetBtnClass("tweet-button disabledButton")
+        }
+
+        if (bodyLength > 255) {
+            setTweetBtnClass("tweet-button disabledButton")
+        } else if (bodyLength > 1) {
+            setTweetBtnClass("tweet-button")
+            setTweetBody(e.target.value)
+        }
     }
 
     return (
         <div className="composeCompact">
-            <input type="text" placeholder="What's happeening?" 
-            onChange={inputHandler} 
-            ref={inputRef}></input>
-            <input type="button" value="Tweet" onClick={buttonHandler}></input>
+            <div className="compose-main">
+                <div className="compose-box">
+                    <div className="compose-avatar-bar">
+                        <div className="compose-avatar">
+                            <Avatar username={user.username} size="48" />
+                        </div>
+                    </div>
+                    <div className="compose-area-wrapper">
+                        <textarea className="compose-text-area" onChange={textAreaOnChange}
+                            placeholder={replyTo == null ? "What's Happening?" : "Tweet your reply"}>
+                        </textarea>
+                    </div>
+                </div>
+                <div className="compose-compact-tweet-bar">
+                    <button className={tweetBtnClass} disabled={tweetBody == ""}
+                        onClick={tweetBtnHandler}>Tweet</button>
+                </div>
+            </div>
         </div>
     )
 }

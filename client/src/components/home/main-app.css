@@ -23,6 +23,10 @@
     position: relative;
 }
 
+.compose-tweet-box {
+    display: none;
+}
+
 
 /*
     media bara zire 480px mishe amoodi

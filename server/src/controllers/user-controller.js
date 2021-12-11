@@ -114,61 +114,6 @@ async function get_profileInfo(req, res) {
     }
 }
 
-async function get_profileTweets(req, res) {
-    try {
-        const tweets = await Tweet.find({
-            user: req.query.userID,
-            tweetType: {
-                $in: ["original", "retweet"]
-            }
-        },
-            "likesCount body user createdAt repliesCount retweetCount retweetData",
-            {
-                skip: +req.query.skip,
-                limit: 10,
-                sort: {
-                    createdAt: -1
-                }
-            })
-        for (const tweet of tweets) {
-            await tweet.populate({
-                path: "user",
-                select: {
-                    username: 1,
-                    displayName: 1,
-                    avatar: 1,
-                    _id: 0
-                }
-            }).execPopulate()
-            if (tweet.tweetType == "retweet") {
-                await tweet.populate({
-                    path: "retweetData",
-                    select: {
-                        likesCount: 1,
-                        body: 1,
-                        user: 1,
-                        createdAt: 1,
-                        repliesCount: 1,
-                        retweetCount: 1,
-                    },
-                    populate: {
-                        path: "user",
-                        select: {
-                            username: 1,
-                            displayName: 1,
-                            avatar: 1,
-                            _id: 0
-                        }
-                    }
-                }).execPopulate()
-            }
-        }
-        res.status(200).send({ tweets })
-    } catch (e) {
-        res.status(500).send({ e })
-    }
-}
-
 async function get_userInfo(req, res) {
     const user = req.user
     try {
@@ -315,7 +260,7 @@ async function delete_deleteUser(req, res) {
         const deletedUser = await User.deleteOne({ _id: req.user._id })
         res.status(200).send(deletedUser)
     } catch (e) {
-        res.status(500).send({e})
+        res.status(500).send({ e })
     }
 }
 
@@ -364,7 +309,6 @@ module.exports = {
     get_userInfo,
     get_profileInfo,
     get_profileRetweets,
-    get_profileTweets,
     get_profileLikes,
     post_settings_profile,
     get_search,

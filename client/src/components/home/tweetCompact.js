@@ -59,7 +59,7 @@ const TweetCompact = ({ tweet, extend = false }) => {
                     dispatch({
                         type: "addLike",
                         payload: {
-                            tweetID : tweetContent._id
+                            tweetID: tweetContent._id
                         }
                     })
                 } else if (res.data.message == "removed") {
@@ -72,7 +72,7 @@ const TweetCompact = ({ tweet, extend = false }) => {
                     dispatch({
                         type: "removeLike",
                         payload: {
-                            tweetID : tweetContent._id
+                            tweetID: tweetContent._id
                         }
                     })
                 }
@@ -106,7 +106,7 @@ const TweetCompact = ({ tweet, extend = false }) => {
                     dispatch({
                         type: "addRetweet",
                         payload: {
-                            tweetID : tweetContent._id
+                            tweetID: tweetContent._id
                         }
                     })
                 } else if (res.data.message == "removed") {
@@ -119,7 +119,7 @@ const TweetCompact = ({ tweet, extend = false }) => {
                     dispatch({
                         type: "removeRetweet",
                         payload: {
-                            tweetID : tweetContent._id
+                            tweetID: tweetContent._id
                         }
                     })
                 }
@@ -156,11 +156,11 @@ const TweetCompact = ({ tweet, extend = false }) => {
                         <label>@{tweetContent.user.username}</label>
                     </div>
                 </div>
-                <div className="tweet-body" onClick={redirectToTweet}>
+                <div className="tweet-body" onClick={extend ? null : redirectToTweet}>
                     {tweetContent.body}
                 </div>
                 <div className="tweet-actions">
-                    <div className="tweet-icon-wrapper" onClick={redirectToTweet}>
+                    <div className="tweet-icon-wrapper" onClick={extend ? null : redirectToTweet}>
                         <CommentIcon style={iconStyle} />
                         {tweetContent.repliesCount != 0 ? tweetContent.repliesCount : null}
                     </div>

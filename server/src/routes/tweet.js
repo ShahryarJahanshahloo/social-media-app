@@ -13,6 +13,7 @@ const {
     get_bookmarks,
     post_retweet,
     get_tweetInfo,
+    get_profileTweets,
 } = require("../controllers/tweet-controller")
 
 router.get('/home', auth, get_home)
@@ -25,6 +26,7 @@ router.get("/getReplies", get_getReplies)
 router.patch("/like", auth, patch_like)
 router.patch("/bookmark", auth, patch_bookmark)
 router.get("/bookmarks", auth, get_bookmarks)
+router.get("/profileTweets", get_profileTweets)
 router.get("/tweetInfo", get_tweetInfo)
 
 module.exports = router

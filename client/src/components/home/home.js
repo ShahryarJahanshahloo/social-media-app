@@ -72,7 +72,9 @@ const Home = () => {
             </div>
             <div className="middle-section">
                 <TitleBar />
-                <ComposeCompact setTweets={setTweets} />
+                <div className="compose-tweet-box">
+                    <ComposeCompact setTweets={setTweets} />
+                </div>
                 <TweetList tweets={tweets.data} setTweetsHandler={setTweetsHandler} url="/api/home" />
                 <button className="load-more" onClick={() => LoadClickHandler()}>:</button>
             </div>
