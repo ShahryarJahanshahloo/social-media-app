@@ -9,6 +9,7 @@ import Navbar from './navbar';
 import FollowSuggestion from './followSuggestion';
 import TweetCompact from './tweetCompact';
 import useTweetList from '../hooks/useTweetList';
+import TopBar from './topBar';
 
 import {
     BiArrowBack as BackIcon,
@@ -67,29 +68,28 @@ const TweetExtended = (props) => {
             })
     }, [])
 
+    const left = () =>
+        <div className="back-button-wrapper">
+            <div className="back-button" onClick={backButtonHandler}>
+                <BackIcon style={{ fontSize: "1.25em" }} />
+            </div>
+        </div>
+
+    const middle = () =>
+        <div className="tweet-title">
+            <div>Tweet</div>
+        </div>
+
+    const right = () =>
+        <div></div>
+
     return (
         <div className="main-app">
             <div className="side-section">
                 <Navbar />
             </div>
             <div className="middle-section">
-                <div className="top-bar">
-                    <div className="top-bar-flex">
-                        <div className="top-bar-flex-item-side">
-                            <div className="back-button-wrapper">
-                                <div className="back-button" onClick={backButtonHandler}>
-                                    <BackIcon style={{ fontSize: "1.25em" }} />
-                                </div>
-                            </div>
-                        </div>
-                        <div className="top-bar-flex-item-middle">
-                            <div className="tweet-title">
-                                <div>Tweet</div>
-                            </div>
-                        </div>
-                        <div className="top-bar-flex-item-side"></div>
-                    </div>
-                </div>
+                <TopBar Left={left} Middle={middle} Right={right} />
                 {tweet.body == "" || user.username == "" ? null : <TweetCompact tweet={tweet} extend={true} />}
                 <div className="compose-reply-box">
                     {tweet.body == "" || user.username == "" ? null : <ComposeCompact setTweets={addReply} replyTo={{

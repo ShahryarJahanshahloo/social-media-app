@@ -6,6 +6,7 @@ import axios from "axios"
 import UserList from './userList'
 import Navbar from './navbar'
 import FollowSuggestion from './followSuggestion'
+import TopBar from './topBar';
 
 import {
     BiArrowBack as BackIcon,
@@ -82,32 +83,29 @@ const Explore = () => {
             })
     }
 
+    const left = () =>
+        <div className="back-button-wrapper">
+            <div className="back-button" onClick={backButtonHandler}>
+                <BackIcon style={{ fontSize: "1.25em" }} />
+            </div>
+        </div>
+
+    const middle = () =>
+        <div className="search-box">
+            <input onChange={searchInputOnChange}
+                placeholder='search user'></input>
+        </div>
+
+    const right = () =>
+        <button onClick={searchButtonHandler}>search</button>
+
     return (
         <div className="main-app">
             <div className="side-section">
                 <Navbar />
             </div>
             <div className="middle-section">
-                <div className="top-bar">
-                    <div className="top-bar-flex">
-                        <div className="top-bar-flex-item-side">
-                            <div className="back-button-wrapper">
-                                <div className="back-button" onClick={backButtonHandler}>
-                                    <BackIcon style={{ fontSize: "1.25em" }} />
-                                </div>
-                            </div>
-                        </div>
-                        <div className="top-bar-flex-item-middle">
-                            <div className="search-box">
-                                <input onChange={searchInputOnChange} 
-                                placeholder='search user'></input>
-                            </div>
-                        </div>
-                        <div className="top-bar-flex-item-side">
-                            <button onClick={searchButtonHandler}>search</button>
-                        </div>
-                    </div>
-                </div>
+                <TopBar Left={left} Middle={middle} Right={right} />
                 <UserList users={users} />
                 <button className="load-more" onClick={loadMore}>:</button>
             </div>

@@ -15,6 +15,7 @@ const reducer = (state = initialState, action) => {
                 displayName: action.payload.displayName,
                 likedTweets: action.payload.likedTweets,
                 retweets: action.payload.retweets,
+                followings: action.payload.followings,
             }
         }
         case "addLike" : {

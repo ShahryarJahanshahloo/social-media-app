@@ -4,6 +4,7 @@ import { useHistory } from 'react-router';
 import { useSelector } from 'react-redux';
 
 import Avatar from "./avatar"
+import TopBar from './topBar';
 
 import {
     BiArrowBack as BackIcon,
@@ -34,12 +35,12 @@ const ComposeExtended = () => {
                 body: tweetBody
             },
         })
-        .then((res) => {
-            if (res.status == "200") history.push("/home")
-        })
-        .catch((e) => {
-            console.log(e)
-        })
+            .then((res) => {
+                if (res.status == "200") history.push("/home")
+            })
+            .catch((e) => {
+                console.log(e)
+            })
     }
 
     const textAreaOnChange = (e) => {
@@ -58,24 +59,23 @@ const ComposeExtended = () => {
         }
     }
 
+    const left = () =>
+        <div className="back-button-wrapper">
+            <div className="back-button" onClick={backButtonHandler}>
+                <BackIcon style={{ fontSize: "1.25em" }} />
+            </div>
+        </div>
+
+    const middle = () =>
+        <div></div>
+
+    const right = () =>
+        <button className={tweetBtnClass} disabled={tweetBody == ""}
+            onClick={tweetBtnHandler}>Tweet</button>
+
     return (
         <div className="composeExtended">
-            <div className="top-bar">
-                <div className="top-bar-flex">
-                    <div className="top-bar-flex-item-side">
-                        <div className="back-button-wrapper">
-                            <div className="back-button" onClick={backButtonHandler}>
-                                <BackIcon style={{ fontSize: "1.25em" }} />
-                            </div>
-                        </div>
-                    </div>
-                    <div className="top-bar-flex-item-middle"></div>
-                    <div className="top-bar-flex-item-side">
-                        <button className={tweetBtnClass} disabled={tweetBody == ""}
-                            onClick={tweetBtnHandler}>Tweet</button>
-                    </div>
-                </div>
-            </div>
+            <TopBar Left={left} Middle={middle} Right={right} />
             <div className="compose-main">
                 <div className="compose-box">
                     <div className="compose-avatar-bar">

@@ -11,7 +11,7 @@ import "./components/login&signup.css"
 import "./components/navbar.css"
 import "./components/tweetCompact.css"
 import "./components/tweetExtended.css"
-import "./components/titleBar.css"
+import "./components/topBar.css"
 import "./components/composeExtended.css"
 import "./components/profile.css"
 import "./components/explore.css"
@@ -61,6 +61,7 @@ function App() {
               displayName: res.data.displayName,
               likedTweets: res.data.likes,
               retweets: retweets,
+              followings: res.data.followings
             }
           })
           dispatch({

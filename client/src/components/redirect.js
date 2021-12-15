@@ -13,7 +13,6 @@ const Redirect = (props) => {
                     method: "post",
                     url: "/api/authenticate",
                     headers: {
-                        // "Accept": "application/json",
                         "Authorization": `Bearer ${jwt}`,
                         "Access-Control-Allow-Origin": "*",
                         "Access-Control-Allow-Credentials": true

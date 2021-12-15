@@ -8,6 +8,7 @@ import TweetList from './tweetList';
 import Navbar from './navbar';
 import FollowSuggestion from './followSuggestion';
 import useTweetList from '../hooks/useTweetList';
+import TopBar from './topBar';
 
 import {
     BiArrowBack as BackIcon,
@@ -55,32 +56,29 @@ const Profile = (props) => {
             })
     }, [])
 
+    const left = () =>
+        <div className="back-button-wrapper">
+            <div className="back-button" onClick={backButtonHandler}>
+                <BackIcon style={{ fontSize: "1.25em" }} />
+            </div>
+        </div>
+
+    const middle = () =>
+        <div className="top-bar-profile">
+            <div className="top-bar-displayName">{profile.displayName}</div>
+            <div className="top-bar-tweetCount">{profile.tweetsCount} Tweets</div>
+        </div>
+
+    const right = () =>
+        <div></div>
 
     return (
         <div className="main-app">
             <div className="side-section">
                 <Navbar />
             </div>
-
             <div className="middle-section">
-                <div className="top-bar">
-                    <div className="top-bar-flex">
-                        <div className="top-bar-flex-item-side">
-                            <div className="back-button-wrapper">
-                                <div className="back-button" onClick={backButtonHandler}>
-                                    <BackIcon style={{ fontSize: "1.25em" }} />
-                                </div>
-                            </div>
-                        </div>
-                        <div className="top-bar-flex-item-middle">
-                            <div className="top-bar-profile">
-                                <div className="top-bar-displayName">{profile.displayName}</div>
-                                <div className="top-bar-tweetCount">{profile.tweetsCount} Tweets</div>
-                            </div>
-                        </div>
-                        <div className="top-bar-flex-item-side"></div>
-                    </div>
-                </div>
+                <TopBar Left={left} Middle={middle} Right={right} />
                 <div className="profile-stats-wrapper">
                     <div className="profile-stats-box">
                         <div className="user-stats-box">
