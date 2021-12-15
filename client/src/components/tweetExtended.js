@@ -8,16 +8,17 @@ import ComposeCompact from "./composeCompact"
 import Navbar from './navbar';
 import FollowSuggestion from './followSuggestion';
 import TweetCompact from './tweetCompact';
+import useTweetList from '../hooks/useTweetList';
 
 import {
     BiArrowBack as BackIcon,
 } from "react-icons/bi"
 
 const TweetExtended = (props) => {
-    const jwt = localStorage.getItem("jwt")
     const { tweetID } = useParams()
     const history = useHistory()
     const user = useSelector(state => state.userReducer)
+    const [tweets, loadMore, setTweets] = useTweetList("/api/getReplies", { tweetID })
     const [tweet, setTweet] = useState({
         body: "",
         likesCount: "",
@@ -27,27 +28,9 @@ const TweetExtended = (props) => {
         createdAt: "",
         _id: ""
     })
-    const [tweets, setTweets] = useState([{
-            body: "",
-            likesCount: "",
-            retweetCount: "",
-            repliesCount: "",
-            retweetData: {
-                user: { displayName: "" }
-            },
-            user: { displayName: "", username: "" },
-            createdAt: ""
-        }])
-    const [skip, setSkip] = useState(0)
 
     const backButtonHandler = () => {
         history.push("/home")
-    }
-
-    const setTweetsHandler = (response) => {
-        setTweets(() => {
-            return response.data.tweets
-        })
     }
 
     const addReply = (reply) => {
@@ -56,30 +39,6 @@ const TweetExtended = (props) => {
             prevTweets.push(reply)
             return prevTweets
         })
-    }
-
-    const LoadClickHandler = () => {
-        axios({
-            url: "/api/getReplies",
-            method: 'get',
-            headers: {
-                "Access-Control-Allow-Origin": "*",
-                "Access-Control-Allow-Credentials": true
-            },
-            params: { skip: (skip + 1) * 10, tweetID: tweet._id }
-        })
-            .then((response) => {
-                setTweets((prevState) => {
-                    const newState = []
-                    newState.push(...prevState)
-                    newState.push(...response.data.tweets)
-                    return newState
-                })
-                setSkip((prevState) => prevState + 1)
-            })
-            .catch((e) => {
-                console.log(e)
-            })
     }
 
     useEffect(() => {
@@ -102,27 +61,6 @@ const TweetExtended = (props) => {
                         _id: res.data._id,
                     }
                 })
-            })
-            .catch((e) => {
-                console.log(e)
-            })
-    }, [])
-
-    useEffect(() => {
-        axios({
-            url: "/api/getReplies",
-            method: 'GET',
-            headers: {
-                "Authorization": `Bearer ${jwt}`,
-                "Access-Control-Allow-Origin": "*",
-                "Access-Control-Allow-Credentials": true
-            },
-            params: { skip: 0, tweetID: tweet._id }
-        })
-            .then((res) => {
-                if (res.data.tweets.length !== 0) {
-                    setTweetsHandler(res)
-                }
             })
             .catch((e) => {
                 console.log(e)
@@ -159,7 +97,7 @@ const TweetExtended = (props) => {
                     }} />}
                 </div>
                 {tweet._id == "" ? null : <TweetList tweets={tweets} />}
-                <button className="load-more" onClick={() => LoadClickHandler()}>:</button>
+                <button className="load-more" onClick={loadMore}>:</button>
             </div>
             <div className="side-section suggestion">
                 <FollowSuggestion />

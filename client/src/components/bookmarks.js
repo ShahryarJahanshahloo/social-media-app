@@ -7,6 +7,7 @@ import Navbar from "./navbar";
 import TweetList from './tweetList';
 import FollowSuggestion from './followSuggestion';
 import TitleBar from './titleBar';
+import useTweetList from '../hooks/useTweetList';
 
 const Bookmarks = (props) => {
     const history = useHistory()
@@ -16,72 +17,7 @@ const Bookmarks = (props) => {
         history.push("/login")
     }
 
-    const [tweets, setTweets] = useState([{
-        body: "",
-        likesCount: "",
-        retweetCount: "",
-        repliesCount: "",
-        retweetData: {
-            user: { displayName: "" }
-        },
-        user: { displayName: "", username: "" },
-        createdAt: ""
-    }])
-    const [skip, setSkip] = useState(0)
-    const jwt = localStorage.getItem("jwt")
-
-    const setTweetsHandler = (response) => {
-        setTweets((prevState) => {
-            return response.data.tweets
-        })
-    }
-
-    const LoadClickHandler = () => {
-        axios({
-            url: "/api/bookmarks",
-            method: 'get',
-            headers: {
-                "Authorization": `Bearer ${jwt}`,
-                "Access-Control-Allow-Origin": "*",
-                "Access-Control-Allow-Credentials": true
-            },
-            params: { skip: (skip + 1) * 10 }
-        })
-            .then((response) => {
-                setTweets((prevState) => {
-                    const newState = []
-                    newState.push(...prevState)
-                    newState.push(...response.data.tweets)
-                    return newState
-                })
-                setSkip((prevState) => prevState + 1)
-
-            })
-            .catch((e) => {
-                console.log(e)
-            })
-    }
-
-    useEffect(() => {
-        axios({
-            url: "/api/bookmarks",
-            method: 'GET',
-            headers: {
-                "Authorization": `Bearer ${jwt}`,
-                "Access-Control-Allow-Origin": "*",
-                "Access-Control-Allow-Credentials": true
-            },
-            params: { skip: 0 }
-        })
-            .then((res) => {
-                if (res.data.tweets.length !== 0) {
-                    setTweetsHandler(res)
-                }
-            })
-            .catch((e) => {
-                console.log(e)
-            })
-    }, [])
+    const [tweets, loadMore] = useTweetList("/api/bookmarks", {})
 
     return (
         <div className="main-app">
@@ -91,7 +27,7 @@ const Bookmarks = (props) => {
             <div className="middle-section">
                 <TitleBar title="Bookmarks" composeDisplay="none" />
                 <TweetList tweets={tweets} />
-                <button className="load-more" onClick={() => LoadClickHandler()}>:</button>
+                <button className="load-more" onClick={loadMore}>:</button>
             </div>
             <div className="side-section suggestion">
                 <FollowSuggestion />

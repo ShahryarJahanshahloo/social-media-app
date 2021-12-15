@@ -7,25 +7,13 @@ import Avatar from "./avatar"
 import TweetList from './tweetList';
 import Navbar from './navbar';
 import FollowSuggestion from './followSuggestion';
+import useTweetList from '../hooks/useTweetList';
 
 import {
     BiArrowBack as BackIcon,
 } from "react-icons/bi"
 
 const Profile = (props) => {
-    const jwt = localStorage.getItem("jwt")
-    const [skip, setSkip] = useState(0)
-    const [tweets, setTweets] = useState([{
-        body: "",
-        likesCount: "",
-        retweetCount: "",
-        repliesCount: "",
-        retweetData: {
-            user: { displayName: "" }
-        },
-        user: { displayName: "", username: "" },
-        createdAt: ""
-    }])
     const [profile, setProfile] = useState({
         displayName: "",
         bio: "",
@@ -34,43 +22,13 @@ const Profile = (props) => {
         followingsCount: 0,
     })
     let profileUsername = useParams().username
+    const [tweets, loadMore] = useTweetList("/api/profileTweets", { username: profileUsername })
     const user = useSelector(state => state.userReducer)
     const isUserProfile = (profileUsername == user.username)
     const history = useHistory()
 
     const backButtonHandler = () => {
         history.push("/home")
-    }
-
-    const setTweetsHandler = (response) => {
-        setTweets(() => {
-            return response.data.tweets
-        })
-    }
-
-    const LoadClickHandler = () => {
-        axios({
-            url: "/api/profileTweets",
-            method: 'get',
-            headers: {
-                "Access-Control-Allow-Origin": "*",
-                "Access-Control-Allow-Credentials": true
-            },
-            params: { skip: (skip + 1) * 10, username: profileUsername }
-        })
-            .then((response) => {
-                setTweets((prevState) => {
-                    const newState = []
-                    newState.push(...prevState)
-                    newState.push(...response.data.tweets)
-                    return newState
-                })
-                setSkip((prevState) => prevState + 1)
-
-            })
-            .catch((e) => {
-                console.log(e)
-            })
     }
 
     useEffect(() => {
@@ -97,26 +55,6 @@ const Profile = (props) => {
             })
     }, [])
 
-    useEffect(() => {
-        axios({
-            url: "/api/profileTweets",
-            method: 'GET',
-            headers: {
-                "Authorization": `Bearer ${jwt}`,
-                "Access-Control-Allow-Origin": "*",
-                "Access-Control-Allow-Credentials": true
-            },
-            params: { skip: 0, username: profileUsername }
-        })
-            .then((res) => {
-                if (res.data.tweets.length !== 0) {
-                    setTweetsHandler(res)
-                }
-            })
-            .catch((e) => {
-                console.log(e)
-            })
-    }, [])
 
     return (
         <div className="main-app">
@@ -189,7 +127,7 @@ const Profile = (props) => {
                     </div>
                 </div>
                 <TweetList tweets={tweets} />
-                <button className="load-more" onClick={() => LoadClickHandler()}>:</button>
+                <button className="load-more" onClick={loadMore}>:</button>
             </div>
 
             <div className="side-section suggestion">

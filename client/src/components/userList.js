@@ -3,7 +3,7 @@ import React from 'react';
 import UserCompact from './userCompact';
 
 const UserList = ({ users }) => {
-    const isUserListEmpty = (users[0].body === "")
+    const isUserListEmpty = (users[0].username === "")
 
     let userList = <div className="alert">No users to show!</div>
 

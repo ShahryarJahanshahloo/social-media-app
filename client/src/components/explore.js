@@ -58,7 +58,7 @@ const Explore = () => {
         })
     }
 
-    const LoadClickHandler = () => {
+    const loadMore = () => {
         axios({
             url: "/api/search",
             method: 'GET',
@@ -109,7 +109,7 @@ const Explore = () => {
                     </div>
                 </div>
                 <UserList users={users} />
-                <button className="load-more" onClick={() => LoadClickHandler()}>:</button>
+                <button className="load-more" onClick={loadMore}>:</button>
             </div>
             <div className="side-section suggestion">
                 <FollowSuggestion />
