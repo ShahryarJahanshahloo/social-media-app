@@ -51,6 +51,16 @@ const TweetExtended = (props) => {
         })
     }
 
+    const addReply = (reply) => {
+        setTweets((prevState) => {
+            const prevTweets = [...prevState.data]
+            prevTweets.push(reply)
+            return {
+                data: prevTweets
+            }
+        })
+    }
+
     const LoadClickHandler = () => {
         axios({
             url: "/api/getReplies",
@@ -126,7 +136,7 @@ const TweetExtended = (props) => {
                 </div>
                 {tweet.body == "" || user.username == "" ? null : <TweetCompact tweet={tweet} extend={true} />}
                 <div className="compose-reply-box">
-                    {tweet.body == "" || user.username == "" ? null : <ComposeCompact setTweets="" replyTo={{
+                    {tweet.body == "" || user.username == "" ? null : <ComposeCompact setTweets={addReply} replyTo={{
                         tweetID: tweet._id,
                     }} />}
                 </div>

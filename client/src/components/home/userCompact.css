@@ -1,0 +1,27 @@
+.user-info {
+    display: flex;
+    flex-flow: column nowrap;
+    height: 100%;
+    width: 75%;
+}
+
+.follow-section {
+    height: 100%;
+    width: 25%;
+}
+
+.user-author-info {
+    display: flex;
+    flex-flow: row nowrap;
+    width: 100%;
+    height: 50px;
+}
+
+.user-username {
+    font-size: 0.8rem;
+    color: rgb(83, 100, 113);
+}
+
+.user-displayName {
+    font-weight: 550;
+}

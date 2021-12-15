@@ -12,23 +12,25 @@ const ComposeCompact = ({ setTweets, replyTo = null }) => {
 
     const tweetBtnHandler = () => {
         //validate tweet body!
+        const url = replyTo == null ? "/api/compose" : "/api/reply"
+        const data = replyTo == null ? {
+            body: tweetBody
+        } : {
+            body: tweetBody, tweetID: replyTo.tweetID
+        }
         axios({
-            method: "post",
-            url: "/api/" + replyTo == null ? "compose" : "reply",
+            method: "POST",
+            url: url,
             headers: {
                 "Authorization": `Bearer ${jwt}`,
                 "Access-Control-Allow-Origin": "*",
                 "Access-Control-Allow-Credentials": true
             },
-            data: replyTo == null ? {
-                body: tweetBody
-            } : {
-                body: tweetBody, tweetID: replyTo.tweetID
-            },
+            data: data
         })
             .then((res) => {
-                //setTweets
-                console.log("helloww");
+                console.log(res.data.tweet);
+                setTweets(res.data.tweet)
             })
             .catch((e) => {
                 console.log(e)
@@ -49,6 +51,7 @@ const ComposeCompact = ({ setTweets, replyTo = null }) => {
             setTweetBtnClass("tweet-button")
             setTweetBody(e.target.value)
         }
+        console.log(tweetBody);
     }
 
     return (

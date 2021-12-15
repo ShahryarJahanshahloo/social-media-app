@@ -33,7 +33,6 @@ const Profile = (props) => {
         displayName: "",
         bio: "",
         tweetsCount: 0,
-        avatar: "",
         followersCount: 0,
         followingsCount: 0,
     })

@@ -14,7 +14,6 @@ async function post_signin(req, res) {
             token,
             username: user.username,
             displayName: user.displayName,
-            avatar: user.avatar,
         })
     } catch (e) { res.status(500).send({ e }) }
 }
@@ -31,7 +30,6 @@ async function post_signup(req, res) {
             token,
             username: user.username,
             displayName: user.displayName,
-            avatar: user.avatar,
         })
     } catch (e) { res.status(500).send({ e }) }
 }
@@ -59,7 +57,6 @@ async function get_followers(req, res) {
                 username: 1,
                 displayName: 1,
                 bio: 1,
-                avatar: 1,
                 _id: 0
             }
         }).execPopulate()
@@ -85,7 +82,6 @@ async function get_followings(req, res) {
                 username: 1,
                 displayName: 1,
                 bio: 1,
-                avatar: 1,
                 _id: 0
             }
         }).execPopulate()
@@ -104,7 +100,6 @@ async function get_profileInfo(req, res) {
             username: user.username,
             bio: user.bio,
             displayName: user.displayName,
-            avatar: user.avatar,
             tweetsCount: user.tweetsCount,
             followersCount: user.followers.length,
             followingsCount: user.followings.length,
@@ -127,7 +122,6 @@ async function get_userInfo(req, res) {
             displayName: user.displayName,
             likes: user.likes,
             retweets: retweets,
-            avatar: user.avatar,
         })
     } catch (e) {
         res.status(500).send({ e })
@@ -156,14 +150,14 @@ async function post_settings_profile(req, res) {
 async function get_search(req, res) {
     try {
         const query = req.query.query
-        const result = await User.find({ username: new RegExp(query) },
-            "bio username displayName avatar",
+        const users = await User.find({ username: new RegExp(query) },
+            "bio username displayName _id",
             {
                 skip: 0,
                 limit: 10
             })
-        if (!result) return res.status(404).send()
-        res.status(200).send(result)
+        // if (!users) return res.status(404).send()
+        res.status(200).send({ users })
     } catch (e) {
         res.status(500).send()
     }
@@ -287,7 +281,6 @@ async function get_profileLikes(req, res) {
                 select: {
                     username: 1,
                     displayName: 1,
-                    avatar: 1,
                     _id: 0,
                     password: 0,
                 }

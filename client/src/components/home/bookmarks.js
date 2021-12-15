@@ -16,7 +16,14 @@ const Bookmarks = (props) => {
         history.push("/login")
     }
 
-    const [tweets, setTweets] = useState({ data: [{ body: "", likesCount: "", user: { displayName: "", username: "" }, createdAt: "" }] })
+    const [tweets, setTweets] = useState({
+        data: [{
+            body: "",
+            likesCount: "",
+            user: { displayName: "", username: "" },
+            createdAt: ""
+        }]
+    })
     const [skip, setSkip] = useState(0)
     const jwt = localStorage.getItem("jwt")
 
@@ -58,7 +65,7 @@ const Bookmarks = (props) => {
                 <Navbar />
             </div>
             <div className="middle-section">
-                <TitleBar title="Bookmarks" composeDisplay="none"/>
+                <TitleBar title="Bookmarks" composeDisplay="none" />
                 <TweetList tweets={tweets.data} setTweetsHandler={setTweetsHandler} url="/api/bookmarks" />
                 <button className="load-more" onClick={() => LoadClickHandler()}>:</button>
             </div>

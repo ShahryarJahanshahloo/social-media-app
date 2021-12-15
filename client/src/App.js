@@ -4,7 +4,7 @@ import axios from "axios"
 import { useDispatch } from 'react-redux';
 
 import './App.css';
-import "./components/home/main-app.css"
+import "./components/home/home.css"
 import "./components/home/tweetList.css"
 import "./components/home/composeCompact.css"
 import "./components/home/login&signup.css"
@@ -14,6 +14,9 @@ import "./components/home/tweetExtended.css"
 import "./components/home/titleBar.css"
 import "./components/home/composeExtended.css"
 import "./components/home/profile.css"
+import "./components/home/explore.css"
+import "./components/home/userCompact.css"
+import "./components/home/userList.css"
 
 import Login from "./components/home/login"
 import Signup from "./components/home/signup"

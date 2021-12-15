@@ -67,7 +67,7 @@ async function post_compose(req, res) {
         await tweet.save()
         req.user.tweetsCount++
         await req.user.save()
-        res.status(200).send(tweet)
+        res.status(200).send({ tweet })
     } catch (e) {
         res.status(500).send(e)
     }
@@ -175,7 +175,6 @@ async function get_bookmarks(req, res) {
                 select: {
                     username: 1,
                     displayName: 1,
-                    avatar: 1,
                     _id: 0
                 }
             }
@@ -263,16 +262,27 @@ async function post_reply(req, res) {
         const targetTweet = await Tweet.findById(req.body.tweetID)
         targetTweet.repliesCount += 1
         await targetTweet.save()
-        res.status(200).send({ message: "reply was successful" })
+        res.status(200).send({
+            tweet: {
+                _id: tweet._id,
+                body: tweet.body,
+                likesCount: tweet.likesCount,
+                retweetCount: tweet.retweetCount,
+                repliesCount: tweet.repliesCount,
+                createdAt: tweet.createdAt,
+                tweetType: tweet.tweetType,
+                user: req.user
+            }
+        })
     } catch (e) {
-        res.status(500).send()
+        res.status(500).send({ e })
     }
 }
 
 async function get_getReplies(req, res) {
     try {
         const replies = await Tweet.find({ replyTo: req.query.tweetID },
-            "likesCount body user createdAt repliesCount retweetCount tweetType",
+            "likesCount body user createdAt repliesCount retweetCount tweetType _id",
             {
                 skip: +req.query.skip,
                 limit: 10,
@@ -306,7 +316,6 @@ async function get_tweetInfo(req, res) {
             select: {
                 username: 1,
                 displayName: 1,
-                avatar: 1,
                 _id: 0
             }
         }).execPopulate()
