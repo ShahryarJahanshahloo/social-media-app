@@ -122,6 +122,7 @@ async function get_userInfo(req, res) {
             displayName: user.displayName,
             likes: user.likes,
             retweets: retweets,
+            followings: user.followings
         })
     } catch (e) {
         res.status(500).send({ e })
