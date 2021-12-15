@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from "axios"
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
@@ -17,25 +17,23 @@ const Home = () => {
         history.push("/login")
     }
 
-    const [tweets, setTweets] = useState({
-        data: [{
-            body: "",
-            likesCount: "",
-            retweetCount: "",
-            repliesCount: "",
-            retweetData: {
-                user: { displayName: "" }
-            },
-            user: { displayName: "", username: "" },
-            createdAt: ""
-        }]
-    })
+    const [tweets, setTweets] = useState([{
+        body: "",
+        likesCount: "",
+        retweetCount: "",
+        repliesCount: "",
+        retweetData: {
+            user: { displayName: "" }
+        },
+        user: { displayName: "", username: "" },
+        createdAt: ""
+    }])
     const [skip, setSkip] = useState(0)
     const jwt = localStorage.getItem("jwt")
 
     const setTweetsHandler = (response) => {
         setTweets(() => {
-            return { data: response.data.tweets }
+            return response.data.tweets
         })
     }
 
@@ -52,9 +50,9 @@ const Home = () => {
         })
             .then((response) => {
                 setTweets((prevState) => {
-                    const newState = { data: [] }
-                    newState.data.push(...prevState.data)
-                    newState.data.push(...response.data.tweets)
+                    const newState = []
+                    newState.push(...prevState)
+                    newState.push(...response.data.tweets)
                     return newState
                 })
                 setSkip((prevState) => prevState + 1)
@@ -64,6 +62,27 @@ const Home = () => {
                 console.log(e)
             })
     }
+
+    useEffect(() => {
+        axios({
+            url: "/api/home",
+            method: 'GET',
+            headers: {
+                "Authorization": `Bearer ${jwt}`,
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Credentials": true
+            },
+            params: { skip: 0 }
+        })
+            .then((res) => {
+                if (res.data.tweets.length !== 0) {
+                    setTweetsHandler(res)
+                }
+            })
+            .catch((e) => {
+                console.log(e)
+            })
+    }, [])
 
     return (
         <div className="main-app">
@@ -75,7 +94,7 @@ const Home = () => {
                 <div className="compose-tweet-box">
                     <ComposeCompact setTweets={setTweets} />
                 </div>
-                <TweetList tweets={tweets.data} setTweetsHandler={setTweetsHandler} url="/api/home" />
+                <TweetList tweets={tweets} />
                 <button className="load-more" onClick={() => LoadClickHandler()}>:</button>
             </div>
             <div className="side-section suggestion">

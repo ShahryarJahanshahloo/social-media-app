@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from "axios";
 import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -16,20 +16,23 @@ const Bookmarks = (props) => {
         history.push("/login")
     }
 
-    const [tweets, setTweets] = useState({
-        data: [{
-            body: "",
-            likesCount: "",
-            user: { displayName: "", username: "" },
-            createdAt: ""
-        }]
-    })
+    const [tweets, setTweets] = useState([{
+        body: "",
+        likesCount: "",
+        retweetCount: "",
+        repliesCount: "",
+        retweetData: {
+            user: { displayName: "" }
+        },
+        user: { displayName: "", username: "" },
+        createdAt: ""
+    }])
     const [skip, setSkip] = useState(0)
     const jwt = localStorage.getItem("jwt")
 
     const setTweetsHandler = (response) => {
         setTweets((prevState) => {
-            return { data: response.data.tweets }
+            return response.data.tweets
         })
     }
 
@@ -46,9 +49,9 @@ const Bookmarks = (props) => {
         })
             .then((response) => {
                 setTweets((prevState) => {
-                    const newState = { data: [] }
-                    newState.data.push(...prevState.data)
-                    newState.data.push(...response.data.tweets)
+                    const newState = []
+                    newState.push(...prevState)
+                    newState.push(...response.data.tweets)
                     return newState
                 })
                 setSkip((prevState) => prevState + 1)
@@ -59,6 +62,27 @@ const Bookmarks = (props) => {
             })
     }
 
+    useEffect(() => {
+        axios({
+            url: "/api/bookmarks",
+            method: 'GET',
+            headers: {
+                "Authorization": `Bearer ${jwt}`,
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Credentials": true
+            },
+            params: { skip: 0 }
+        })
+            .then((res) => {
+                if (res.data.tweets.length !== 0) {
+                    setTweetsHandler(res)
+                }
+            })
+            .catch((e) => {
+                console.log(e)
+            })
+    }, [])
+
     return (
         <div className="main-app">
             <div className="side-section">
@@ -66,7 +90,7 @@ const Bookmarks = (props) => {
             </div>
             <div className="middle-section">
                 <TitleBar title="Bookmarks" composeDisplay="none" />
-                <TweetList tweets={tweets.data} setTweetsHandler={setTweetsHandler} url="/api/bookmarks" />
+                <TweetList tweets={tweets} />
                 <button className="load-more" onClick={() => LoadClickHandler()}>:</button>
             </div>
             <div className="side-section suggestion">

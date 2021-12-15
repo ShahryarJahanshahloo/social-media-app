@@ -3,7 +3,6 @@ import { useHistory } from 'react-router';
 import { useSelector, useDispatch } from 'react-redux';
 
 import Avatar from './avatar';
-import mamadAvatar from "../../mamad.jpg"
 import {
     BiHeart as HeartIcon,
     BiComment as CommentIcon,

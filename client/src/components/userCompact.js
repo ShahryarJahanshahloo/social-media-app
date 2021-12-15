@@ -3,7 +3,6 @@ import { useHistory } from 'react-router'
 import { useSelector, useDispatch } from 'react-redux'
 
 import Avatar from './avatar'
-import axios from 'axios'
 
 const iconStyle = {
     fontSize: "15px",

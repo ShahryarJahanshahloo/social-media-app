@@ -4,8 +4,6 @@ import { useSelector } from 'react-redux';
 
 import Avatar from "./avatar"
 
-import myAvatar from "../../bull.jpg"
-
 import {
     AiFillEdit as ComposeIcon,
 } from "react-icons/ai"

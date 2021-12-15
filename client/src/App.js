@@ -1,33 +1,33 @@
 import { useEffect } from 'react';
-import { useHistory, BrowserRouter, Switch, Route } from 'react-router-dom'
+import { useHistory, Switch, Route } from 'react-router-dom'
 import axios from "axios"
 import { useDispatch } from 'react-redux';
 
 import './App.css';
-import "./components/home/home.css"
-import "./components/home/tweetList.css"
-import "./components/home/composeCompact.css"
-import "./components/home/login&signup.css"
-import "./components/home/navbar.css"
-import "./components/home/tweetCompact.css"
-import "./components/home/tweetExtended.css"
-import "./components/home/titleBar.css"
-import "./components/home/composeExtended.css"
-import "./components/home/profile.css"
-import "./components/home/explore.css"
-import "./components/home/userCompact.css"
-import "./components/home/userList.css"
+import "./components/home.css"
+import "./components/tweetList.css"
+import "./components/composeCompact.css"
+import "./components/login&signup.css"
+import "./components/navbar.css"
+import "./components/tweetCompact.css"
+import "./components/tweetExtended.css"
+import "./components/titleBar.css"
+import "./components/composeExtended.css"
+import "./components/profile.css"
+import "./components/explore.css"
+import "./components/userCompact.css"
+import "./components/userList.css"
 
-import Login from "./components/home/login"
-import Signup from "./components/home/signup"
-import Home from "./components/home/home"
-import Bookmarks from "./components/home/bookmarks"
-import Profile from './components/home/profile';
-import Explore from "./components/home/explore"
+import Login from "./components/login"
+import Signup from "./components/signup"
+import Home from "./components/home"
+import Bookmarks from "./components/bookmarks"
+import Profile from './components/profile';
+import Explore from "./components/explore"
 import Redirect from './components/redirect';
 import NoMatch404 from "./components/noMatch404";
-import ComposeExtended from './components/home/composeExtended';
-import TweetExtended from './components/home/tweetExtended';
+import ComposeExtended from './components/composeExtended';
+import TweetExtended from './components/tweetExtended';
 
 function App() {
   const jwt = localStorage.getItem("jwt")

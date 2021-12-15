@@ -3,8 +3,6 @@ import { useParams, useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import axios from "axios"
 
-import myAvatar from "../../bull.jpg"
-
 import Avatar from "./avatar"
 import TweetList from './tweetList';
 import Navbar from './navbar';
@@ -15,20 +13,19 @@ import {
 } from "react-icons/bi"
 
 const Profile = (props) => {
+    const jwt = localStorage.getItem("jwt")
     const [skip, setSkip] = useState(0)
-    const [tweets, setTweets] = useState({
-        data: [{
-            body: "",
-            likesCount: "",
-            retweetCount: "",
-            repliesCount: "",
-            retweetData: {
-                user: { displayName: "" }
-            },
-            user: { displayName: "", username: "" },
-            createdAt: ""
-        }]
-    })
+    const [tweets, setTweets] = useState([{
+        body: "",
+        likesCount: "",
+        retweetCount: "",
+        repliesCount: "",
+        retweetData: {
+            user: { displayName: "" }
+        },
+        user: { displayName: "", username: "" },
+        createdAt: ""
+    }])
     const [profile, setProfile] = useState({
         displayName: "",
         bio: "",
@@ -47,11 +44,9 @@ const Profile = (props) => {
 
     const setTweetsHandler = (response) => {
         setTweets(() => {
-            return { data: response.data.tweets }
+            return response.data.tweets
         })
     }
-
-    console.log("profile rendering");
 
     const LoadClickHandler = () => {
         axios({
@@ -65,9 +60,9 @@ const Profile = (props) => {
         })
             .then((response) => {
                 setTweets((prevState) => {
-                    const newState = { data: [] }
-                    newState.data.push(...prevState.data)
-                    newState.data.push(...response.data.tweets)
+                    const newState = []
+                    newState.push(...prevState)
+                    newState.push(...response.data.tweets)
                     return newState
                 })
                 setSkip((prevState) => prevState + 1)
@@ -96,6 +91,27 @@ const Profile = (props) => {
                         followingsCount: res.data.followingsCount,
                     }
                 })
+            })
+            .catch((e) => {
+                console.log(e)
+            })
+    }, [])
+
+    useEffect(() => {
+        axios({
+            url: "/api/profileTweets",
+            method: 'GET',
+            headers: {
+                "Authorization": `Bearer ${jwt}`,
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Credentials": true
+            },
+            params: { skip: 0, username: profileUsername }
+        })
+            .then((res) => {
+                if (res.data.tweets.length !== 0) {
+                    setTweetsHandler(res)
+                }
             })
             .catch((e) => {
                 console.log(e)
@@ -172,12 +188,7 @@ const Profile = (props) => {
                         </div>
                     </div>
                 </div>
-                <TweetList tweets={tweets.data}
-                    setTweetsHandler={setTweetsHandler}
-                    url="/api/profileTweets"
-                    query={{
-                        username: profileUsername
-                    }} />
+                <TweetList tweets={tweets} />
                 <button className="load-more" onClick={() => LoadClickHandler()}>:</button>
             </div>
 
