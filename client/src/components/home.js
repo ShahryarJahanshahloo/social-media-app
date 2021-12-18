@@ -34,24 +34,24 @@ const Home = () => {
 
     const [tweets, loadMore, setTweets] = useTweetList("/api/home", {})
 
-    const left = () => 
+    const left =
         <div className="avatar-box">
             <Avatar username={username} size="32" />
         </div>
 
-    const middle = () =>
+    const middle = 
         <div className="title-box">
             Home
         </div>
 
-    const right = () =>
+    const right = 
         <div className="composeIcon" onClick={composeHandler}>
             <ComposeIcon style={iconStyle} />
         </div>
 
     return (
         <div className="main-app">
-            <div className="side-section">
+            <div className="side-section left">
                 <Navbar />
             </div>
             <div className="middle-section">
@@ -60,9 +60,9 @@ const Home = () => {
                     <ComposeCompact setTweets={setTweets} />
                 </div>
                 <TweetList tweets={tweets} />
-                <button className="load-more" onClick={loadMore}>:</button>
+                {tweets[0].body == "" ? null :<button className="load-more" onClick={loadMore}>load more</button>}
             </div>
-            <div className="side-section suggestion">
+            <div className="side-section right">
                 <FollowSuggestion />
             </div>
         </div>

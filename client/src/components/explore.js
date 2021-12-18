@@ -7,11 +7,7 @@ import UserList from './userList'
 import Navbar from './navbar'
 import FollowSuggestion from './followSuggestion'
 import TopBar from './topBar';
-
-import {
-    BiArrowBack as BackIcon,
-} from "react-icons/bi"
-
+import Avatar from './avatar'
 
 const Explore = () => {
     const [query, setQuery] = useState("")
@@ -25,10 +21,6 @@ const Explore = () => {
         _id: "",
     }])
     const [skip, setSkip] = useState(0)
-
-    const backButtonHandler = () => {
-        history.push("/home")
-    }
 
     const searchButtonHandler = () => {
         axios({
@@ -83,33 +75,31 @@ const Explore = () => {
             })
     }
 
-    const left = () =>
-        <div className="back-button-wrapper">
-            <div className="back-button" onClick={backButtonHandler}>
-                <BackIcon style={{ fontSize: "1.25em" }} />
-            </div>
+    const left =
+        <div className="avatar-box">
+            <Avatar username={user.username} size="32" />
         </div>
 
-    const middle = () =>
+    const middle =
         <div className="search-box">
             <input onChange={searchInputOnChange}
-                placeholder='search user'></input>
+                placeholder='Search User'></input>
         </div>
 
-    const right = () =>
+    const right =
         <button onClick={searchButtonHandler}>search</button>
 
     return (
         <div className="main-app">
-            <div className="side-section">
+            <div className="side-section left">
                 <Navbar />
             </div>
             <div className="middle-section">
                 <TopBar Left={left} Middle={middle} Right={right} />
                 <UserList users={users} />
-                <button className="load-more" onClick={loadMore}>:</button>
+                {users[0].username == "" ? null :<button className="load-more" onClick={loadMore}>load more</button>}
             </div>
-            <div className="side-section suggestion">
+            <div className="side-section right">
                 <FollowSuggestion />
             </div>
         </div>

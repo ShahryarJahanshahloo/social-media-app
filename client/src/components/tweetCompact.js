@@ -144,7 +144,12 @@ const TweetCompact = ({ tweet, extend = false }) => {
             <div className="tweet-main">
                 <div className="retweetedBy-box">
                     <div className="retweetedBy-info">
-                        {isRetweet ? `${tweet.user.displayName} retweeted` : null}
+                        {isRetweet
+                            ? <div style={{ color: "rgb(83, 100, 113)", fontSize: "0.8em" }}>
+                                <RetweetIcon style={{ color: "rgb(83, 100, 113)" }} /> {tweet.user.displayName} retweeted
+                            </div>
+                            : null
+                        }
                     </div>
                 </div>
                 <div className="tweet-author-info">
@@ -160,16 +165,28 @@ const TweetCompact = ({ tweet, extend = false }) => {
                 </div>
                 <div className="tweet-actions">
                     <div className="tweet-icon-wrapper" onClick={extend ? null : redirectToTweet}>
-                        <CommentIcon style={iconStyle} />
-                        {tweetContent.repliesCount != 0 ? tweetContent.repliesCount : null}
+                        <div className='tweet-icon'>
+                            <CommentIcon style={iconStyle} />
+                        </div>
+                        <div className='tweet-icon-num'>
+                            {tweetContent.repliesCount != 0 ? tweetContent.repliesCount : null}
+                        </div>
                     </div>
                     <div className="tweet-icon-wrapper" onClick={retweetBtnHandler}>
-                        <RetweetIcon style={retweetState.isRetweeted ? { ...iconStyle, color: "green" } : iconStyle} />
-                        {retweetState.retweetCount != 0 ? retweetState.retweetCount : null}
+                        <div className='tweet-icon'>
+                            <RetweetIcon style={retweetState.isRetweeted ? { ...iconStyle, color: "green" } : iconStyle} />
+                        </div>
+                        <div className='tweet-icon-num'>
+                            {retweetState.retweetCount != 0 ? retweetState.retweetCount : null}
+                        </div>
                     </div>
                     <div className="tweet-icon-wrapper" onClick={likeBtnHandler}>
-                        <HeartIcon style={likeState.isLiked ? { ...iconStyle, color: "red" } : iconStyle} />
-                        {likeState.likesCount != 0 ? likeState.likesCount : null}
+                        <div className='tweet-icon'>
+                            <HeartIcon style={likeState.isLiked ? { ...iconStyle, color: "red" } : iconStyle} />
+                        </div>
+                        <div className='tweet-icon-num'>
+                            {likeState.likesCount != 0 ? likeState.likesCount : null}
+                        </div>
                     </div>
                 </div>
             </div>

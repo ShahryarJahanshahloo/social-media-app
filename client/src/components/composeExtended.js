@@ -59,17 +59,17 @@ const ComposeExtended = () => {
         }
     }
 
-    const left = () =>
+    const left = 
         <div className="back-button-wrapper">
             <div className="back-button" onClick={backButtonHandler}>
                 <BackIcon style={{ fontSize: "1.25em" }} />
             </div>
         </div>
 
-    const middle = () =>
+    const middle = 
         <div></div>
 
-    const right = () =>
+    const right = 
         <button className={tweetBtnClass} disabled={tweetBody == ""}
             onClick={tweetBtnHandler}>Tweet</button>
 

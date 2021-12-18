@@ -2,7 +2,7 @@ import React from 'react';
 
 import TweetCompact from './tweetCompact';
 
-const TweetList = ({ tweets }) => {
+const TweetList = ({ tweets, alt }) => {
 
     const isTweetListEmpty = (tweets[0].body === "")
 

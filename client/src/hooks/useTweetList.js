@@ -27,6 +27,7 @@ const useTweetList = (URL, PARAMS) => {
             url: URL,
             method: 'get',
             headers: {
+                "Authorization": `Bearer ${jwt}`,
                 "Access-Control-Allow-Origin": "*",
                 "Access-Control-Allow-Credentials": true
             },

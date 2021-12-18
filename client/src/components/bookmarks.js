@@ -21,30 +21,30 @@ const Bookmarks = (props) => {
 
     const [tweets, loadMore] = useTweetList("/api/bookmarks", {})
 
-    const left = () =>
+    const left =
         <div className="avatar-box">
             <Avatar username={username} size="32" />
         </div>
 
-    const middle = () =>
+    const middle =
         <div className="title-box">
             Bookmarks
         </div>
 
-    const right = () =>
+    const right =
         <div></div>
 
     return (
         <div className="main-app">
-            <div className="side-section">
+            <div className="side-section left">
                 <Navbar />
             </div>
             <div className="middle-section">
                 <TopBar Left={left} Middle={middle} Right={right} />
                 <TweetList tweets={tweets} />
-                <button className="load-more" onClick={loadMore}>:</button>
+                {tweets[0].body == "" ? null :<button className="load-more" onClick={loadMore}>load more</button>}
             </div>
-            <div className="side-section suggestion">
+            <div className="side-section right">
                 <FollowSuggestion />
             </div>
         </div>

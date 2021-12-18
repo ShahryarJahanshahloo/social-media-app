@@ -6,13 +6,13 @@ const TopBar = ({ Left, Middle, Right }) => {
         <div className="top-bar">
             <div className="top-bar-flex">
                 <div className="top-bar-flex-item-side">
-                    <Left />
+                    {Left}
                 </div>
                 <div className="top-bar-flex-item-middle">
-                    <Middle />
+                    {Middle}
                 </div>
                 <div className="top-bar-flex-item-side">
-                    <Right />
+                    {Right}
                 </div>
             </div>
         </div>

@@ -49,26 +49,31 @@ const Navbar = (props) => {
         <div className="navbar-wrapper">
             <div className="navbar">
                 <div className="navbar-upper">
+                    <div className="navbar-item-wrapper twitter-icon">
+                        <div className="navbar-item" onClick={() => { history.push("/home") }}>
+                            <BirdIcon style={{ fontSize: "2em", color: "rgb(29, 155, 240)" }} />
+                        </div>
+                    </div>
                     <div className="navbar-item-wrapper">
-                        <div className="navbar-item" onClick={() => {history.push("/home")}}>
+                        <div className="navbar-item" onClick={() => { history.push("/home") }}>
                             <HomeIcon style={iconStyle} />
                             <label className="navbar-item-text">Home</label>
                         </div>
                     </div>
                     <div className="navbar-item-wrapper">
-                        <div className="navbar-item" onClick={() => {history.push("/bookmarks")}}>
+                        <div className="navbar-item" onClick={() => { history.push("/bookmarks") }}>
                             <BookmarkIcon style={iconStyle} />
                             <label className="navbar-item-text">Bookmarks</label>
                         </div>
                     </div>
                     <div className="navbar-item-wrapper">
-                        <div className="navbar-item" onClick={() => {history.push("/explore")}}>
+                        <div className="navbar-item" onClick={() => { history.push("/explore") }}>
                             <ExploreIcon style={iconStyle} />
                             <label className="navbar-item-text">Explore</label>
                         </div>
                     </div>
                     <div className="navbar-item-wrapper">
-                        <div className="navbar-item" onClick={() => {history.push(`/profile/${user.username}`)}}>
+                        <div className="navbar-item" onClick={() => { history.push(`/profile/${user.username}`) }}>
                             <ProfileIcon style={iconStyle} />
                             <label className="navbar-item-text">Profile</label>
                         </div>

@@ -56,25 +56,25 @@ const Profile = (props) => {
             })
     }, [])
 
-    const left = () =>
+    const left = 
         <div className="back-button-wrapper">
             <div className="back-button" onClick={backButtonHandler}>
                 <BackIcon style={{ fontSize: "1.25em" }} />
             </div>
         </div>
 
-    const middle = () =>
+    const middle = 
         <div className="top-bar-profile">
             <div className="top-bar-displayName">{profile.displayName}</div>
             <div className="top-bar-tweetCount">{profile.tweetsCount} Tweets</div>
         </div>
 
-    const right = () =>
+    const right = 
         <div></div>
 
     return (
         <div className="main-app">
-            <div className="side-section">
+            <div className="side-section left">
                 <Navbar />
             </div>
             <div className="middle-section">
@@ -125,10 +125,10 @@ const Profile = (props) => {
                     </div>
                 </div>
                 <TweetList tweets={tweets} />
-                <button className="load-more" onClick={loadMore}>:</button>
+                {tweets[0].body == "" ? null :<button className="load-more" onClick={loadMore}>load more</button>}
             </div>
 
-            <div className="side-section suggestion">
+            <div className="side-section right">
                 <FollowSuggestion />
             </div>
         </div>

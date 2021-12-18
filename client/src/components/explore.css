@@ -5,8 +5,16 @@
     flex-flow: column nowrap;
     justify-content: center;
     align-items: center;
+    padding-right: 5px;
 }
 
 .search-box > input {
     width: 100%;
+    padding: 2px;
+    padding-left: 10px;
+    outline: none;
+    height: 40px;
+    border-radius: 15px;
+    border: none;
+    background-color: rgb(239, 243, 244);
 }

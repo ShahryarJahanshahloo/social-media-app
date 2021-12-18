@@ -32,8 +32,9 @@
 
 .compose-area-wrapper {
     height: 100%;
-    flex-grow: 5;
+    width: 100%;
     padding: 15px 10px;
+    position: relative;
 }
 
 .compose-text-area {

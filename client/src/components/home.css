@@ -10,7 +10,7 @@
     height: 50px;
 }
 
-.side-section.suggestion {
+.side-section.right {
     display: none;
 }
 
@@ -21,16 +21,47 @@
     display: flex;
     flex-flow: column nowrap;
     position: relative;
+    max-width: 600px;
 }
 
 .compose-tweet-box {
+    border-bottom: 1px solid rgba(223, 223, 223, 0.4);
     display: none;
 }
 
+@media only screen and (min-width: 480px) {
+    .main-app {
+        flex-flow: row nowrap;
+    }
 
-/*
-    media bara zire 480px mishe amoodi
-    baraye balaye 480 ke desktop o inast marhale marhale
-    avavl left side koochik mishe
-    baad right side pak mishe
-*/
+    .side-section {
+        height: 100%;
+    }
+
+    .side-section.left {
+        width: 100px;
+    }
+
+    .middle-section {
+        height: 100%;
+        border-left: 1px solid rgba(223, 223, 223, 0.4);
+        border-right: 1px solid rgba(223, 223, 223, 0.4);
+    }
+
+    .compose-tweet-box {
+        display: block;
+    }
+}
+
+@media only screen and (min-width: 1000px) {
+    .side-section.right {
+        display: block;
+        width: 300px;
+    }
+}
+
+@media only screen and (min-width: 1300px) {
+    .side-section.left {
+        width: 275px;
+    }
+}
