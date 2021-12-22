@@ -68,28 +68,28 @@ const TweetExtended = (props) => {
             })
     }, [])
 
-    const left = 
-        <div className="back-button-wrapper">
-            <div className="back-button" onClick={backButtonHandler}>
-                <BackIcon style={{ fontSize: "1.25em" }} />
-            </div>
-        </div>
-
-    const middle = 
-        <div className="tweet-title">
-            <div>Tweet</div>
-        </div>
-
-    const right = 
-        <div></div>
-
     return (
         <div className="main-app">
             <div className="side-section left">
                 <Navbar />
             </div>
             <div className="middle-section">
-                <TopBar Left={left} Middle={middle} Right={right} />
+                <TopBar
+                    Left={
+                        <div className="back-button-wrapper">
+                            <div className="back-button" onClick={backButtonHandler}>
+                                <BackIcon style={{ fontSize: "1.25em" }} />
+                            </div>
+                        </div>
+                    }
+                    Middle={
+                        <div className="tweet-title">
+                            <div>Tweet</div>
+                        </div>
+                    }
+                    Right={
+                        <div></div>
+                    } />
                 {tweet.body == "" || user.username == "" ? null : <TweetCompact tweet={tweet} extend={true} />}
                 <div className="compose-reply-box">
                     {tweet.body == "" || user.username == "" ? null : <ComposeCompact setTweets={addReply} replyTo={{
@@ -97,7 +97,7 @@ const TweetExtended = (props) => {
                     }} />}
                 </div>
                 {tweet._id == "" ? null : <TweetList tweets={tweets} />}
-                {tweets[0].body == "" ? null :<button className="load-more" onClick={loadMore}>load more</button>}
+                {tweets.length == 0 ? null : <button className="load-more" onClick={loadMore}>load more</button>}
             </div>
             <div className="side-section right">
                 <FollowSuggestion />

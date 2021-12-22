@@ -4,9 +4,11 @@ import TweetCompact from './tweetCompact';
 
 const TweetList = ({ tweets, alt }) => {
 
-    const isTweetListEmpty = (tweets[0].body === "")
+    const isTweetListEmpty = tweets.length == 0
 
     let tweetList = <div className="alert">No tweets to show!</div>
+
+    if (alt != null) tweetList = alt
 
     if (!isTweetListEmpty) {
         tweetList = tweets.map((value, index) => {

@@ -32,6 +32,7 @@
 @media only screen and (min-width: 480px) {
     .main-app {
         flex-flow: row nowrap;
+        justify-content: left;
     }
 
     .side-section {
@@ -39,7 +40,7 @@
     }
 
     .side-section.left {
-        width: 100px;
+        width: 90px;
     }
 
     .middle-section {
@@ -54,6 +55,10 @@
 }
 
 @media only screen and (min-width: 1000px) {
+    .main-app {
+        justify-content: center;
+    }
+
     .side-section.right {
         display: block;
         width: 300px;

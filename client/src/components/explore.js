@@ -75,29 +75,29 @@ const Explore = () => {
             })
     }
 
-    const left =
-        <div className="avatar-box">
-            <Avatar username={user.username} size="32" />
-        </div>
-
-    const middle =
-        <div className="search-box">
-            <input onChange={searchInputOnChange}
-                placeholder='Search User'></input>
-        </div>
-
-    const right =
-        <button onClick={searchButtonHandler}>search</button>
-
     return (
         <div className="main-app">
             <div className="side-section left">
                 <Navbar />
             </div>
             <div className="middle-section">
-                <TopBar Left={left} Middle={middle} Right={right} />
+                <TopBar
+                    Left={
+                        <div className="avatar-box">
+                            <Avatar username={user.username} size="32" />
+                        </div>
+                    }
+                    Middle={
+                        <div className="search-box">
+                            <input onChange={searchInputOnChange}
+                                placeholder='Search User'></input>
+                        </div>
+                    }
+                    Right={
+                        <button onClick={searchButtonHandler}>search</button>
+                    } />
                 <UserList users={users} />
-                {users[0].username == "" ? null :<button className="load-more" onClick={loadMore}>load more</button>}
+                {users[0].username == "" ? null : <button className="load-more" onClick={loadMore}>load more</button>}
             </div>
             <div className="side-section right">
                 <FollowSuggestion />

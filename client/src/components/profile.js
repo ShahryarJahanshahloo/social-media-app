@@ -56,29 +56,29 @@ const Profile = (props) => {
             })
     }, [])
 
-    const left = 
-        <div className="back-button-wrapper">
-            <div className="back-button" onClick={backButtonHandler}>
-                <BackIcon style={{ fontSize: "1.25em" }} />
-            </div>
-        </div>
-
-    const middle = 
-        <div className="top-bar-profile">
-            <div className="top-bar-displayName">{profile.displayName}</div>
-            <div className="top-bar-tweetCount">{profile.tweetsCount} Tweets</div>
-        </div>
-
-    const right = 
-        <div></div>
-
     return (
         <div className="main-app">
             <div className="side-section left">
                 <Navbar />
             </div>
             <div className="middle-section">
-                <TopBar Left={left} Middle={middle} Right={right} />
+                <TopBar
+                    Left={
+                        <div className="back-button-wrapper">
+                            <div className="back-button" onClick={backButtonHandler}>
+                                <BackIcon style={{ fontSize: "1.25em" }} />
+                            </div>
+                        </div>
+                    }
+                    Middle={
+                        <div className="top-bar-profile">
+                            <div className="top-bar-displayName">{profile.displayName}</div>
+                            <div className="top-bar-tweetCount">{profile.tweetsCount} Tweets</div>
+                        </div>
+                    }
+                    Right={
+                        <div></div>
+                    } />
                 <div className="profile-stats-wrapper">
                     <div className="profile-stats-box">
                         <div className="user-stats-box">
@@ -125,7 +125,7 @@ const Profile = (props) => {
                     </div>
                 </div>
                 <TweetList tweets={tweets} />
-                {tweets[0].body == "" ? null :<button className="load-more" onClick={loadMore}>load more</button>}
+                {tweets.length == 0 ? null : <button className="load-more" onClick={loadMore}>load more</button>}
             </div>
 
             <div className="side-section right">

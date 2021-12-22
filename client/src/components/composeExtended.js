@@ -59,23 +59,23 @@ const ComposeExtended = () => {
         }
     }
 
-    const left = 
-        <div className="back-button-wrapper">
-            <div className="back-button" onClick={backButtonHandler}>
-                <BackIcon style={{ fontSize: "1.25em" }} />
-            </div>
-        </div>
-
-    const middle = 
-        <div></div>
-
-    const right = 
-        <button className={tweetBtnClass} disabled={tweetBody == ""}
-            onClick={tweetBtnHandler}>Tweet</button>
-
     return (
         <div className="composeExtended">
-            <TopBar Left={left} Middle={middle} Right={right} />
+            <TopBar
+                Left={
+                    <div className="back-button-wrapper">
+                        <div className="back-button" onClick={backButtonHandler}>
+                            <BackIcon style={{ fontSize: "1.25em" }} />
+                        </div>
+                    </div>
+                }
+                Middle={
+                    <div></div>
+                }
+                Right={
+                    <button className={tweetBtnClass} disabled={tweetBody == ""}
+                        onClick={tweetBtnHandler}>Tweet</button>
+                } />
             <div className="compose-main">
                 <div className="compose-box">
                     <div className="compose-avatar-bar">

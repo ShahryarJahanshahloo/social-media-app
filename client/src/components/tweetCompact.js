@@ -1,20 +1,30 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router';
 import { useSelector, useDispatch } from 'react-redux';
+import axios from 'axios'
 
 import Avatar from './avatar';
 import {
-    BiHeart as HeartIcon,
-    BiComment as CommentIcon,
-} from "react-icons/bi"
+    AiOutlineRetweet as RetweetIcon
+} from "react-icons/ai"
 import {
-    FaRetweet as RetweetIcon,
+    BsHeartFill as HeartIcon
+} from "react-icons/bs"
+import {
+    FaRegComment as CommentIcon
 } from "react-icons/fa"
-import axios from 'axios';
 
 const iconStyle = {
+    fontSize: "17px",
+    color: "rgb(83, 100, 113)",
+}
+
+const heartStyle = {
     fontSize: "15px",
     color: "rgb(83, 100, 113)",
+    fill: "none",
+    strokeWidth: "1.3",
+    width: "100%",
 }
 
 const TweetCompact = ({ tweet, extend = false }) => {
@@ -174,17 +184,19 @@ const TweetCompact = ({ tweet, extend = false }) => {
                     </div>
                     <div className="tweet-icon-wrapper" onClick={retweetBtnHandler}>
                         <div className='tweet-icon'>
-                            <RetweetIcon style={retweetState.isRetweeted ? { ...iconStyle, color: "green" } : iconStyle} />
+                            <RetweetIcon 
+                            style={retweetState.isRetweeted ? { ...iconStyle, color: "green", strokeWidth: "20" } : iconStyle} />
                         </div>
-                        <div className='tweet-icon-num'>
+                        <div className='tweet-icon-num' style={retweetState.isRetweeted ? { color: "green" } : null}>
                             {retweetState.retweetCount != 0 ? retweetState.retweetCount : null}
                         </div>
                     </div>
                     <div className="tweet-icon-wrapper" onClick={likeBtnHandler}>
                         <div className='tweet-icon'>
-                            <HeartIcon style={likeState.isLiked ? { ...iconStyle, color: "red" } : iconStyle} />
+                            <HeartIcon
+                            style={likeState.isLiked ? { ...heartStyle, color: "red", fill: "red ", stroke:"none" } : heartStyle} />
                         </div>
-                        <div className='tweet-icon-num'>
+                        <div className='tweet-icon-num' style={likeState.isLiked ? { color: "red" } : null}>
                             {likeState.likesCount != 0 ? likeState.likesCount : null}
                         </div>
                     </div>

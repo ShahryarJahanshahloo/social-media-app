@@ -11,19 +11,7 @@ body, html {
 * {
     box-sizing: border-box;
     font-size: 16px;
-    font-family: montserrat,Arial, 'Courier New', Courier, monospace;
+    font-family: "Open sans", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
 
 a {text-decoration: none}
-
-.load-more {
-    background-color: #ffffff;
-    border: none;
-    color: rgb(24, 23, 23);
-    padding: 5px 0;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    outline: none;
-}

@@ -3,17 +3,7 @@ import axios from 'axios';
 
 const useTweetList = (URL, PARAMS) => {
     const jwt = localStorage.getItem("jwt")
-    const [tweets, setTweets] = useState([{
-        body: "",
-        likesCount: "",
-        retweetCount: "",
-        repliesCount: "",
-        retweetData: {
-            user: { displayName: "" }
-        },
-        user: { displayName: "", username: "" },
-        createdAt: ""
-    }])
+    const [tweets, setTweets] = useState([])
     const [skip, setSkip] = useState(0)
 
     const setTweetsHandler = (response) => {
