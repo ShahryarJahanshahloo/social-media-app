@@ -124,8 +124,24 @@ const Profile = (props) => {
                         </div>
                     </div>
                 </div>
-                <TweetList tweets={tweets} />
-                {tweets.length == 0 ? null : <button className="load-more" onClick={loadMore}>load more</button>}
+                <TweetList tweets={tweets} alt={
+                    <div className='alt-container'>
+                        <div className='alt-flex'>
+                            <div className='alt-item-wrapper'>
+                                <span className='alt-item-big'>
+                                {isUserProfile ? "You haven't Tweeted yet": "This user hasn't Tweeted yet"}
+                                </span>
+                            </div>
+                            <div className='alt-item-wrapper'>
+                                <span className='alt-item-small'>
+                                {isUserProfile ? "When you post a Tweet, it'll show up here":
+                                ""}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                }/>
+                {tweets.length < 10 ? null : <button className="load-more" onClick={loadMore}>load more tweets</button>}
             </div>
 
             <div className="side-section right">

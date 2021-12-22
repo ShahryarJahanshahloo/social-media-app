@@ -57,7 +57,7 @@ const Bookmarks = (props) => {
                         </div>
                     </div>
                 } />
-                {tweets.length == 0 ? null : <button className="load-more" onClick={loadMore}>load more</button>}
+                {tweets.length < 10 ? null : <button className="load-more" onClick={loadMore}>load more tweets</button>}
             </div>
             <div className="side-section right">
                 <FollowSuggestion />

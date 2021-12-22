@@ -59,8 +59,24 @@ const Home = () => {
                 <div className="compose-tweet-box">
                     <ComposeCompact setTweets={setTweets} />
                 </div>
-                <TweetList tweets={tweets} />
-                {tweets.length == 0 ? null : <button className="load-more" onClick={loadMore}>load more</button>}
+                <TweetList tweets={tweets} alt={
+                    <div className='alt-container'>
+                        <div className='alt-flex'>
+                            <div className='alt-item-wrapper'>
+                                <span className='alt-item-big'>
+                                What? No Tweets yet?
+                                </span>
+                            </div>
+                            <div className='alt-item-wrapper'>
+                                <span className='alt-item-small'>
+                                This empty timeline won't be around for long. Start following
+                                people and you'll see Tweets show up here.
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                } />
+                {tweets.length < 10 ? null : <button className="load-more" onClick={loadMore}>load more tweets</button>}
             </div>
             <div className="side-section right">
                 <FollowSuggestion />

@@ -14,13 +14,9 @@ const Explore = () => {
     const history = useHistory()
     const user = useSelector(state => state.userReducer)
 
-    const [users, setUsers] = useState([{
-        username: "",
-        displayName: "",
-        bio: "",
-        _id: "",
-    }])
+    const [users, setUsers] = useState([])
     const [skip, setSkip] = useState(0)
+    const [emptyRes, setEmptyRes] = useState(false)
 
     const searchButtonHandler = () => {
         axios({
@@ -38,6 +34,8 @@ const Explore = () => {
                         return res.data.users
                     })
                     setSkip(() => 0)
+                } else if (res.data.users.length == 0) {
+                    setEmptyRes(true)
                 }
             })
             .catch((e) => {
@@ -96,8 +94,24 @@ const Explore = () => {
                     Right={
                         <button onClick={searchButtonHandler}>search</button>
                     } />
-                <UserList users={users} />
-                {users[0].username == "" ? null : <button className="load-more" onClick={loadMore}>load more</button>}
+                <UserList users={users} alt=  {emptyRes ?
+                    <div className='alt-container'>
+                        <div className='alt-flex'>
+                            <div className='alt-item-wrapper'>
+                                <span className='alt-item-big'>
+                                No results found!
+                                </span>
+                            </div>
+                            <div className='alt-item-wrapper'>
+                                <span className='alt-item-small'>
+                                The term you entered did not bring up any results. You may have 
+                                mistyped your term or the username you are looking for doesn't exist.
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                : null}  />
+                {users.length < 10 ? null : <button className="load-more" onClick={loadMore}>load more users</button>}
             </div>
             <div className="side-section right">
                 <FollowSuggestion />

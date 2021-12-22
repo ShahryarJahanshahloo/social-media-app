@@ -97,7 +97,7 @@ const TweetExtended = (props) => {
                     }} />}
                 </div>
                 {tweet._id == "" ? null : <TweetList tweets={tweets} />}
-                {tweets.length == 0 ? null : <button className="load-more" onClick={loadMore}>load more</button>}
+                {tweets.length < 10 ? null : <button className="load-more" onClick={loadMore}>load more replies</button>}
             </div>
             <div className="side-section right">
                 <FollowSuggestion />

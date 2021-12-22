@@ -6,7 +6,7 @@ const TweetList = ({ tweets, alt }) => {
 
     const isTweetListEmpty = tweets.length == 0
 
-    let tweetList = <div className="alert">No tweets to show!</div>
+    let tweetList = <div className="alert"></div>
 
     if (alt != null) tweetList = alt
 

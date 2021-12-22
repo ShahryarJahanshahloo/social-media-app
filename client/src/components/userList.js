@@ -2,10 +2,13 @@ import React from 'react';
 
 import UserCompact from './userCompact';
 
-const UserList = ({ users }) => {
-    const isUserListEmpty = (users[0].username === "")
+const UserList = ({ users, alt }) => {
 
-    let userList = <div className="alert">No users to show!</div>
+    const isUserListEmpty = users.length == 0
+
+    let userList = <div className="alert"></div>
+
+    if (alt != null) userList = alt
 
     if (!isUserListEmpty) {
         userList = users.map((value, index) => {
