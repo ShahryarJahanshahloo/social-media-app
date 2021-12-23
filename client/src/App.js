@@ -28,6 +28,8 @@ import Redirect from './components/redirect';
 import NoMatch404 from "./components/noMatch404";
 import ComposeExtended from './components/composeExtended';
 import TweetExtended from './components/tweetExtended';
+import Following from './components/following'
+import Followers from './components/followers'
 
 function App() {
   const jwt = localStorage.getItem("jwt")
@@ -85,6 +87,8 @@ function App() {
         <Route path="/compose" component={ComposeExtended}></Route>
         <Route path="/tweet/:tweetID" component={TweetExtended}></Route>
         <Route path="/profile/:username" component={Profile}></Route>
+        <Route path="/following/:username" component={Following}></Route>
+        <Route path="/followers/:username" component={Followers}></Route>
         <Route exact path="/" component={Redirect} />
         <Route path="*" component={NoMatch404}></Route>
       </Switch>

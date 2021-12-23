@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from "axios"
+import { useHistory } from 'react-router';
 import { useSelector } from 'react-redux';
 
 import Avatar from "./avatar"
@@ -9,6 +10,11 @@ const ComposeCompact = ({ setTweets, replyTo = null }) => {
     const [tweetBtnClass, setTweetBtnClass] = useState("tweet-button disabledButton")
     const user = useSelector(state => state.userReducer)
     const jwt = localStorage.getItem("jwt")
+    const history = useHistory()
+
+    const profileRedirect = () => {
+        history.push(`/profile/${user.username}`)
+    }
 
     const tweetBtnHandler = () => {
         //validate tweet body!
@@ -59,7 +65,7 @@ const ComposeCompact = ({ setTweets, replyTo = null }) => {
             <div className="compose-main">
                 <div className="compose-box">
                     <div className="compose-avatar-bar">
-                        <div className="compose-avatar">
+                        <div className="compose-avatar"  onClick={profileRedirect}>
                             <Avatar username={user.username} size="48" />
                         </div>
                     </div>

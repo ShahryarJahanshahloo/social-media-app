@@ -23,6 +23,7 @@
 
 .compose-avatar {
     width: 48px;
+    cursor: pointer;
 }
 
 .compose-avatar-bar {

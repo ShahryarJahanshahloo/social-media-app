@@ -40,7 +40,7 @@ const Home = () => {
                 <Navbar />
             </div>
             <div className="middle-section">
-                <TopBar
+                <TopBar needsDesktop={true}
                     Left={
                         <div className="avatar-box">
                             <Avatar username={username} size="32" />
@@ -64,13 +64,13 @@ const Home = () => {
                         <div className='alt-flex'>
                             <div className='alt-item-wrapper'>
                                 <span className='alt-item-big'>
-                                What? No Tweets yet?
+                                    What? No Tweets yet?
                                 </span>
                             </div>
                             <div className='alt-item-wrapper'>
                                 <span className='alt-item-small'>
-                                This empty timeline won't be around for long. Start following
-                                people and you'll see Tweets show up here.
+                                    This empty timeline won't be around for long. Start following
+                                    people and you'll see Tweets show up here.
                                 </span>
                             </div>
                         </div>

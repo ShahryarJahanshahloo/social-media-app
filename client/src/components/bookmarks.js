@@ -27,7 +27,7 @@ const Bookmarks = (props) => {
                 <Navbar />
             </div>
             <div className="middle-section">
-                <TopBar
+                <TopBar needsDesktop={true}
                     Left={
                         <div className="avatar-box">
                             <Avatar username={username} size="32" />

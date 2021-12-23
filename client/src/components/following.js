@@ -13,7 +13,7 @@ import {
     BiArrowBack as BackIcon,
 } from "react-icons/bi"
 
-const Followers = () => {
+const Following = () => {
     const history = useHistory()
     const [profile, setProfile] = useState({
         displayName: ""
@@ -21,7 +21,7 @@ const Followers = () => {
     let profileUsername = useParams().username
     const user = useSelector(state => state.userReducer)
     const isUserProfile = (profileUsername == user.username)
-    const [users, loadMore] = useUserList("/api/followers", { username: profileUsername })
+    const [users, loadMore] = useUserList("/api/followings", { username: profileUsername })
 
     const backButtonHandler = () => {
         history.push("/home")
@@ -76,16 +76,16 @@ const Followers = () => {
                             <div className='alt-item-wrapper'>
                                 <span className='alt-item-big'>
                                     {isUserProfile
-                                        ? "You don’t have any followers yet"
-                                        : `@${profileUsername} doesn’t have any followers`
+                                        ? "You aren’t following anyone yet"
+                                        : `@${profileUsername} isn't following anyone`
                                     }
                                 </span>
                             </div>
                             <div className='alt-item-wrapper'>
                                 <span className='alt-item-small'>
                                     {isUserProfile
-                                        ? "When someone follows you, you’ll see them here."
-                                        : "When someone follows them, they’ll be listed here."
+                                        ? "When you do, they’ll be listed here and you’ll see their Tweets in your timeline."
+                                        : "When they do, they’ll be listed here."
                                     }
                                 </span>
                             </div>
@@ -101,4 +101,4 @@ const Followers = () => {
     )
 }
 
-export default Followers
+export default Following

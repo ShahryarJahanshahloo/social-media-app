@@ -56,22 +56,6 @@
     align-items: center;
 }
 
-.tweets-navbar {
-    width: 100%;
-    height: 10%;
-    display: flex;
-    flex-flow: row nowrap;
-}
-
-.tweets-navbar-item {
-    width: 50%;
-    height: 100%;
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: center;
-    align-items: center;
-}
-
 .top-bar-profile {
     width: 100%;
     height: 100%;

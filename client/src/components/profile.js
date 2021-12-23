@@ -32,6 +32,14 @@ const Profile = (props) => {
         history.push("/home")
     }
 
+    const followingRedirect = () => {
+        history.push(`/following/${profileUsername}`)
+    }
+
+    const followersRedirect = () => {
+        history.push(`/followers/${profileUsername}`)
+    }
+
     useEffect(() => {
         axios({
             url: "/api/profileInfo",
@@ -95,32 +103,24 @@ const Profile = (props) => {
                         </div>
                         <div className="follow-stats-box">
                             <div className="follow-stats-item">
-                                <div>
+                                <div onClick={followersRedirect} style={{ cursor: "pointer" }}>
                                     <div className="followers-stats">Followers</div>
                                     <div>{profile.followersCount}</div>
                                 </div>
                             </div>
                             <div className="follow-stats-item">
-                                <div>
-                                    <div className="followings-stats">Followings</div>
+                                <div onClick={followingRedirect} style={{ cursor: "pointer" }}>
+                                    <div className="followings-stats">Following</div>
                                     <div>{profile.followingsCount}</div>
                                 </div>
                             </div>
                             <div className="follow-stats-item">
                                 <div>
                                     <div className="follow-button">
-                                //button
+                                        //button
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div className="tweets-navbar">
-                        <div className="tweets-navbar-item">
-                            <label>Tweets</label>
-                        </div>
-                        <div className="tweets-navbar-item">
-                            <label>Tweets & replies</label>
                         </div>
                     </div>
                 </div>
@@ -129,18 +129,23 @@ const Profile = (props) => {
                         <div className='alt-flex'>
                             <div className='alt-item-wrapper'>
                                 <span className='alt-item-big'>
-                                {isUserProfile ? "You haven't Tweeted yet": "This user hasn't Tweeted yet"}
+                                    {isUserProfile
+                                        ? "You haven't Tweeted yet"
+                                        : "This user hasn't Tweeted yet"
+                                    }
                                 </span>
                             </div>
                             <div className='alt-item-wrapper'>
                                 <span className='alt-item-small'>
-                                {isUserProfile ? "When you post a Tweet, it'll show up here":
-                                ""}
+                                    {isUserProfile
+                                        ? "When you post a Tweet, it'll show up here"
+                                        : ""
+                                    }
                                 </span>
                             </div>
                         </div>
                     </div>
-                }/>
+                } />
                 {tweets.length < 10 ? null : <button className="load-more" onClick={loadMore}>load more tweets</button>}
             </div>
 

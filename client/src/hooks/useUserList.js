@@ -2,12 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 const useUserList = (URL, PARAMS) => {
-    const [users, setUsers] = useState([{
-        username: "",
-        displayName: "",
-        bio: "",
-        _id: "",
-    }])
+    const [users, setUsers] = useState([])
     const [skip, setSkip] = useState(0)
 
     const loadMore = () => {
