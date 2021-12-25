@@ -70,37 +70,45 @@ const TweetExtended = (props) => {
 
     return (
         <div className="main-app">
-            <div className="side-section left">
-                <Navbar />
+            <div className='side-section-left-wrapper'>
+                <div className="side-section left">
+                    <Navbar />
+                </div>
             </div>
             <div className="middle-section">
-                <TopBar
-                    Left={
-                        <div className="back-button-wrapper">
-                            <div className="back-button" onClick={backButtonHandler}>
-                                <BackIcon style={{ fontSize: "1.25em" }} />
-                            </div>
+                <div className='middle-sections-container'>
+                    <div className='middle-section-left'>
+                        <TopBar
+                            Left={
+                                <div className="back-button-wrapper">
+                                    <div className="back-button" onClick={backButtonHandler}>
+                                        <BackIcon style={{ fontSize: "1.25em" }} />
+                                    </div>
+                                </div>
+                            }
+                            Middle={
+                                <div className="tweet-title">
+                                    <div>Tweet</div>
+                                </div>
+                            }
+                            Right={
+                                <div></div>
+                            } />
+                        {tweet.body == "" || user.username == "" ? null : <TweetCompact tweet={tweet} extend={true} />}
+                        <div className="compose-reply-box">
+                            {tweet.body == "" || user.username == "" ? null : <ComposeCompact setTweets={addReply} replyTo={{
+                                tweetID: tweet._id,
+                            }} />}
                         </div>
-                    }
-                    Middle={
-                        <div className="tweet-title">
-                            <div>Tweet</div>
-                        </div>
-                    }
-                    Right={
-                        <div></div>
-                    } />
-                {tweet.body == "" || user.username == "" ? null : <TweetCompact tweet={tweet} extend={true} />}
-                <div className="compose-reply-box">
-                    {tweet.body == "" || user.username == "" ? null : <ComposeCompact setTweets={addReply} replyTo={{
-                        tweetID: tweet._id,
-                    }} />}
+                        {tweet._id == "" ? null : <TweetList tweets={tweets} />}
+                        {tweets.length < 10 ? null : <button className="load-more" onClick={loadMore}>load more replies</button>}
+                    </div>
                 </div>
-                {tweet._id == "" ? null : <TweetList tweets={tweets} />}
-                {tweets.length < 10 ? null : <button className="load-more" onClick={loadMore}>load more replies</button>}
-            </div>
-            <div className="side-section right">
-                <FollowSuggestion />
+                <div className='middle-section-right'>
+                    <div className="side-section right">
+                        <FollowSuggestion />
+                    </div>
+                </div>
             </div>
         </div>
     )

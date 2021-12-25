@@ -49,53 +49,61 @@ const Following = () => {
 
     return (
         <div className="main-app">
-            <div className="side-section left">
-                <Navbar />
+            <div className='side-section-left-wrapper'>
+                <div className="side-section left">
+                    <Navbar />
+                </div>
             </div>
             <div className="middle-section">
-                <TopBar
-                    Left={
-                        <div className="back-button-wrapper">
-                            <div className="back-button" onClick={backButtonHandler}>
-                                <BackIcon style={{ fontSize: "1.25em" }} />
+                <div className='middle-sections-container'>
+                    <div className='middle-section-left'>
+                        <TopBar
+                            Left={
+                                <div className="back-button-wrapper">
+                                    <div className="back-button" onClick={backButtonHandler}>
+                                        <BackIcon style={{ fontSize: "1.25em" }} />
+                                    </div>
+                                </div>
+                            }
+                            Middle={
+                                <div className="top-bar-profile">
+                                    <div className="top-bar-displayName">{profile.displayName}</div>
+                                    <div className="top-bar-tweetCount">{profileUsername}</div>
+                                </div>
+                            }
+                            Right={
+                                <div></div>
+                            } />
+                        <UserList users={users} alt={
+                            <div className='alt-container'>
+                                <div className='alt-flex'>
+                                    <div className='alt-item-wrapper'>
+                                        <span className='alt-item-big'>
+                                            {isUserProfile
+                                                ? "You aren’t following anyone yet"
+                                                : `@${profileUsername} isn't following anyone`
+                                            }
+                                        </span>
+                                    </div>
+                                    <div className='alt-item-wrapper'>
+                                        <span className='alt-item-small'>
+                                            {isUserProfile
+                                                ? "When you do, they’ll be listed here and you’ll see their Tweets in your timeline."
+                                                : "When they do, they’ll be listed here."
+                                            }
+                                        </span>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    }
-                    Middle={
-                        <div className="top-bar-profile">
-                            <div className="top-bar-displayName">{profile.displayName}</div>
-                            <div className="top-bar-tweetCount">{profileUsername}</div>
-                        </div>
-                    }
-                    Right={
-                        <div></div>
-                    } />
-                <UserList users={users} alt={
-                    <div className='alt-container'>
-                        <div className='alt-flex'>
-                            <div className='alt-item-wrapper'>
-                                <span className='alt-item-big'>
-                                    {isUserProfile
-                                        ? "You aren’t following anyone yet"
-                                        : `@${profileUsername} isn't following anyone`
-                                    }
-                                </span>
-                            </div>
-                            <div className='alt-item-wrapper'>
-                                <span className='alt-item-small'>
-                                    {isUserProfile
-                                        ? "When you do, they’ll be listed here and you’ll see their Tweets in your timeline."
-                                        : "When they do, they’ll be listed here."
-                                    }
-                                </span>
-                            </div>
+                        } />
+                        {users.length < 10 ? null : <button className="load-more" onClick={loadMore}>load more users</button>}
+                    </div>
+                    <div className='middle-section-right'>
+                        <div className="side-section right">
+                            <FollowSuggestion />
                         </div>
                     </div>
-                } />
-                {users.length < 10 ? null : <button className="load-more" onClick={loadMore}>load more users</button>}
-            </div>
-            <div className="side-section right">
-                <FollowSuggestion />
+                </div>
             </div>
         </div>
     )
