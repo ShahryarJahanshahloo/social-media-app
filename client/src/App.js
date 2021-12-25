@@ -17,6 +17,7 @@ import "./components/profile.css"
 import "./components/explore.css"
 import "./components/userCompact.css"
 import "./components/userList.css"
+import "./components/followSuggestion.css"
 
 import Login from "./components/login"
 import Signup from "./components/signup"

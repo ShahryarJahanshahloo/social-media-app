@@ -49,6 +49,7 @@
     height: 100%;
     width: 25%;
     margin: 10px;
+    flex-shrink: 0;
 }
 
 .navbar-item-wrapper.twitter-icon {
