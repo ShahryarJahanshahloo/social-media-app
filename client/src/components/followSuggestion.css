@@ -17,6 +17,24 @@
     border-radius: 16px;
     margin-bottom: 20px;
     flex-shrink: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.about-me-section {
+    width: 100%;
+    padding-left: 16px;
+    padding-top: 8px;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+}
+
+.about-me-info {
+    padding-left: 6px;
+}
+
+.about-me-title {
+    font-size: 24px;
 }
 
 .who-to-follow {
@@ -37,7 +55,6 @@
 }
 
 .suggestion-title > span {
-    font-family: Arial, Helvetica, sans-serif;
     font-size: 22px;
     font-weight: 600;
 }

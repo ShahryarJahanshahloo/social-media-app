@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import axios from "axios"
 
 import Avatar from "./avatar"
@@ -27,6 +27,11 @@ const Profile = (props) => {
     const user = useSelector(state => state.userReducer)
     const isUserProfile = (profileUsername == user.username)
     const history = useHistory()
+    const dispatch = useDispatch()
+    const jwt = localStorage.getItem("jwt")
+    const [buttonText, setButtonText] = useState("Followed")
+    const [isFollowed, setIsFollowed] = useState(user.followings.some(e => e.username === profileUsername))
+    const buttonClass = isFollowed ? "follow-btn followed" : "follow-btn not-followed"
 
     const backButtonHandler = () => {
         history.push("/home")
@@ -38,6 +43,43 @@ const Profile = (props) => {
 
     const followersRedirect = () => {
         history.push(`/followers/${profileUsername}`)
+    }
+
+    const onMouseOver = (e) => {
+        setButtonText("Unfollow")
+    }
+
+    const onMouseOut = (e) => {
+        setButtonText("Followed")
+    }
+
+    const clickHandler = () => {
+        axios({
+            method: "PATCH",
+            url: "/api/follow",
+            headers: {
+                "Authorization": `Bearer ${jwt}`,
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Credentials": true
+            },
+            data: { username: profileUsername }
+        })
+            .then((res) => {
+                if (res.data.message == "added") {
+                    dispatch({
+                        type: "addFollowing",
+                        payload: { username: profileUsername }
+                    })
+                    setIsFollowed(true)
+                } else if (res.data.message == "removed") {
+                    dispatch({
+                        type: "removeFollowing",
+                        payload: { username: profileUsername }
+                    })
+                    setIsFollowed(false)
+                }
+            })
+            .catch((e) => { console.log(e) })
     }
 
     useEffect(() => {
@@ -100,28 +142,34 @@ const Profile = (props) => {
                                         </div>
                                     </div>
                                     <div className="profile-text-box">
-                                        <div className="profile-username-box">{profileUsername}</div>
                                         <div className="profile-displayName-box">{profile.displayName}</div>
+                                        <div className="profile-username-box">@{profileUsername}</div>
                                         <div className="profile-bio-box">{profile.bio}</div>
                                     </div>
                                 </div>
                                 <div className="follow-stats-box">
                                     <div className="follow-stats-item">
                                         <div onClick={followersRedirect} style={{ cursor: "pointer" }}>
-                                            <div className="followers-stats">Followers</div>
-                                            <div>{profile.followersCount}</div>
+                                            <div className="follow-stat">Followers</div>
+                                            <div className="follow-num">{profile.followersCount}</div>
                                         </div>
                                     </div>
                                     <div className="follow-stats-item">
                                         <div onClick={followingRedirect} style={{ cursor: "pointer" }}>
-                                            <div className="followings-stats">Following</div>
-                                            <div>{profile.followingsCount}</div>
+                                            <div className="follow-stat">Following</div>
+                                            <div className="follow-num">{profile.followingsCount}</div>
                                         </div>
                                     </div>
                                     <div className="follow-stats-item">
                                         <div>
                                             <div className="follow-button">
-                                        //button
+                                                {isUserProfile
+                                                    ? <button className='edit-profile-btn'>Edit profile</button>
+                                                    : <button className={buttonClass} onClick={clickHandler}
+                                                        onMouseOver={onMouseOver} onMouseOut={onMouseOut}>
+                                                        {isFollowed ? buttonText : "Follow"}
+                                                    </button>
+                                                }
                                             </div>
                                         </div>
                                     </div>

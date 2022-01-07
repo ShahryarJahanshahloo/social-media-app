@@ -47,9 +47,11 @@
 }
 
 .title-box {
+    padding-left: 15px;
     text-align: center;
-    font-size: 1.25em;
-    font-weight: 550;
+    font-size: 18px;
+    font-weight: 600;
+    color: rgb(15, 20, 25);
 }
 
 .composeIcon:hover {
@@ -65,5 +67,9 @@
 @media only screen and (min-width: 480px) {
     .top-bar-flex-item-side.top-bar-desktop {
         display: none;
+    }
+
+    .title-box {
+        font-size: 20px;
     }
 }

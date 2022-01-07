@@ -117,12 +117,20 @@ async function get_userInfo(req, res) {
             user: user._id,
             tweetType: "retweet"
         }, "retweetData")
+        await user.populate({
+            path: "followings",
+            select: {
+                username: 1,
+                _id: 0
+            }
+        }).execPopulate()
         res.status(200).send({
             username: user.username,
             displayName: user.displayName,
             likes: user.likes,
             retweets: retweets,
-            followings: user.followings
+            followings: user.followings,
+            bookmarks: user.bookmarks
         })
     } catch (e) {
         res.status(500).send({ e })

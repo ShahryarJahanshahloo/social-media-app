@@ -1,6 +1,15 @@
 import React from 'react';
 
 import UserCompact from './userCompact';
+import Avatar from './avatar';
+
+import {
+    FaCity as CityIcon
+} from "react-icons/fa"
+
+import {
+    AiOutlineMail as EmailIcon
+} from "react-icons/ai"
 
 const FollowSuggestion = (props) => {
 
@@ -10,13 +19,28 @@ const FollowSuggestion = (props) => {
             <div className='about-me'>
                 <div className='suggestion-title'>
                     <span>About me</span>
-                    avatar im shahryar jahanshahloo,
-                    CE student @tabriz university.
-                    im currently learning
-                    nodejs and react.
-
-                    cityIcon tehran/iran
-                    emailIcon shahryar.jahanshahloo@gmail.com
+                </div>
+                <div className='about-me-section'>
+                    <div className="avatar-box" style={{width:"60px"}}>
+                        <Avatar username="mamad1234" size="48" />
+                    </div>
+                    <div className='about-me-title'>
+                        Hi! &#128075;
+                    </div>
+                </div>
+                <div className='about-me-section' style={{lineHeight:"30px"}}>
+                    I'm Shahryar Jahanshahloo,
+                    CE student @Tabriz university.
+                    I'm currently learning
+                    Nodejs and React.
+                </div>
+                <div className='about-me-section'>
+                    <CityIcon />
+                    <div className='about-me-info'>Tehran,Iran</div>
+                </div>
+                <div className='about-me-section'>
+                    <EmailIcon />
+                    <div className='about-me-info'>shahryar.jahanshahloo@gmail.com</div>
                 </div>
             </div>
 

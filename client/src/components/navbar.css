@@ -48,7 +48,6 @@
     justify-content: center;
     height: 100%;
     width: 25%;
-    margin: 10px;
     flex-shrink: 0;
 }
 
@@ -75,6 +74,7 @@
     .navbar-item-wrapper {
         height: 50px;
         width: 50px;
+        margin: 10px;
     }
 
     .navbar-item {
@@ -94,10 +94,6 @@
     .navbar-item-wrapper.twitter-icon {
         display: flex;
     }
-}
-
-@media only screen and (min-width: 1000px) {
-
 }
 
 @media only screen and (min-width: 1300px) {

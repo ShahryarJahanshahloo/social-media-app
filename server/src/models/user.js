@@ -126,13 +126,13 @@ userSchema.statics = {
             await followerUser.save()
             targetUser.followers.splice(targetUser.followers.indexOf(followerUser._id), 1)
             await targetUser.save()
-            message = "user unfollowed!"
+            message = "removed"
         } else {
             followerUser.followings.push(targetUser._id)
             await followerUser.save()
             targetUser.followers.push(followerUser._id)
             await targetUser.save()
-            message = "user followed!"
+            message = "added"
         }
         return message
     },

@@ -3,6 +3,8 @@ const initialState = {
     displayName: "",
     likedTweets: [],
     retweets: [],
+    followings: [{username:""}],
+    bookmarks: [],
     // add profile pic later
 }
 
@@ -16,9 +18,10 @@ const reducer = (state = initialState, action) => {
                 likedTweets: action.payload.likedTweets,
                 retweets: action.payload.retweets,
                 followings: action.payload.followings,
+                bookmarks: action.payload.bookmarks,
             }
         }
-        case "addLike" : {
+        case "addLike": {
             const likedTweets = [...state.likedTweets]
             likedTweets.push(action.payload.tweetID)
             return {
@@ -26,7 +29,7 @@ const reducer = (state = initialState, action) => {
                 likedTweets
             }
         }
-        case "removeLike" : {
+        case "removeLike": {
             return {
                 ...state,
                 likedTweets: state.likedTweets.filter((i) => {
@@ -34,7 +37,7 @@ const reducer = (state = initialState, action) => {
                 })
             }
         }
-        case "addRetweet" : {
+        case "addRetweet": {
             const retweets = [...state.retweets]
             retweets.push(action.payload.tweetID)
             return {
@@ -42,10 +45,42 @@ const reducer = (state = initialState, action) => {
                 retweets
             }
         }
-        case "removeRetweet" : {
+        case "removeRetweet": {
             return {
                 ...state,
                 retweets: state.retweets.filter((i) => {
+                    return i != action.payload.tweetID
+                })
+            }
+        }
+        case "addFollowing": {
+            const followings = [...state.followings]
+            followings.push({ username: action.payload.username })
+            return {
+                ...state,
+                followings
+            }
+        }
+        case "removeFollowing": {
+            return {
+                ...state,
+                followings: state.followings.filter((i) => {
+                    return i.username != action.payload.username
+                })
+            }
+        }
+        case "addBookmark": {
+            const bookmarks = [...state.bookmarks]
+            bookmarks.push(action.payload.tweetID)
+            return {
+                ...state,
+                bookmarks
+            }
+        }
+        case "removeBookmark": {
+            return {
+                ...state,
+                bookmarks: state.bookmarks.filter((i) => {
                     return i != action.payload.tweetID
                 })
             }

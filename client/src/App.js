@@ -64,7 +64,8 @@ function App() {
               displayName: res.data.displayName,
               likedTweets: res.data.likes,
               retweets: retweets,
-              followings: res.data.followings
+              followings: res.data.followings,
+              bookmarks: res.data.bookmarks,
             }
           })
           dispatch({
