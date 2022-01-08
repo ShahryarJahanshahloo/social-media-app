@@ -3,6 +3,8 @@ import { useHistory } from "react-router-dom";
 import { useSelector } from 'react-redux';
 import axios from "axios"
 
+import Avatar from './avatar';
+
 import {
     FiHome as HomeIcon,
     FiSearch as ExploreIcon,
@@ -80,7 +82,11 @@ const Navbar = (props) => {
                     </div>
                 </div>
                 <div className="navbar-bottom">
-                    <button onClick={logoutHandler}>Logout</button>
+                    <div className='navbar-avatar'>
+                        <div className="avatar-box">
+                            <Avatar username={user.username} size="40" />
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

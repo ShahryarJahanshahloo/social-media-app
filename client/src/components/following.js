@@ -24,7 +24,7 @@ const Following = () => {
     const [users, loadMore] = useUserList("/api/followings", { username: profileUsername })
 
     const backButtonHandler = () => {
-        history.push("/home")
+        history.goBack()
     }
 
     useEffect(() => {

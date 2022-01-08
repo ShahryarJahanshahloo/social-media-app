@@ -34,7 +34,7 @@ const Profile = (props) => {
     const buttonClass = isFollowed ? "follow-btn followed" : "follow-btn not-followed"
 
     const backButtonHandler = () => {
-        history.push("/home")
+        history.goBack()
     }
 
     const followingRedirect = () => {

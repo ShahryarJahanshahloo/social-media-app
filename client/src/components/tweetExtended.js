@@ -31,7 +31,7 @@ const TweetExtended = (props) => {
     })
 
     const backButtonHandler = () => {
-        history.push("/home")
+        history.goBack()
     }
 
     const addReply = (reply) => {
