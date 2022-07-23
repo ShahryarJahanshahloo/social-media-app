@@ -1,73 +1,73 @@
 .tweet-list {
-    display: flex;
-    flex-flow: column wrap;
-    width: 100%;
-    position: relative;
+  display: flex;
+  flex-flow: column wrap;
+  width: 100%;
+  position: relative;
 }
 
 .tweet-list-item {
-    width: 100%;
-    min-height: 50px;
-    border-bottom: 1px solid rgba(223, 223, 223, 0.4);
+  width: 100%;
+  min-height: 50px;
+  border-bottom: 1px solid rgba(223, 223, 223, 0.4);
 }
 
 .load-more {
-    background-color: #ffffff;
-    border: none;
-    color: rgb(24, 23, 23);
-    padding: 5px 0;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    outline: none;
+  background-color: #ffffff;
+  border: none;
+  color: rgb(24, 23, 23);
+  padding: 5px 0;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  outline: none;
 }
 
 .alert {
-    font-size: 1.8rem;
-    width: 100%;
-    text-align: center;
+  font-size: 1.8rem;
+  width: 100%;
+  text-align: center;
 }
 
 .alt-container {
-    width: 100%;
-    /* min-width: 300px; */
-    max-width: 600px;
-    padding-top: 30px;
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: center;
+  width: 100%;
+  /* min-width: 300px; */
+  max-width: 600px;
+  padding-top: 30px;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
 }
 
 .alt-flex {
-    width: 300px;
-    display: flex;
-    flex-flow: column nowrap;
-    justify-content: center;
+  width: 300px;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
 }
 
 .alt-item-wrapper {
-    width: 100%;
-    padding-top: 10px;
+  width: 100%;
+  padding-top: 10px;
 }
 
 .alt-item-big {
-    line-height: 36px;
-    font-size: 32px;
-    font-weight: 850;
-    font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  line-height: 36px;
+  font-size: 32px;
+  font-weight: 850;
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
 }
 
 .alt-item-small {
-    color: rgb(83, 100, 113);
-    white-space: pre-wrap;
-    font-size: 15px;
-    font-stretch: 100%;
-    font-style: normal;
+  color: rgb(83, 100, 113);
+  white-space: pre-wrap;
+  font-size: 15px;
+  font-stretch: 100%;
+  font-style: normal;
 }
 
 @media only screen and (min-width: 480px) {
-    .tweet-list-item {
-        border: 1px solid rgba(223, 223, 223, 0.4);
-    }
+  .tweet-list-item {
+    border: 1px solid rgba(223, 223, 223, 0.4);
+  }
 }

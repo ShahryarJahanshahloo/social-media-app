@@ -1,8 +1,6 @@
-
-
 .compose-compact-tweet-bar {
-    display: flex;
-    flex-flow: row-reverse nowrap;
+  display: flex;
+  flex-flow: row-reverse nowrap;
 }
 
 /* media change display  */

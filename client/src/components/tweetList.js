@@ -1,28 +1,25 @@
-import React from 'react';
+import React from 'react'
 
-import TweetCompact from './tweetCompact';
+import TweetCompact from './tweetCompact'
 
 const TweetList = ({ tweets, alt }) => {
+  const isTweetListEmpty = tweets.length == 0
 
-    const isTweetListEmpty = tweets.length == 0
+  let tweetList = <div className='alert'></div>
 
-    let tweetList = <div className="alert"></div>
+  if (alt != null) tweetList = alt
 
-    if (alt != null) tweetList = alt
+  if (!isTweetListEmpty) {
+    tweetList = tweets.map((value, index) => {
+      return (
+        <div key={index} className='tweet-list-item'>
+          <TweetCompact tweet={value} />
+        </div>
+      )
+    })
+  }
 
-    if (!isTweetListEmpty) {
-        tweetList = tweets.map((value, index) => {
-            return (
-                <div key={index} className="tweet-list-item">
-                    <TweetCompact tweet={value} />
-                </div>
-            )
-        })
-    }
-
-    return (
-        <div className="tweet-list">{tweetList}</div>
-    )
+  return <div className='tweet-list'>{tweetList}</div>
 }
 
 export default TweetList

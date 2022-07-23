@@ -1,135 +1,135 @@
 .profile-stats-wrapper {
-    width: 100%;
-    min-height: 220px;
-    flex-shrink: 0;
-    display: flex;
-    flex-flow: column nowrap;
-    padding: 10px 10px;
+  width: 100%;
+  min-height: 220px;
+  flex-shrink: 0;
+  display: flex;
+  flex-flow: column nowrap;
+  padding: 10px 10px;
 }
 
 .profile-stats-box {
-    width: 100%;
-    height: 90%;
-    display: flex;
-    flex-flow: column nowrap;
+  width: 100%;
+  height: 90%;
+  display: flex;
+  flex-flow: column nowrap;
 }
 
 .user-stats-box {
-    width: 100%;
-    height: 80%;
-    display: flex;
-    flex-flow: row nowrap;
+  width: 100%;
+  height: 80%;
+  display: flex;
+  flex-flow: row nowrap;
 }
 
 .profile-avatar-box {
-    height: 100%;
-    width: 148px;
-    padding-left: 10px;
-    padding-right: 10px;
+  height: 100%;
+  width: 148px;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 .profile-text-box {
-    height: 100%;
-    width: 100%;
-    padding-bottom: 10px;
+  height: 100%;
+  width: 100%;
+  padding-bottom: 10px;
 }
 
 .profile-username-box {
-    color: rgb(83, 100, 113);
-    font-size: 15px;
+  color: rgb(83, 100, 113);
+  font-size: 15px;
 }
 
 .profile-displayName-box {
-    color: rgb(15, 20, 25);
-    font-size: 20px;
-    font-weight: 800;
+  color: rgb(15, 20, 25);
+  font-size: 20px;
+  font-weight: 800;
 }
 
 .profile-bio-box {
-    padding-top: 10px;
-    overflow: auto;
-    font-size: 14px;
+  padding-top: 10px;
+  overflow: auto;
+  font-size: 14px;
 }
 
 .follow-stats-box {
-    width: 100%;
-    height: 20%;
-    display: flex;
-    flex-flow: row nowrap;
+  width: 100%;
+  height: 20%;
+  display: flex;
+  flex-flow: row nowrap;
 }
 
 .follow-stats-item {
-    height: 100%;
-    width: 33.3%;
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: center;
-    align-items: center;
+  height: 100%;
+  width: 33.3%;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
 }
 
 .follow-stat {
-    color: rgb(83, 100, 113);
-    font-size: 14px;
+  color: rgb(83, 100, 113);
+  font-size: 14px;
 }
 
 .follow-num {
-    font-size: 20px;
-    font-weight: 700;
+  font-size: 20px;
+  font-weight: 700;
 }
 
 .follow-stats-item > div {
-    height: 100%;
-    width: 100%;
-    display: flex;
-    flex-flow: column nowrap;
-    justify-content: center;
-    align-items: center;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
 }
 
 .top-bar-profile {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-flow: column wrap;
-    justify-content: center;
-    padding: 5px 10px 10px 20px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  padding: 5px 10px 10px 20px;
 }
 
 .top-bar-displayName {
-    width: 100%;
-    height: 50%;
-    font-weight: 700;
-    font-size: 17px;
+  width: 100%;
+  height: 50%;
+  font-weight: 700;
+  font-size: 17px;
 }
 
 .top-bar-tweetCount {
-    width: 100%;
-    height: 50%;
-    color: rgb(83, 100, 113);
-    font-size: 13px;
+  width: 100%;
+  height: 50%;
+  color: rgb(83, 100, 113);
+  font-size: 13px;
 }
 
 .edit-profile-btn {
-    width: 115px;
-    height: 32px;
-    border: none;
-    padding: 0 10px;
-    border-radius: 16px;
-    cursor: pointer;
-    background-color: white;
-    color: black;
-    border: 1px solid rgb(211, 211, 211);
+  width: 115px;
+  height: 32px;
+  border: none;
+  padding: 0 10px;
+  border-radius: 16px;
+  cursor: pointer;
+  background-color: white;
+  color: black;
+  border: 1px solid rgb(211, 211, 211);
 }
 
 .edit-profile-btn:hover {
-    background-color: rgba(15,20,25,0.1);
-    transition: background-color 0.2s ease-out;
+  background-color: rgba(15, 20, 25, 0.1);
+  transition: background-color 0.2s ease-out;
 }
 
-@media only screen and (min-width : 480px){
-    .profile-avatar-box {
-        padding-left: 20px;
-        padding-right: 20px;
-        width: 168px;
-    }
+@media only screen and (min-width: 480px) {
+  .profile-avatar-box {
+    padding-left: 20px;
+    padding-right: 20px;
+    width: 168px;
+  }
 }

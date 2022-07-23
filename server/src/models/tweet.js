@@ -1,77 +1,80 @@
 const mongoose = require('mongoose')
 const User = require('./user')
 
-const tweetSchema = mongoose.Schema({
+const tweetSchema = mongoose.Schema(
+  {
     body: {
-        type: String,
-        required: false,
-        maxlength: 255,
+      type: String,
+      required: false,
+      maxlength: 255,
     },
     user: {
-        type: mongoose.Schema.Types.ObjectId,
-        required: true,
-        ref: "User"
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: 'User',
     },
     tweetType: {
-        type: String,
-        required: true,
-        default: "original",
+      type: String,
+      required: true,
+      default: 'original',
     },
     replyTo: {
-        type: mongoose.Schema.Types.ObjectId,
-        required: false,
-        ref: "Tweet"
+      type: mongoose.Schema.Types.ObjectId,
+      required: false,
+      ref: 'Tweet',
     },
     retweetData: {
-        type: mongoose.Schema.Types.ObjectId,
-        required: false,
-        ref: "Tweet"
+      type: mongoose.Schema.Types.ObjectId,
+      required: false,
+      ref: 'Tweet',
     },
     likesCount: {
-        type: Number,
-        required: false,
-        default: 0,
+      type: Number,
+      required: false,
+      default: 0,
     },
     repliesCount: {
-        type: Number,
-        required: false,
-        default: 0,
+      type: Number,
+      required: false,
+      default: 0,
     },
     retweetCount: {
-        type: Number,
-        required: false,
-        default: 0,
+      type: Number,
+      required: false,
+      default: 0,
     },
-}, {
+  },
+  {
     timestamps: true,
-})
+  }
+)
 
 tweetSchema.statics = {
-    toggleRetweet: async (user, tweetID) => {
-        const retweet = await Tweet.findOne({
-            tweetType: "retweet",
-            user: user._id,
-            retweetData: tweetID
-        })
-        if (!retweet) {
-            const newTweet = new Tweet({
-                user: user._id,
-                tweetType: "retweet",
-                retweetData: tweetID
-            })
-            const targetTweet = await Tweet.findById(tweetID)
-            targetTweet.retweetCount += 1
-            await targetTweet.save()
-            await newTweet.save()
-            return "added"
-        } else {
-            await Tweet.findByIdAndDelete(retweet._id)
-            const targetTweet = await Tweet.findById(tweetID)
-            targetTweet.retweetCount -= 1
-            await targetTweet.save()
-            return "removed"
-        }
+  toggleRetweet: async (user, tweetID) => {
+    const retweet = await Tweet.findOne({
+      tweetType: 'retweet',
+      user: user._id,
+      retweetData: tweetID,
+    })
+    if (!retweet) {
+      const newTweet = new Tweet({
+        user: user._id,
+        tweetType: 'retweet',
+        retweetData: tweetID,
+      })
+      const targetTweet = await Tweet.findById(tweetID)
+      targetTweet.retweetCount += 1
+      await targetTweet.save()
+      await newTweet.save()
+      return 'added'
+    } else {
+      await Tweet.findByIdAndDelete(retweet._id)
+      const targetTweet = await Tweet.findById(tweetID)
+      targetTweet.retweetCount -= 1
+      await targetTweet.save()
+      return 'removed'
     }
+  },
 }
 
 const Tweet = mongoose.model('Tweet', tweetSchema)

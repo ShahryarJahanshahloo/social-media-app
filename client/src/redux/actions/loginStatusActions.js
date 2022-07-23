@@ -1,3 +1,3 @@
 export const updateLoginStatus = () => {
-    return { type: "updateLoginStatus"}
+  return { type: 'updateLoginStatus' }
 }
