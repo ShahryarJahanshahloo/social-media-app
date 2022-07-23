@@ -1,10 +1,10 @@
-import React, { useState, useRef } from 'react'
+import React, { useState } from 'react'
 import axios from 'axios'
 import { useHistory } from 'react-router'
 import { useSelector } from 'react-redux'
 
-import Avatar from '../components/avatar'
-import TopBar from '../components/topBar'
+import Avatar from '../../components/Avatar/Avatar'
+import TopBar from '../../components/TopBar/TopBar'
 
 import { BiArrowBack as BackIcon } from 'react-icons/bi'
 
@@ -36,7 +36,7 @@ const ComposeExtended = () => {
       },
     })
       .then(res => {
-        if (res.status == '200') history.push('/home')
+        if (res.status === '200') history.push('/home')
       })
       .catch(e => {
         console.log(e)
@@ -45,7 +45,7 @@ const ComposeExtended = () => {
 
   const textAreaOnChange = e => {
     let bodyLength = e.target.value.length
-    if (e.target.value.trim() != '') {
+    if (e.target.value.trim() !== '') {
       setTweetBtnClass('tweet-button')
     } else {
       setTweetBtnClass('tweet-button disabledButton')
@@ -73,7 +73,7 @@ const ComposeExtended = () => {
         Right={
           <button
             className={tweetBtnClass}
-            disabled={tweetBody == ''}
+            disabled={tweetBody === ''}
             onClick={tweetBtnHandler}
           >
             Tweet

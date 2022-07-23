@@ -1,9 +1,9 @@
 import React from 'react'
 
-import TweetCompact from './tweetCompact'
+import TweetCompact from '../TweetCompact/TweetCompact'
 
 const TweetList = ({ tweets, alt }) => {
-  const isTweetListEmpty = tweets.length == 0
+  const isTweetListEmpty = tweets.length === 0
 
   let tweetList = <div className='alert'></div>
 

@@ -3,12 +3,12 @@ import { useHistory } from 'react-router'
 import { useSelector, useDispatch } from 'react-redux'
 import axios from 'axios'
 
-import Avatar from './avatar'
+import Avatar from '../Avatar/Avatar'
 
-const iconStyle = {
-  fontSize: '15px',
-  color: 'rgb(83, 100, 113)',
-}
+// const iconStyle = {
+//   fontSize: '15px',
+//   color: 'rgb(83, 100, 113)',
+// }
 
 const UserCompact = ({ userContent }) => {
   const history = useHistory()
@@ -47,13 +47,13 @@ const UserCompact = ({ userContent }) => {
       data: { username: userContent.username },
     })
       .then(res => {
-        if (res.data.message == 'added') {
+        if (res.data.message === 'added') {
           dispatch({
             type: 'addFollowing',
             payload: { username: userContent.username },
           })
           setIsFollowed(true)
-        } else if (res.data.message == 'removed') {
+        } else if (res.data.message === 'removed') {
           dispatch({
             type: 'removeFollowing',
             payload: { username: userContent.username },

@@ -1,7 +1,7 @@
 import React from 'react'
 
 import UserCompact from '../UserCompact/UserCompact'
-import Avatar from './avatar'
+import Avatar from '../Avatar/Avatar'
 
 import { FaCity as CityIcon } from 'react-icons/fa'
 

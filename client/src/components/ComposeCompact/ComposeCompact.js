@@ -3,7 +3,7 @@ import axios from 'axios'
 import { useHistory } from 'react-router'
 import { useSelector } from 'react-redux'
 
-import Avatar from './avatar'
+import Avatar from '../Avatar/Avatar'
 
 const ComposeCompact = ({ setTweets, replyTo = null }) => {
   const [tweetBody, setTweetBody] = useState('')
@@ -51,7 +51,7 @@ const ComposeCompact = ({ setTweets, replyTo = null }) => {
 
   const textAreaOnChange = e => {
     let bodyLength = e.target.value.length
-    if (e.target.value.trim() != '') {
+    if (e.target.value.trim() !== '') {
       setTweetBtnClass('tweet-button')
     } else {
       setTweetBtnClass('tweet-button disabledButton')
@@ -87,7 +87,7 @@ const ComposeCompact = ({ setTweets, replyTo = null }) => {
         <div className='compose-compact-tweet-bar'>
           <button
             className={tweetBtnClass}
-            disabled={tweetBody == ''}
+            disabled={tweetBody === ''}
             onClick={tweetBtnHandler}
           >
             Tweet

@@ -3,12 +3,12 @@ import { useParams, useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import axios from 'axios'
 
-import Avatar from '../components/avatar'
-import TweetList from '../components/tweetList'
-import Navbar from '../components/navbar'
-import FollowSuggestion from '../components/followSuggestion'
+import Avatar from '../../components/Avatar/Avatar'
+import TweetList from '../../components/TweetList/TweetList'
+import Navbar from '../../components/Navbar/Navbar'
+import FollowSuggestion from '../../components/FollowSuggestion/FollowSuggestion'
 import useTweetList from '../../hooks/useTweetList'
-import TopBar from '../components/topBar'
+import TopBar from '../../components/TopBar/TopBar'
 
 import { BiArrowBack as BackIcon } from 'react-icons/bi'
 

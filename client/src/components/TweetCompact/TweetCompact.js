@@ -3,7 +3,7 @@ import { useHistory } from 'react-router'
 import { useSelector, useDispatch } from 'react-redux'
 import axios from 'axios'
 
-import Avatar from './avatar'
+import Avatar from '../Avatar/Avatar'
 import { AiOutlineRetweet as RetweetIcon } from 'react-icons/ai'
 import { BsHeartFill as HeartIcon } from 'react-icons/bs'
 import { FaRegComment as CommentIcon } from 'react-icons/fa'
@@ -58,7 +58,7 @@ const TweetCompact = ({ tweet, extend = false }) => {
       },
     })
       .then(res => {
-        if (res.data.message == 'added') {
+        if (res.data.message === 'added') {
           setLikeState(prevState => {
             return {
               likesCount: prevState.likesCount + 1,
@@ -71,7 +71,7 @@ const TweetCompact = ({ tweet, extend = false }) => {
               tweetID: tweetContent._id,
             },
           })
-        } else if (res.data.message == 'removed') {
+        } else if (res.data.message === 'removed') {
           setLikeState(prevState => {
             return {
               likesCount: prevState.likesCount - 1,
@@ -105,7 +105,7 @@ const TweetCompact = ({ tweet, extend = false }) => {
       },
     })
       .then(res => {
-        if (res.data.message == 'added') {
+        if (res.data.message === 'added') {
           setRetweetState(prevState => {
             return {
               retweetCount: prevState.retweetCount + 1,
@@ -118,7 +118,7 @@ const TweetCompact = ({ tweet, extend = false }) => {
               tweetID: tweetContent._id,
             },
           })
-        } else if (res.data.message == 'removed') {
+        } else if (res.data.message === 'removed') {
           setRetweetState(prevState => {
             return {
               retweetCount: prevState.retweetCount - 1,
@@ -185,7 +185,7 @@ const TweetCompact = ({ tweet, extend = false }) => {
               <CommentIcon style={iconStyle} />
             </div>
             <div className='tweet-icon-num'>
-              {tweetContent.repliesCount != 0
+              {tweetContent.repliesCount !== 0
                 ? tweetContent.repliesCount
                 : null}
             </div>
@@ -204,7 +204,7 @@ const TweetCompact = ({ tweet, extend = false }) => {
               className='tweet-icon-num'
               style={retweetState.isRetweeted ? { color: 'green' } : null}
             >
-              {retweetState.retweetCount != 0
+              {retweetState.retweetCount !== 0
                 ? retweetState.retweetCount
                 : null}
             </div>
@@ -228,7 +228,7 @@ const TweetCompact = ({ tweet, extend = false }) => {
               className='tweet-icon-num'
               style={likeState.isLiked ? { color: 'red' } : null}
             >
-              {likeState.likesCount != 0 ? likeState.likesCount : null}
+              {likeState.likesCount !== 0 ? likeState.likesCount : null}
             </div>
           </div>
         </div>

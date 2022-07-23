@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from 'react'
-import axios from 'axios'
+// import React, { useState, useEffect } from 'react'
+// import axios from 'axios'
 import { useHistory } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
-import Avatar from '../components/avatar'
-import Navbar from '../components/navbar'
-import TweetList from '../components/tweetList'
-import FollowSuggestion from '../components/followSuggestion'
-import TopBar from '../components/topBar'
+import Avatar from '../../components/Avatar/Avatar'
+import Navbar from '../../components/Navbar/Navbar'
+import TweetList from '../../components/TweetList/TweetList'
+import FollowSuggestion from '../../components/FollowSuggestion/FollowSuggestion'
+import TopBar from '../../components/TopBar/TopBar'
 import useTweetList from '../../hooks/useTweetList'
 
 const Bookmarks = props => {

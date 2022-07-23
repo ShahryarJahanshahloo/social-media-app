@@ -1,9 +1,9 @@
 import React from 'react'
 
-import UserCompact from './userCompact'
+import UserCompact from '../UserCompact/UserCompact'
 
 const UserList = ({ users, alt }) => {
-  const isUserListEmpty = users.length == 0
+  const isUserListEmpty = users.length === 0
 
   let userList = <div className='alert'></div>
 

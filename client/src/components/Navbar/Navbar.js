@@ -1,9 +1,9 @@
 import React from 'react'
 import { useHistory } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import axios from 'axios'
+// import axios from 'axios'
 
-import Avatar from './avatar'
+import Avatar from '../Avatar/Avatar'
 
 import { FiHome as HomeIcon, FiSearch as ExploreIcon } from 'react-icons/fi'
 import {
@@ -14,27 +14,27 @@ import { SiTwitter as BirdIcon } from 'react-icons/si'
 
 const Navbar = props => {
   const user = useSelector(state => state.userReducer)
-  const jwt = localStorage.getItem('jwt')
+  // const jwt = localStorage.getItem('jwt')
   const history = useHistory()
 
-  const logoutHandler = () => {
-    axios({
-      method: 'post',
-      url: '/api/logout',
-      headers: {
-        Authorization: `Bearer ${jwt}`,
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Credentials': true,
-      },
-    })
-      .then(() => {
-        localStorage.removeItem('jwt')
-        history.push('/')
-      })
-      .catch(e => {
-        console.log(e)
-      })
-  }
+  // const logoutHandler = () => {
+  //   axios({
+  //     method: 'post',
+  //     url: '/api/logout',
+  //     headers: {
+  //       Authorization: `Bearer ${jwt}`,
+  //       'Access-Control-Allow-Origin': '*',
+  //       'Access-Control-Allow-Credentials': true,
+  //     },
+  //   })
+  //     .then(() => {
+  //       localStorage.removeItem('jwt')
+  //       history.push('/')
+  //     })
+  //     .catch(e => {
+  //       console.log(e)
+  //     })
+  // }
 
   const iconStyle = {
     fontSize: '1.6em',
