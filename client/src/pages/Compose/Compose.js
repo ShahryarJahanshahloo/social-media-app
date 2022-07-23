@@ -3,8 +3,8 @@ import axios from 'axios'
 import { useHistory } from 'react-router'
 import { useSelector } from 'react-redux'
 
-import Avatar from './avatar'
-import TopBar from './topBar'
+import Avatar from '../components/avatar'
+import TopBar from '../components/topBar'
 
 import { BiArrowBack as BackIcon } from 'react-icons/bi'
 

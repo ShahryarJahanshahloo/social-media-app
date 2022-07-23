@@ -1,23 +1,16 @@
 import React, { useState, useEffect } from 'react'
-import { useSelector } from 'react-redux'
+import axios from 'axios'
 import { useHistory } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
-import Avatar from './avatar'
-import Navbar from './navbar'
-import ComposeCompact from './composeCompact'
-import TweetList from './tweetList'
-import FollowSuggestion from './followSuggestion'
-import useTweetList from '../hooks/useTweetList'
-import TopBar from './topBar'
+import Avatar from '../components/avatar'
+import Navbar from '../components/navbar'
+import TweetList from '../components/tweetList'
+import FollowSuggestion from '../components/followSuggestion'
+import TopBar from '../components/topBar'
+import useTweetList from '../../hooks/useTweetList'
 
-import { AiFillEdit as ComposeIcon } from 'react-icons/ai'
-
-const iconStyle = {
-  fontSize: '1.6em',
-  color: 'rgb(29, 155, 240)',
-}
-
-const Home = () => {
+const Bookmarks = props => {
   const history = useHistory()
   const isLoggedIn = useSelector(state => state.loginStatusReducer)
   const username = useSelector(state => state.userReducer.username)
@@ -26,10 +19,7 @@ const Home = () => {
     history.push('/login')
   }
 
-  const composeHandler = () => {
-    history.push('/compose')
-  }
-  const [tweets, loadMore, setTweets] = useTweetList('/api/home', {})
+  const [tweets, loadMore] = useTweetList('/api/bookmarks', {})
 
   return (
     <div className='main-app'>
@@ -48,28 +38,22 @@ const Home = () => {
                   <Avatar username={username} size='32' />
                 </div>
               }
-              Middle={<div className='title-box'>Home</div>}
-              Right={
-                <div className='composeIcon' onClick={composeHandler}>
-                  <ComposeIcon style={iconStyle} />
-                </div>
-              }
+              Middle={<div className='title-box'>Bookmarks</div>}
+              Right={<div></div>}
             />
-            <div className='compose-tweet-box'>
-              <ComposeCompact setTweets={setTweets} />
-            </div>
             <TweetList
               tweets={tweets}
               alt={
                 <div className='alt-container'>
                   <div className='alt-flex'>
                     <div className='alt-item-wrapper'>
-                      <span className='alt-item-big'>What? No Tweets yet?</span>
+                      <span className='alt-item-big'>
+                        You haven’t added any Tweets to your Bookmarks yet
+                      </span>
                     </div>
                     <div className='alt-item-wrapper'>
                       <span className='alt-item-small'>
-                        This empty timeline won't be around for long. Start
-                        following people and you'll see Tweets show up here.
+                        When you do, they’ll show up here.
                       </span>
                     </div>
                   </div>
@@ -93,4 +77,4 @@ const Home = () => {
   )
 }
 
-export default Home
+export default Bookmarks

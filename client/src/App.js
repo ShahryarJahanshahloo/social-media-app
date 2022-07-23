@@ -19,18 +19,18 @@ import './components/userCompact.css'
 import './components/userList.css'
 import './components/followSuggestion.css'
 
-import Login from './components/login'
-import Signup from './components/signup'
-import Home from './components/home'
-import Bookmarks from './components/bookmarks'
-import Profile from './components/profile'
-import Explore from './components/explore'
-import Redirect from './components/redirect'
-import NoMatch404 from './components/noMatch404'
-import ComposeExtended from './components/composeExtended'
-import TweetExtended from './components/tweetExtended'
-import Following from './components/following'
-import Followers from './components/followers'
+import Login from './pages/Login/Login'
+import Signup from './pages/SignUp/SignUp'
+import Home from './pages/Home/Home'
+import Bookmarks from './pages/Bookmarks/Bookmarks'
+import Profile from './pages/Profile/Profile'
+import Explore from './pages/Explore/Explore'
+import Redirect from './pages/Redirect/Redirect'
+import Page404 from './pages/404/Page404'
+import ComposeExtended from './pages/Compose/Compose'
+import TweetExtended from './pages/Tweet/Tweet'
+import Following from './pages/Following/Following'
+import Followers from './pages/Followers/Followers'
 
 function App() {
   const jwt = localStorage.getItem('jwt')
@@ -96,7 +96,7 @@ function App() {
         <Route path='/following/:username' component={Following}></Route>
         <Route path='/followers/:username' component={Followers}></Route>
         <Route exact path='/' component={Redirect} />
-        <Route path='*' component={NoMatch404}></Route>
+        <Route path='*' component={Page404}></Route>
       </Switch>
     </div>
   )

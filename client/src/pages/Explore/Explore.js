@@ -3,11 +3,11 @@ import { useHistory } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import axios from 'axios'
 
-import UserList from './userList'
-import Navbar from './navbar'
-import FollowSuggestion from './followSuggestion'
-import TopBar from './topBar'
-import Avatar from './avatar'
+import UserList from '../components/userList'
+import Navbar from '../components/navbar'
+import FollowSuggestion from '../components/followSuggestion'
+import TopBar from '../components/topBar'
+import Avatar from '../components/avatar'
 
 import {
   BiSearchAlt as SearchIcon,

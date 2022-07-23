@@ -3,11 +3,11 @@ import { useParams, useHistory } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import axios from 'axios'
 
-import Navbar from './navbar'
-import UserList from './userList'
-import FollowSuggestion from './followSuggestion'
-import TopBar from './topBar'
-import useUserList from '../hooks/useUserList'
+import Navbar from '../components/navbar'
+import UserList from '../components/userList'
+import FollowSuggestion from '../components/followSuggestion'
+import TopBar from '../components/topBar'
+import useUserList from '../../hooks/useUserList'
 
 import { BiArrowBack as BackIcon } from 'react-icons/bi'
 
