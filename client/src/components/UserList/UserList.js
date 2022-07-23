@@ -12,14 +12,14 @@ const UserList = ({ users, alt }) => {
   if (!isUserListEmpty) {
     userList = users.map((value, index) => {
       return (
-        <div key={index} className='user-list-item'>
+        <div key={index}>
           <UserCompact userContent={value} />
         </div>
       )
     })
   }
 
-  return <div className='user-list'>{userList}</div>
+  return <div>{userList}</div>
 }
 
 export default UserList

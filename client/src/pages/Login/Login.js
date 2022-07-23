@@ -3,6 +3,8 @@ import { useHistory } from 'react-router-dom'
 import axios from 'axios'
 import { useDispatch } from 'react-redux'
 
+import s from '../SignUp/SignUp.module.css'
+
 const Login = props => {
   let history = useHistory()
   const emailInput = useRef(null)
@@ -39,19 +41,37 @@ const Login = props => {
   }
 
   return (
-    <div className='login-box-container'>
-      <div className='login-box'>
-        <label className='topic'>Sign In</label>
+    <div className={s.container}>
+      <div className={s.box}>
+        <label className={s.topic}>Sign In</label>
 
-        <div className='form'>
-          <input type='text' ref={emailInput} placeholder='Email' />
-          <input type='text' ref={passwordInput} placeholder='Password' />
-          <input type='submit' value='Sign in' onClick={handleLogin} />
+        <div className={s.form}>
+          <input
+            type='text'
+            ref={emailInput}
+            placeholder='Email'
+            className={s.input}
+          />
+          <input
+            type='text'
+            ref={passwordInput}
+            placeholder='Password'
+            className={s.input}
+          />
+          <input
+            type='submit'
+            value='Sign in'
+            onClick={handleLogin}
+            className={s.submit}
+          />
         </div>
 
-        <div className='signup-link'>
-          <label>no account?</label>
-          <button onClick={handleRedirectClick}> Signup </button>
+        <div className={s.alt}>
+          <label className={s.altText}>no account?</label>
+          <button onClick={handleRedirectClick} className={s.altButton}>
+            {' '}
+            Signup{' '}
+          </button>
         </div>
       </div>
     </div>

@@ -4,6 +4,7 @@ import { useHistory } from 'react-router'
 import { useSelector } from 'react-redux'
 
 import Avatar from '../Avatar/Avatar'
+import s from '../../pages/Compose/Compose.module.css'
 
 const ComposeCompact = ({ setTweets, replyTo = null }) => {
   const [tweetBody, setTweetBody] = useState('')
@@ -66,17 +67,17 @@ const ComposeCompact = ({ setTweets, replyTo = null }) => {
   }
 
   return (
-    <div className='composeCompact'>
-      <div className='compose-main'>
-        <div className='compose-box'>
-          <div className='compose-avatar-bar'>
-            <div className='compose-avatar' onClick={profileRedirect}>
+    <div>
+      <div className={s.main}>
+        <div className={s.box}>
+          <div className={s.avatarBar}>
+            <div className={s.avatar} onClick={profileRedirect}>
               <Avatar username={user.username} size='48' />
             </div>
           </div>
-          <div className='compose-area-wrapper'>
+          <div className={s.areaWrapper}>
             <textarea
-              className='compose-text-area'
+              className={s.textArea}
               onChange={textAreaOnChange}
               placeholder={
                 replyTo == null ? "What's Happening?" : 'Tweet your reply'
@@ -84,7 +85,7 @@ const ComposeCompact = ({ setTweets, replyTo = null }) => {
             ></textarea>
           </div>
         </div>
-        <div className='compose-compact-tweet-bar'>
+        <div className={s.tweetBarCompact}>
           <button
             className={tweetBtnClass}
             disabled={tweetBody === ''}

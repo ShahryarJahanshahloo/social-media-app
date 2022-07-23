@@ -7,6 +7,7 @@ import Avatar from '../../components/Avatar/Avatar'
 import TopBar from '../../components/TopBar/TopBar'
 
 import { BiArrowBack as BackIcon } from 'react-icons/bi'
+import s from './Compose.module.css'
 
 const ComposeExtended = () => {
   const username = useSelector(state => state.userReducer.username)
@@ -60,7 +61,7 @@ const ComposeExtended = () => {
   }
 
   return (
-    <div className='composeExtended'>
+    <div className={s.wrapper}>
       <TopBar
         Left={
           <div className='back-button-wrapper'>
@@ -80,16 +81,16 @@ const ComposeExtended = () => {
           </button>
         }
       />
-      <div className='compose-main'>
-        <div className='compose-box'>
-          <div className='compose-avatar-bar'>
-            <div className='compose-avatar'>
+      <div className={s.main}>
+        <div className={s.box}>
+          <div className={s.avatarBar}>
+            <div className={s.avatar}>
               <Avatar username={username} size='48' />
             </div>
           </div>
-          <div className='compose-area-wrapper'>
+          <div className={s.areaWrapper}>
             <textarea
-              className='compose-text-area'
+              className={s.textArea}
               onChange={textAreaOnChange}
               placeholder="What's Happening?"
             ></textarea>

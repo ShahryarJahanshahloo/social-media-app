@@ -4,41 +4,41 @@ import UserCompact from '../UserCompact/UserCompact'
 import Avatar from '../Avatar/Avatar'
 
 import { FaCity as CityIcon } from 'react-icons/fa'
-
 import { AiOutlineMail as EmailIcon } from 'react-icons/ai'
+import s from './FollowSuggestion.css'
 
 const FollowSuggestion = props => {
   return (
-    <div className='follow-suggestion-container'>
-      <div className='about-me'>
-        <div className='suggestion-title'>
+    <div className={s.container}>
+      <div className={s.aboutMe}>
+        <div className={s.suggestionTitle}>
           <span>About me</span>
         </div>
-        <div className='about-me-section'>
+        <div className={s.section}>
           <div className='avatar-box' style={{ width: '60px' }}>
             <Avatar username='mamad1234' size='48' />
           </div>
-          <div className='about-me-title'>Hi! &#128075;</div>
+          <div className={s.title}>Hi! &#128075;</div>
         </div>
-        <div className='about-me-section' style={{ lineHeight: '30px' }}>
+        <div className={s.section} style={{ lineHeight: '30px' }}>
           I'm Shahryar Jahanshahloo, CE student @Tabriz university. I'm
           currently learning Nodejs and React.
         </div>
-        <div className='about-me-section'>
+        <div className={s.section}>
           <CityIcon />
-          <div className='about-me-info'>Tehran,Iran</div>
+          <div className={s.info}>Tehran,Iran</div>
         </div>
-        <div className='about-me-section'>
+        <div className={s.section}>
           <EmailIcon />
-          <div className='about-me-info'>shahryar.jahanshahloo@gmail.com</div>
+          <div className={s.info}>shahryar.jahanshahloo@gmail.com</div>
         </div>
       </div>
 
-      <div className='who-to-follow'>
-        <div className='suggestion-title'>
-          <span>Who to follow</span>
+      <div className={s.suggestions}>
+        <div className={s.suggestionTitle}>
+          <span className={s.span}>Who to follow</span>
         </div>
-        <div className='follow-list'>
+        <div className={s.list}>
           <UserCompact
             userContent={{
               username: 'mamad1234',

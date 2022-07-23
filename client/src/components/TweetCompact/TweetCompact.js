@@ -8,6 +8,7 @@ import { AiOutlineRetweet as RetweetIcon } from 'react-icons/ai'
 import { BsHeartFill as HeartIcon } from 'react-icons/bs'
 import { FaRegComment as CommentIcon } from 'react-icons/fa'
 import { BiDotsHorizontalRounded as DotsIcon } from 'react-icons/bi'
+import s from './TweetCompact.module.css'
 
 const iconStyle = {
   fontSize: '17px',
@@ -147,16 +148,16 @@ const TweetCompact = ({ tweet, extend = false }) => {
   }
 
   return (
-    <div className='tweet-compact'>
-      <div className='tweet-options'>
+    <div className={s.container}>
+      <div className={s.options}>
         <DotsIcon style={dotStyle} />
       </div>
-      <div className='tweet-sidebar' onClick={redirectToProfile}>
+      <div className={s.sidebar} onClick={redirectToProfile}>
         <Avatar username={tweetContent.user.username} size='48' />
       </div>
-      <div className='tweet-main'>
-        <div className='retweetedBy-box'>
-          <div className='retweetedBy-info'>
+      <div className={s.main}>
+        <div className={s.box}>
+          <div className={s.info}>
             {isRetweet ? (
               <div style={{ color: 'rgb(83, 100, 113)', fontSize: '0.8em' }}>
                 <RetweetIcon style={{ color: 'rgb(83, 100, 113)' }} />{' '}
@@ -165,33 +166,30 @@ const TweetCompact = ({ tweet, extend = false }) => {
             ) : null}
           </div>
         </div>
-        <div className='tweet-author-info'>
-          <div className='tweet-displayName' onClick={redirectToProfile}>
+        <div className={s.author}>
+          <div className={s.displayName} onClick={redirectToProfile}>
             {tweetContent.user.displayName}
           </div>
-          <div className='tweet-username' onClick={redirectToProfile}>
+          <div className={s.username} onClick={redirectToProfile}>
             <label>@{tweetContent.user.username}</label>
           </div>
         </div>
-        <div className='tweet-body' onClick={extend ? null : redirectToTweet}>
+        <div className={s.body} onClick={extend ? null : redirectToTweet}>
           {tweetContent.body}
         </div>
-        <div className='tweet-actions'>
-          <div
-            className='tweet-icon-wrapper'
-            onClick={extend ? null : redirectToTweet}
-          >
-            <div className='tweet-icon'>
+        <div className={s.actions}>
+          <div className={s.wrapper} onClick={extend ? null : redirectToTweet}>
+            <div className={s.icon}>
               <CommentIcon style={iconStyle} />
             </div>
-            <div className='tweet-icon-num'>
+            <div className={s.num}>
               {tweetContent.repliesCount !== 0
                 ? tweetContent.repliesCount
                 : null}
             </div>
           </div>
-          <div className='tweet-icon-wrapper' onClick={retweetBtnHandler}>
-            <div className='tweet-icon'>
+          <div className={s.wrapper} onClick={retweetBtnHandler}>
+            <div className={s.icon}>
               <RetweetIcon
                 style={
                   retweetState.isRetweeted
@@ -201,7 +199,7 @@ const TweetCompact = ({ tweet, extend = false }) => {
               />
             </div>
             <div
-              className='tweet-icon-num'
+              className={s.num}
               style={retweetState.isRetweeted ? { color: 'green' } : null}
             >
               {retweetState.retweetCount !== 0
@@ -209,8 +207,8 @@ const TweetCompact = ({ tweet, extend = false }) => {
                 : null}
             </div>
           </div>
-          <div className='tweet-icon-wrapper' onClick={likeBtnHandler}>
-            <div className='tweet-icon'>
+          <div className={s.wrapper} onClick={likeBtnHandler}>
+            <div className={s.icon}>
               <HeartIcon
                 style={
                   likeState.isLiked
@@ -225,7 +223,7 @@ const TweetCompact = ({ tweet, extend = false }) => {
               />
             </div>
             <div
-              className='tweet-icon-num'
+              className={s.num}
               style={likeState.isLiked ? { color: 'red' } : null}
             >
               {likeState.likesCount !== 0 ? likeState.likesCount : null}

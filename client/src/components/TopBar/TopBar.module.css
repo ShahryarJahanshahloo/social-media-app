@@ -1,4 +1,4 @@
-.top-bar {
+.container {
   width: 100%;
   min-height: 50px;
   display: flex;
@@ -13,7 +13,7 @@
   cursor: pointer;
 }
 
-.top-bar-flex {
+.flex {
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
@@ -28,7 +28,7 @@
   flex-flow: row nowrap;
 }
 
-.top-bar-flex-item-side {
+.side {
   width: 60px;
   height: 100%;
   display: flex;
@@ -37,7 +37,7 @@
   align-items: center;
 }
 
-.top-bar-flex-item-middle {
+.middle {
   width: calc(100%);
   height: 100%;
   display: flex;
@@ -65,7 +65,7 @@
 }
 
 @media only screen and (min-width: 480px) {
-  .top-bar-flex-item-side.top-bar-desktop {
+  .side.desktop {
     display: none;
   }
 

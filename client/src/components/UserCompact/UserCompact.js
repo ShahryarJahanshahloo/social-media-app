@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import axios from 'axios'
 
 import Avatar from '../Avatar/Avatar'
+import s from './UserCompact.module.css'
 
 // const iconStyle = {
 //   fontSize: '15px',
@@ -20,8 +21,8 @@ const UserCompact = ({ userContent }) => {
     user.followings.some(e => e.username === userContent.username)
   )
   const buttonClass = isFollowed
-    ? 'follow-btn followed'
-    : 'follow-btn not-followed'
+    ? `${s.btn} ${s.followed}`
+    : `${s.btn} ${s.notFollowed}`
 
   const redirectToProfile = () => {
     history.push(`/profile/${userContent.username}`)
@@ -67,21 +68,21 @@ const UserCompact = ({ userContent }) => {
   }
 
   return (
-    <div className='tweet-compact'>
-      <div className='tweet-sidebar' onClick={redirectToProfile}>
+    <div className={s.container}>
+      <div className={s.sidebar} onClick={redirectToProfile}>
         <Avatar username={userContent.username} size='48' />
       </div>
-      <div className='tweet-main'>
-        <div className='user-author-info'>
-          <div className='user-info'>
-            <div className='user-displayName' onClick={redirectToProfile}>
+      <div className={s.main}>
+        <div className={s.author}>
+          <div className={s.info}>
+            <div className={s.displayName} onClick={redirectToProfile}>
               {userContent.displayName}
             </div>
-            <div className='user-username' onClick={redirectToProfile}>
+            <div className={s.username} onClick={redirectToProfile}>
               <label>@{userContent.username}</label>
             </div>
           </div>
-          <div className='follow-section'>
+          <div className={s.follow}>
             <button
               className={buttonClass}
               onClick={clickHandler}
@@ -92,7 +93,7 @@ const UserCompact = ({ userContent }) => {
             </button>
           </div>
         </div>
-        <div className='tweet-body' onClick={redirectToProfile}>
+        <div className={s.body} onClick={redirectToProfile}>
           {userContent.bio}
         </div>
       </div>

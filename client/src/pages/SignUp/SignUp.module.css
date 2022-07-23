@@ -1,8 +1,8 @@
-.login-box.signup {
+.boxSignup {
   min-height: 80%;
 }
 
-.login-box-container {
+.container {
   background: linear-gradient(120deg, #36d1dc, #5b86e5);
   height: 100%;
   width: 100%;
@@ -12,7 +12,7 @@
   justify-content: center;
 }
 
-.login-box {
+.box {
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
@@ -32,7 +32,7 @@
   width: 80%;
 }
 
-.login-box input[type='text'] {
+.input {
   border: 1px silver;
   background-color: gainsboro;
   border-radius: 5px;
@@ -43,7 +43,7 @@
   outline: none;
 }
 
-.login-box input[type='submit'] {
+.submit {
   width: 100%;
   border: none;
   height: 40px;
@@ -60,7 +60,7 @@
   margin-bottom: 40px;
 }
 
-.signup-link {
+.alt {
   background-color: gainsboro;
   padding: 10px;
   text-align: center;
@@ -70,20 +70,20 @@
   bottom: 0;
 }
 
-.signup-link button {
+.altButton {
   border: none;
   background-color: inherit;
   cursor: pointer;
 }
 
-.signup-link button:hover {
+.altButton:hover {
   text-decoration: underline;
 }
 
 @media only screen and (min-width: 480px) {
-  .login-box {
+  .box {
     width: 400px;
-    height: 60%;
+    height: 70%;
     border-radius: 2%;
   }
 }

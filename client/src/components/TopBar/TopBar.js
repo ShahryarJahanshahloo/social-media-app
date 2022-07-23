@@ -1,16 +1,16 @@
 import React from 'react'
 
+import s from './TopBar.module.css'
+
 const TopBar = ({ Left, Middle, Right, needsDesktop = false }) => {
-  const leftClass = needsDesktop
-    ? 'top-bar-flex-item-side top-bar-desktop'
-    : 'top-bar-flex-item-side'
+  const leftClass = needsDesktop ? `${s.side} ${s.desktop}` : s.side
 
   return (
-    <div className='top-bar'>
-      <div className='top-bar-flex'>
+    <div className={s.container}>
+      <div className={s.flex}>
         <div className={leftClass}>{Left}</div>
-        <div className='top-bar-flex-item-middle'>{Middle}</div>
-        <div className='top-bar-flex-item-side'>{Right}</div>
+        <div className={s.middle}>{Middle}</div>
+        <div className={s.side}>{Right}</div>
       </div>
     </div>
   )

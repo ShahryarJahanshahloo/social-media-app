@@ -3,6 +3,8 @@ import { useHistory } from 'react-router-dom'
 import axios from 'axios'
 import { useDispatch } from 'react-redux'
 
+import s from './SignUp.module.css'
+
 const Signup = props => {
   let history = useHistory()
   const [email, setEmail] = useState(null)
@@ -64,37 +66,53 @@ const Signup = props => {
   }
 
   return (
-    <div className='login-box-container'>
-      <div className='login-box signup'>
-        <label className='topic'>Sign Up</label>
+    <div className={s.container}>
+      <div className={`${s.box} ${s.boxSignUp}`}>
+        <label className={s.topic}>Sign Up</label>
 
-        <div className='form'>
-          <input type='text' onChange={onEmailChange} placeholder='Email' />
+        <div className={s.form}>
+          <input
+            type='text'
+            onChange={onEmailChange}
+            placeholder='Email'
+            className={s.input}
+          />
           <input
             type='text'
             onChange={onUsernameChange}
             placeholder='Username'
+            className={s.input}
           />
           <input
             type='text'
             onChange={onDisplayNameChange}
             placeholder='Display Name'
+            className={s.input}
           />
           <input
             type='text'
             onChange={onPasswordChange}
             placeholder='Password'
+            className={s.input}
           />
           <input
             type='text'
             onChange={onPassword2Change}
             placeholder='Repeat Password'
+            className={s.input}
           />
-          <input type='submit' value='create account' onClick={handleSignup} />
+          <input
+            type='submit'
+            value='create account'
+            onClick={handleSignup}
+            className={s.submit}
+          />
         </div>
 
-        <div className='signup-link'>
-          <label onClick={handleRedirectClick}>already have an account? </label>
+        <div className={s.alt}>
+          <label onClick={handleRedirectClick} className={s.altButton}>
+            already have an account?{' '}
+          </label>
         </div>
       </div>
     </div>

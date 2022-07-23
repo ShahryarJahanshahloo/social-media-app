@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux'
 // import axios from 'axios'
 
 import Avatar from '../Avatar/Avatar'
+import s from './Navbar.module.css'
 
 import { FiHome as HomeIcon, FiSearch as ExploreIcon } from 'react-icons/fi'
 import {
@@ -42,12 +43,12 @@ const Navbar = props => {
   }
 
   return (
-    <div className='navbar-wrapper'>
-      <div className='navbar'>
-        <div className='navbar-upper'>
-          <div className='navbar-item-wrapper twitter-icon'>
+    <div className={s.wrapper}>
+      <div className={s.navbar}>
+        <div className={s.upper}>
+          <div className={`${s.itemWrapper} ${s.twitter}`}>
             <div
-              className='navbar-item'
+              className={s.item}
               onClick={() => {
                 history.push('/home')
               }}
@@ -57,53 +58,53 @@ const Navbar = props => {
               />
             </div>
           </div>
-          <div className='navbar-item-wrapper'>
+          <div className={s.itemWrapper}>
             <div
-              className='navbar-item'
+              className={s.item}
               onClick={() => {
                 history.push('/home')
               }}
             >
               <HomeIcon style={iconStyle} />
-              <label className='navbar-item-text'>Home</label>
+              <label className={s.text}>Home</label>
             </div>
           </div>
-          <div className='navbar-item-wrapper'>
+          <div className={s.itemWrapper}>
             <div
-              className='navbar-item'
+              className={s.item}
               onClick={() => {
                 history.push('/bookmarks')
               }}
             >
               <BookmarkIcon style={iconStyle} />
-              <label className='navbar-item-text'>Bookmarks</label>
+              <label className={s.text}>Bookmarks</label>
             </div>
           </div>
-          <div className='navbar-item-wrapper'>
+          <div className={s.itemWrapper}>
             <div
-              className='navbar-item'
+              className={s.item}
               onClick={() => {
                 history.push('/explore')
               }}
             >
               <ExploreIcon style={iconStyle} />
-              <label className='navbar-item-text'>Explore</label>
+              <label className={s.text}>Explore</label>
             </div>
           </div>
-          <div className='navbar-item-wrapper'>
+          <div className={s.itemWrapper}>
             <div
-              className='navbar-item'
+              className={s.item}
               onClick={() => {
                 history.push(`/profile/${user.username}`)
               }}
             >
               <ProfileIcon style={iconStyle} />
-              <label className='navbar-item-text'>Profile</label>
+              <label className={s.text}>Profile</label>
             </div>
           </div>
         </div>
-        <div className='navbar-bottom'>
-          <div className='navbar-avatar'>
+        <div className={s.bottom}>
+          <div className={s.avatar}>
             <div className='avatar-box'>
               <Avatar username={user.username} size='40' />
             </div>

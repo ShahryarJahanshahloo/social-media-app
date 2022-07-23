@@ -1,10 +1,10 @@
 import React from 'react'
 import ReactRoundedImage from 'react-rounded-image'
-import styles from './Avatar.css'
+import s from './Avatar.module.css'
 
 const Avatar = ({ username, size }) => {
   return (
-    <div className={styles.wrapper}>
+    <div className={s.wrapper}>
       <ReactRoundedImage
         image={`/api/getAvatar?username=${username}`}
         imageWidth={size}
