@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import axios from 'axios'
 
 import List from '../../components/List/List'
 import TopBar from '../../components/TopBar/TopBar'
 import useUserList from '../../hooks/useUserList'
+import { GetProfileInfo } from '../../api/api'
 
 const Followers = () => {
   const [displayName, setDisplayName] = useState()
@@ -16,22 +16,9 @@ const Followers = () => {
     username: profileUsername,
   })
 
-  useEffect(() => {
-    axios({
-      url: '/api/profileInfo',
-      method: 'get',
-      params: {
-        username: profileUsername,
-      },
-    })
-      .then(res => {
-        setDisplayName(prevState => {
-          return res.data.displayName
-        })
-      })
-      .catch(e => {
-        console.log(e)
-      })
+  useEffect((async ) => {
+    const res = await GetProfileInfo(profileUsername)
+    setProfile(res.data.displayName)
   }, [])
 
   return (

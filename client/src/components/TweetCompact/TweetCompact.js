@@ -9,6 +9,7 @@ import { BsHeartFill as HeartIcon } from 'react-icons/bs'
 import { FaRegComment as CommentIcon } from 'react-icons/fa'
 import { BiDotsHorizontalRounded as DotsIcon } from 'react-icons/bi'
 import s from './TweetCompact.module.css'
+import { PatchFollow, PatchLike } from '../../api/api'
 
 const iconStyle = {
   fontSize: '17px',
@@ -45,98 +46,38 @@ const TweetCompact = ({ tweet, extend = false }) => {
     isRetweeted: user.retweets.includes(tweetContent._id),
   })
 
-  const likeBtnHandler = () => {
-    axios({
-      method: 'PATCH',
-      url: '/api/like',
-      headers: {
-        Authorization: `Bearer ${jwt}`,
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Credentials': true,
-      },
-      data: {
+  const buttonHandler = async operation => {
+    const data = {
+      tweetID: tweetContent._id,
+    }
+    let res
+    if (operation === 'Like') {
+      res = await PatchLike(data)
+    } else {
+      res = await PatchFollow(data)
+    }
+    const isAdded = res.data.message === 'added'
+    if (operation === 'Like') {
+      setLikeState(prevState => {
+        return {
+          likesCount: prevState.likesCount + (isAdded ? 1 : -1),
+          isLiked: isAdded,
+        }
+      })
+    } else {
+      setRetweetState(prevState => {
+        return {
+          retweetCount: prevState.retweetCount + (isAdded ? 1 : -1),
+          isRetweeted: isAdded,
+        }
+      })
+    }
+    dispatch({
+      type: isAdded ? `add${operation}` : `removeLike${operation}`,
+      payload: {
         tweetID: tweetContent._id,
       },
     })
-      .then(res => {
-        if (res.data.message === 'added') {
-          setLikeState(prevState => {
-            return {
-              likesCount: prevState.likesCount + 1,
-              isLiked: true,
-            }
-          })
-          dispatch({
-            type: 'addLike',
-            payload: {
-              tweetID: tweetContent._id,
-            },
-          })
-        } else if (res.data.message === 'removed') {
-          setLikeState(prevState => {
-            return {
-              likesCount: prevState.likesCount - 1,
-              isLiked: false,
-            }
-          })
-          dispatch({
-            type: 'removeLike',
-            payload: {
-              tweetID: tweetContent._id,
-            },
-          })
-        }
-      })
-      .catch(e => {
-        console.log(e)
-      })
-  }
-
-  const retweetBtnHandler = () => {
-    axios({
-      method: 'POST',
-      url: '/api/retweet',
-      headers: {
-        Authorization: `Bearer ${jwt}`,
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Credentials': true,
-      },
-      data: {
-        tweetID: tweetContent._id,
-      },
-    })
-      .then(res => {
-        if (res.data.message === 'added') {
-          setRetweetState(prevState => {
-            return {
-              retweetCount: prevState.retweetCount + 1,
-              isRetweeted: true,
-            }
-          })
-          dispatch({
-            type: 'addRetweet',
-            payload: {
-              tweetID: tweetContent._id,
-            },
-          })
-        } else if (res.data.message === 'removed') {
-          setRetweetState(prevState => {
-            return {
-              retweetCount: prevState.retweetCount - 1,
-              isRetweeted: false,
-            }
-          })
-          dispatch({
-            type: 'removeRetweet',
-            payload: {
-              tweetID: tweetContent._id,
-            },
-          })
-        }
-      })
-      .catch(e => {
-        console.log(e)
-      })
   }
 
   const redirectToProfile = () => {
@@ -188,7 +129,7 @@ const TweetCompact = ({ tweet, extend = false }) => {
                 : null}
             </div>
           </div>
-          <div className={s.wrapper} onClick={retweetBtnHandler}>
+          <div className={s.wrapper} onClick={buttonHandler('Retweet')}>
             <div className={s.icon}>
               <RetweetIcon
                 style={
@@ -207,7 +148,7 @@ const TweetCompact = ({ tweet, extend = false }) => {
                 : null}
             </div>
           </div>
-          <div className={s.wrapper} onClick={likeBtnHandler}>
+          <div className={s.wrapper} onClick={buttonHandler('Like')}>
             <div className={s.icon}>
               <HeartIcon
                 style={

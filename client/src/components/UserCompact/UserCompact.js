@@ -5,6 +5,7 @@ import axios from 'axios'
 
 import Avatar from '../Avatar/Avatar'
 import s from './UserCompact.module.css'
+import { PatchFollow } from '../../api/api'
 
 // const iconStyle = {
 //   fontSize: '15px',
@@ -15,7 +16,6 @@ const UserCompact = ({ userContent }) => {
   const history = useHistory()
   const user = useSelector(state => state.userReducer)
   const dispatch = useDispatch()
-  const jwt = localStorage.getItem('jwt')
   const [buttonText, setButtonText] = useState('Followed')
   const [isFollowed, setIsFollowed] = useState(
     user.followings.some(e => e.username === userContent.username)
@@ -36,35 +36,15 @@ const UserCompact = ({ userContent }) => {
     setButtonText('Followed')
   }
 
-  const clickHandler = () => {
-    axios({
-      method: 'PATCH',
-      url: '/api/follow',
-      headers: {
-        Authorization: `Bearer ${jwt}`,
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Credentials': true,
-      },
-      data: { username: userContent.username },
+  const clickHandler = async () => {
+    const data = { username: userContent.username }
+    const res = await PatchFollow(data)
+    const isAdded = res.data.message === 'added'
+    dispatch({
+      type: isAdded ? 'addFollowing' : 'removeFollowing',
+      payload: { username: userContent.username },
     })
-      .then(res => {
-        if (res.data.message === 'added') {
-          dispatch({
-            type: 'addFollowing',
-            payload: { username: userContent.username },
-          })
-          setIsFollowed(true)
-        } else if (res.data.message === 'removed') {
-          dispatch({
-            type: 'removeFollowing',
-            payload: { username: userContent.username },
-          })
-          setIsFollowed(false)
-        }
-      })
-      .catch(e => {
-        console.log(e)
-      })
+    setIsFollowed(isAdded)
   }
 
   return (

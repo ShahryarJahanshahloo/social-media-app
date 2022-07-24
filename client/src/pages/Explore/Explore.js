@@ -7,6 +7,7 @@ import List from '../../components/List/List'
 import TopBar from '../../components/TopBar/TopBar'
 import Avatar from '../../components/Avatar/Avatar'
 import s from './Explore.module.css'
+import { GetSearch } from '../../api/api'
 
 import {
   BiSearchAlt as SearchIcon,

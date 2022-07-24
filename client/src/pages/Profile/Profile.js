@@ -7,6 +7,7 @@ import Avatar from '../../components/Avatar/Avatar'
 import List from '../../components/List/List'
 import useTweetList from '../../hooks/useTweetList'
 import TopBar from '../../components/TopBar/TopBar'
+import { PatchFollow, GetProfileInfo } from '../../api/api'
 
 const Profile = props => {
   const [profile, setProfile] = useState()
@@ -18,7 +19,6 @@ const Profile = props => {
   const isUserProfile = profileUsername == user.username
   const history = useHistory()
   const dispatch = useDispatch()
-  const jwt = localStorage.getItem('jwt')
   const [buttonText, setButtonText] = useState('Followed')
   const [isFollowed, setIsFollowed] = useState(
     user.followings.some(e => e.username === profileUsername)
@@ -43,59 +43,26 @@ const Profile = props => {
     setButtonText('Followed')
   }
 
-  const clickHandler = () => {
-    axios({
-      method: 'PATCH',
-      url: '/api/follow',
-      headers: {
-        Authorization: `Bearer ${jwt}`,
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Credentials': true,
-      },
-      data: { username: profileUsername },
+  const clickHandler = async () => {
+    const data = { username: profileUsername }
+    const res = await PatchFollow(data)
+    const isAdded = res.data.message == 'added'
+    dispatch({
+      type: isAdded ? 'addFollowing' : 'removeFollowing',
+      payload: { username: profileUsername },
     })
-      .then(res => {
-        if (res.data.message == 'added') {
-          dispatch({
-            type: 'addFollowing',
-            payload: { username: profileUsername },
-          })
-          setIsFollowed(true)
-        } else if (res.data.message == 'removed') {
-          dispatch({
-            type: 'removeFollowing',
-            payload: { username: profileUsername },
-          })
-          setIsFollowed(false)
-        }
-      })
-      .catch(e => {
-        console.log(e)
-      })
+    setIsFollowed(isAdded)
   }
 
-  useEffect(() => {
-    axios({
-      url: '/api/profileInfo',
-      method: 'get',
-      params: {
-        username: profileUsername,
-      },
+  useEffect(async () => {
+    const res = await GetProfileInfo(profileUsername)
+    setProfile({
+      displayName: res.data.displayName,
+      bio: res.data.bio,
+      tweetsCount: res.data.tweetsCount,
+      followersCount: res.data.followersCount,
+      followingsCount: res.data.followingsCount,
     })
-      .then(res => {
-        setProfile(prevState => {
-          return {
-            displayName: res.data.displayName,
-            bio: res.data.bio,
-            tweetsCount: res.data.tweetsCount,
-            followersCount: res.data.followersCount,
-            followingsCount: res.data.followingsCount,
-          }
-        })
-      })
-      .catch(e => {
-        console.log(e)
-      })
   }, [])
 
   return (

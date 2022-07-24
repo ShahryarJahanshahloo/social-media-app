@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux'
 
 import Avatar from '../Avatar/Avatar'
 import s from '../../pages/Compose/Compose.module.css'
+import { PostCompose, PostReply } from '../../api/api'
 
 const ComposeCompact = ({ setTweets, replyTo = null }) => {
   const [tweetBody, setTweetBody] = useState('')
@@ -12,42 +13,29 @@ const ComposeCompact = ({ setTweets, replyTo = null }) => {
     'tweet-button disabledButton'
   )
   const user = useSelector(state => state.userReducer)
-  const jwt = localStorage.getItem('jwt')
   const history = useHistory()
 
   const profileRedirect = () => {
     history.push(`/profile/${user.username}`)
   }
 
-  const tweetBtnHandler = () => {
+  const tweetBtnHandler = async () => {
     //validate tweet body!
-    const url = replyTo == null ? '/api/compose' : '/api/reply'
-    const data =
-      replyTo == null
-        ? {
-            body: tweetBody,
-          }
-        : {
-            body: tweetBody,
-            tweetID: replyTo.tweetID,
-          }
-    axios({
-      method: 'POST',
-      url: url,
-      headers: {
-        Authorization: `Bearer ${jwt}`,
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Credentials': true,
-      },
-      data: data,
-    })
-      .then(res => {
-        console.log(res.data.tweet)
-        setTweets(res.data.tweet)
-      })
-      .catch(e => {
-        console.log(e)
-      })
+    const data = !replyTo
+      ? {
+          body: tweetBody,
+        }
+      : {
+          body: tweetBody,
+          tweetID: replyTo.tweetID,
+        }
+    let res
+    if (replyTo) {
+      res = await PostReply(data)
+    } else {
+      res = await PostCompose(data)
+    }
+    setTweets(res.data.tweet)
   }
 
   const textAreaOnChange = e => {

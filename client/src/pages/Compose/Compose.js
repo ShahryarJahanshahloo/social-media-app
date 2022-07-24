@@ -5,8 +5,8 @@ import { useSelector } from 'react-redux'
 
 import Avatar from '../../components/Avatar/Avatar'
 import TopBar from '../../components/TopBar/TopBar'
-
 import s from './Compose.module.css'
+import { PostCompose } from '../../api/api'
 
 const ComposeExtended = () => {
   const username = useSelector(state => state.userReducer.username)
@@ -17,26 +17,11 @@ const ComposeExtended = () => {
     'tweet-button disabledButton'
   )
 
-  const tweetBtnHandler = () => {
+  const tweetBtnHandler = async () => {
     //validate tweet body!
-    axios({
-      method: 'post',
-      url: '/api/compose',
-      headers: {
-        Authorization: `Bearer ${jwt}`,
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Credentials': true,
-      },
-      data: {
-        body: tweetBody,
-      },
-    })
-      .then(res => {
-        if (res.status === '200') history.push('/home')
-      })
-      .catch(e => {
-        console.log(e)
-      })
+    const data = { body: tweetBody }
+    const res = await PostCompose(data)
+    if (res.status === 200) history.push('/home')
   }
 
   const textAreaOnChange = e => {

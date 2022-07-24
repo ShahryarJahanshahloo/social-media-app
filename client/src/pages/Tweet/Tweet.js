@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import axios from 'axios'
 
 import List from '../../components/List/List'
 import ComposeCompact from '../../components/ComposeCompact/ComposeCompact'
 import TweetCompact from '../../components/TweetCompact/TweetCompact'
 import useTweetList from '../../hooks/useTweetList'
 import TopBar from '../../components/TopBar/TopBar'
+import { GetTweetInfo } from '../../api/api'
 
 const TweetExtended = props => {
   const { tweetID } = useParams()
@@ -25,30 +25,17 @@ const TweetExtended = props => {
     })
   }
 
-  useEffect(() => {
-    axios({
-      url: '/api/tweetInfo',
-      method: 'get',
-      params: {
-        tweetID,
-      },
+  useEffect(async () => {
+    const res = await GetTweetInfo(tweetID)
+    setTweet({
+      body: res.data.body,
+      likesCount: res.data.likesCount,
+      retweetCount: res.data.retweetCount,
+      repliesCount: res.data.repliesCount,
+      createdAt: res.data.createdAt,
+      user: res.data.user,
+      _id: res.data._id,
     })
-      .then(res => {
-        setTweet(prevState => {
-          return {
-            body: res.data.body,
-            likesCount: res.data.likesCount,
-            retweetCount: res.data.retweetCount,
-            repliesCount: res.data.repliesCount,
-            createdAt: res.data.createdAt,
-            user: res.data.user,
-            _id: res.data._id,
-          }
-        })
-      })
-      .catch(e => {
-        console.log(e)
-      })
   }, [])
 
   return (

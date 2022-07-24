@@ -4,6 +4,7 @@ import axios from 'axios'
 import { useDispatch } from 'react-redux'
 
 import s from '../SignUp/SignUp.module.css'
+import { PostSignIn } from '../../api/api'
 
 const Login = props => {
   let history = useHistory()
@@ -15,29 +16,23 @@ const Login = props => {
     history.push('/signup')
   }
 
-  const handleLogin = () => {
-    axios
-      .post('/api/signin', {
-        email: emailInput.current.value,
-        password: passwordInput.current.value,
-      })
-      .then(res => {
-        dispatch({
-          type: 'updateLoginStatus',
-        })
-        dispatch({
-          type: 'setUser',
-          payload: {
-            username: res.data.username,
-            displayName: res.data.displayName,
-          },
-        })
-        localStorage.setItem('jwt', res.data.token)
-        history.push('/home')
-      })
-      .catch(e => {
-        console.log(e)
-      })
+  const handleLogin = async () => {
+    const data = {
+      email: emailInput.current.value,
+      password: passwordInput.current.value,
+    }
+    const res = await PostSignIn(data)
+    dispatch({
+      type: 'updateLoginStatus',
+    })
+    dispatch({
+      type: 'setUser',
+      payload: {
+        username: res.data.username,
+        displayName: res.data.displayName,
+      },
+    })
+    localStorage.setItem('jwt', res.data.token)
   }
 
   return (

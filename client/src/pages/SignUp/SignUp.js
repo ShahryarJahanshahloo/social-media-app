@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
-import axios from 'axios'
 import { useDispatch } from 'react-redux'
 
 import s from './SignUp.module.css'
+import { PostSignUp } from '../../api/api'
 
 const Signup = props => {
   let history = useHistory()
@@ -18,31 +18,26 @@ const Signup = props => {
     history.push('/login')
   }
 
-  const handleSignup = () => {
-    axios
-      .post('/api/signup', {
-        email,
-        username,
-        displayName,
-        password,
-      })
-      .then(res => {
-        dispatch({
-          type: 'updateLoginStatus',
-        })
-        dispatch({
-          type: 'setUser',
-          payload: {
-            username: res.data.username,
-            displayName: res.data.displayName,
-          },
-        })
-        localStorage.setItem('jwt', res.data.token)
-        history.push('/home')
-      })
-      .catch(e => {
-        console.log(e)
-      })
+  const handleSignup = async () => {
+    const data = {
+      email,
+      username,
+      displayName,
+      password,
+    }
+    const res = await PostSignUp(data)
+    dispatch({
+      type: 'updateLoginStatus',
+    })
+    dispatch({
+      type: 'setUser',
+      payload: {
+        username: res.data.username,
+        displayName: res.data.displayName,
+      },
+    })
+    localStorage.setItem('jwt', res.data.token)
+    history.push('/home')
   }
 
   const onEmailChange = e => {
