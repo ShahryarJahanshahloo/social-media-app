@@ -3,11 +3,10 @@ import { useHistory } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import axios from 'axios'
 
-import UserList from '../../components/UserList/UserList'
-import Navbar from '../../components/Navbar/Navbar'
-import FollowSuggestion from '../../components/FollowSuggestion/FollowSuggestion'
+import List from '../../components/List/List'
 import TopBar from '../../components/TopBar/TopBar'
 import Avatar from '../../components/Avatar/Avatar'
+import s from './Explore.module.css'
 
 import {
   BiSearchAlt as SearchIcon,
@@ -79,79 +78,50 @@ const Explore = () => {
   }
 
   return (
-    <div className='main-app'>
-      <div className='side-section-left-wrapper'>
-        <div className='side-section left'>
-          <Navbar />
-        </div>
-      </div>
-      <div className='middle-section'>
-        <div className='middle-sections-container'>
-          <div className='middle-section-left'>
-            <TopBar
-              needsDesktop={true}
-              Left={
-                <div className='avatar-box'>
-                  <Avatar username={user.username} size='32' />
-                </div>
-              }
-              Middle={
-                <div className='search-box'>
-                  <input
-                    onChange={searchInputOnChange}
-                    placeholder='Search User'
-                  ></input>
-                  <div
-                    onClick={searchButtonHandler}
-                    style={{ paddingRight: '5px' }}
-                  >
-                    <SearchIcon style={{ color: '#a9a9a9' }} />
-                  </div>
-                </div>
-              }
-              Right={
-                <div>
-                  <DotsIcon style={{ fontSize: '24px' }} />
-                </div>
-              }
-            />
-            <UserList
-              users={users}
-              alt={
-                emptyRes ? (
-                  <div className='alt-container'>
-                    <div className='alt-flex'>
-                      <div className='alt-item-wrapper'>
-                        <span className='alt-item-big'>No results found!</span>
-                      </div>
-                      <div className='alt-item-wrapper'>
-                        <span className='alt-item-small'>
-                          The term you entered did not bring up any results. You
-                          may have The term you entered did not bring up any
-                          results. You may have The term you entered did not
-                          bring up any results. You may have mistyped your term
-                          or the username you are looking for doesn't exist.
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                ) : null
-              }
-            />
-            {users.length < 10 ? null : (
-              <button className='load-more' onClick={loadMore}>
-                load more users
-              </button>
-            )}
-          </div>
-          <div className='middle-section-right'>
-            <div className='side-section right'>
-              <FollowSuggestion />
+    <>
+      <TopBar
+        desktop
+        Left={<Avatar username={user.username} size='32' wrap />}
+        Middle={
+          <div className={s.search}>
+            <input
+              className={s.input}
+              onChange={searchInputOnChange}
+              placeholder='Search User'
+            ></input>
+            <div onClick={searchButtonHandler} style={{ paddingRight: '5px' }}>
+              <SearchIcon style={{ color: '#a9a9a9' }} />
             </div>
           </div>
-        </div>
-      </div>
-    </div>
+        }
+        Right={
+          <div>
+            <DotsIcon style={{ fontSize: '24px' }} />
+          </div>
+        }
+      />
+      <List
+        users={users}
+        alt={
+          emptyRes
+            ? {
+                big: 'No results found!',
+                small: `The term you entered did not bring up any results. You may
+                    have The term you entered did not bring up any results. You
+                    may have The term you entered did not bring up any results.
+                    You may have mistyped your term or the username you are
+                    looking for doesn't exist.`,
+              }
+            : null
+        }
+        type='user'
+      />
+      {users.length < 10 ? null : (
+        <button className='load-more' onClick={loadMore}>
+          load more users
+        </button>
+      )}
+    </>
   )
 }
 

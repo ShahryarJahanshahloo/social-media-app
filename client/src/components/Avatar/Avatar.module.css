@@ -1,4 +1,10 @@
-.wrapper {
+.container {
   width: 32px;
   height: 100px;
+}
+
+.wrapper {
+  width: 100%;
+  display: flex;
+  flex-flow: row nowrap;
 }

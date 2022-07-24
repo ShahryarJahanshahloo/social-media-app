@@ -105,9 +105,7 @@ const Navbar = props => {
         </div>
         <div className={s.bottom}>
           <div className={s.avatar}>
-            <div className='avatar-box'>
-              <Avatar username={user.username} size='40' />
-            </div>
+            <Avatar username={user.username} size='40' wrap />
           </div>
         </div>
       </div>

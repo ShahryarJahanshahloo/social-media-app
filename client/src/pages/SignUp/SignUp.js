@@ -7,11 +7,11 @@ import s from './SignUp.module.css'
 
 const Signup = props => {
   let history = useHistory()
-  const [email, setEmail] = useState(null)
-  const [username, setUsername] = useState(null)
-  const [displayName, setDisplayName] = useState(null)
-  const [password, setPassword] = useState(null)
-  const [password2, setPassword2] = useState(null)
+  const [email, setEmail] = useState()
+  const [username, setUsername] = useState()
+  const [displayName, setDisplayName] = useState()
+  const [password, setPassword] = useState()
+  const [password2, setPassword2] = useState()
   const dispatch = useDispatch()
 
   const handleRedirectClick = () => {

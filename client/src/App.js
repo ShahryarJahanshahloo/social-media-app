@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux'
 
 import './App.css'
 
+import Layout from './layout/Layout'
 import Login from './pages/Login/Login'
 import Signup from './pages/SignUp/SignUp'
 import Home from './pages/Home/Home'
@@ -73,14 +74,16 @@ function App() {
       <Switch>
         <Route path='/login' component={Login} />
         <Route path='/signup' component={Signup} />
-        <Route path='/home' component={Home} />
-        <Route path='/bookmarks' component={Bookmarks}></Route>
-        <Route path='/explore' component={Explore}></Route>
         <Route path='/compose' component={ComposeExtended}></Route>
-        <Route path='/tweet/:tweetID' component={TweetExtended}></Route>
-        <Route path='/profile/:username' component={Profile}></Route>
-        <Route path='/following/:username' component={Following}></Route>
-        <Route path='/followers/:username' component={Followers}></Route>
+        <Layout>
+          <Route path='/home' component={Home} />
+          <Route path='/bookmarks' component={Bookmarks}></Route>
+          <Route path='/explore' component={Explore}></Route>
+          <Route path='/tweet/:tweetID' component={TweetExtended}></Route>
+          <Route path='/profile/:username' component={Profile}></Route>
+          <Route path='/following/:username' component={Following}></Route>
+          <Route path='/followers/:username' component={Followers}></Route>
+        </Layout>
         <Route exact path='/' component={Redirect} />
         <Route path='*' component={Page404}></Route>
       </Switch>

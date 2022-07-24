@@ -5,7 +5,7 @@ import Avatar from '../Avatar/Avatar'
 
 import { FaCity as CityIcon } from 'react-icons/fa'
 import { AiOutlineMail as EmailIcon } from 'react-icons/ai'
-import s from './FollowSuggestion.css'
+import s from './FollowSuggestion.module.css'
 
 const FollowSuggestion = props => {
   return (
@@ -15,9 +15,7 @@ const FollowSuggestion = props => {
           <span>About me</span>
         </div>
         <div className={s.section}>
-          <div className='avatar-box' style={{ width: '60px' }}>
-            <Avatar username='mamad1234' size='48' />
-          </div>
+          <Avatar username='mamad1234' size='48' wrap />
           <div className={s.title}>Hi! &#128075;</div>
         </div>
         <div className={s.section} style={{ lineHeight: '30px' }}>

@@ -1,38 +1,21 @@
 import React, { useState, useEffect } from 'react'
-import { useParams, useHistory } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import axios from 'axios'
 
-import TweetList from '../../components/TweetList/TweetList'
+import List from '../../components/List/List'
 import ComposeCompact from '../../components/ComposeCompact/ComposeCompact'
-import Navbar from '../../components/Navbar/Navbar'
-import FollowSuggestion from '../../components/FollowSuggestion/FollowSuggestion'
 import TweetCompact from '../../components/TweetCompact/TweetCompact'
 import useTweetList from '../../hooks/useTweetList'
 import TopBar from '../../components/TopBar/TopBar'
 
-import { BiArrowBack as BackIcon } from 'react-icons/bi'
-
 const TweetExtended = props => {
   const { tweetID } = useParams()
-  const history = useHistory()
   const user = useSelector(state => state.userReducer)
   const [tweets, loadMore, setTweets] = useTweetList('/api/getReplies', {
     tweetID,
   })
-  const [tweet, setTweet] = useState({
-    body: '',
-    likesCount: '',
-    retweetCount: '',
-    repliesCount: '',
-    user: { displayName: '', username: '' },
-    createdAt: '',
-    _id: '',
-  })
-
-  const backButtonHandler = () => {
-    history.goBack()
-  }
+  const [tweet, setTweet] = useState()
 
   const addReply = reply => {
     setTweets(prevState => {
@@ -69,58 +52,34 @@ const TweetExtended = props => {
   }, [])
 
   return (
-    <div className='main-app'>
-      <div className='side-section-left-wrapper'>
-        <div className='side-section left'>
-          <Navbar />
-        </div>
-      </div>
-      <div className='middle-section'>
-        <div className='middle-sections-container'>
-          <div className='middle-section-left'>
-            <TopBar
-              Left={
-                <div className='back-button-wrapper'>
-                  <div className='back-button' onClick={backButtonHandler}>
-                    <BackIcon style={{ fontSize: '1.25em' }} />
-                  </div>
-                </div>
-              }
-              Middle={
-                <div className='tweet-title'>
-                  <div>Tweet</div>
-                </div>
-              }
-              Right={<div></div>}
-            />
-            {tweet.body == '' || user.username == '' ? null : (
-              <TweetCompact tweet={tweet} extend={true} />
-            )}
-            <div className='compose-reply-box'>
-              {tweet.body == '' || user.username == '' ? null : (
-                <ComposeCompact
-                  setTweets={addReply}
-                  replyTo={{
-                    tweetID: tweet._id,
-                  }}
-                />
-              )}
-            </div>
-            {tweet._id == '' ? null : <TweetList tweets={tweets} />}
-            {tweets.length < 10 ? null : (
-              <button className='load-more' onClick={loadMore}>
-                load more replies
-              </button>
-            )}
+    <>
+      <TopBar
+        Middle={
+          <div className='tweet-title'>
+            <div>Tweet</div>
           </div>
-        </div>
-        <div className='middle-section-right'>
-          <div className='side-section right'>
-            <FollowSuggestion />
-          </div>
-        </div>
+        }
+      />
+      {!tweet || user.username == '' ? null : (
+        <TweetCompact tweet={tweet} extend={true} />
+      )}
+      <div className='compose-reply-box'>
+        {!tweet || user.username == '' ? null : (
+          <ComposeCompact
+            setTweets={addReply}
+            replyTo={{
+              tweetID: tweet._id,
+            }}
+          />
+        )}
       </div>
-    </div>
+      {tweet && <List tweets={tweets} />}
+      {tweets.length < 10 ? null : (
+        <button className='load-more' onClick={loadMore}>
+          load more replies
+        </button>
+      )}
+    </>
   )
 }
 

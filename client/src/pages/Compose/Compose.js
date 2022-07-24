@@ -6,7 +6,6 @@ import { useSelector } from 'react-redux'
 import Avatar from '../../components/Avatar/Avatar'
 import TopBar from '../../components/TopBar/TopBar'
 
-import { BiArrowBack as BackIcon } from 'react-icons/bi'
 import s from './Compose.module.css'
 
 const ComposeExtended = () => {
@@ -17,10 +16,6 @@ const ComposeExtended = () => {
   const [tweetBtnClass, setTweetBtnClass] = useState(
     'tweet-button disabledButton'
   )
-
-  const backButtonHandler = () => {
-    history.push('/home')
-  }
 
   const tweetBtnHandler = () => {
     //validate tweet body!
@@ -63,13 +58,6 @@ const ComposeExtended = () => {
   return (
     <div className={s.wrapper}>
       <TopBar
-        Left={
-          <div className='back-button-wrapper'>
-            <div className='back-button' onClick={backButtonHandler}>
-              <BackIcon style={{ fontSize: '1.25em' }} />
-            </div>
-          </div>
-        }
         Middle={<div></div>}
         Right={
           <button

@@ -22,12 +22,6 @@
   margin: 0 10px;
 }
 
-.avatar-box {
-  width: 100%;
-  display: flex;
-  flex-flow: row nowrap;
-}
-
 .side {
   width: 60px;
   height: 100%;

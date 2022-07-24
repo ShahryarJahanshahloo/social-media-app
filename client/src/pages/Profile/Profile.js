@@ -4,22 +4,12 @@ import { useSelector, useDispatch } from 'react-redux'
 import axios from 'axios'
 
 import Avatar from '../../components/Avatar/Avatar'
-import TweetList from '../../components/TweetList/TweetList'
-import Navbar from '../../components/Navbar/Navbar'
-import FollowSuggestion from '../../components/FollowSuggestion/FollowSuggestion'
+import List from '../../components/List/List'
 import useTweetList from '../../hooks/useTweetList'
 import TopBar from '../../components/TopBar/TopBar'
 
-import { BiArrowBack as BackIcon } from 'react-icons/bi'
-
 const Profile = props => {
-  const [profile, setProfile] = useState({
-    displayName: '',
-    bio: '',
-    tweetsCount: 0,
-    followersCount: 0,
-    followingsCount: 0,
-  })
+  const [profile, setProfile] = useState()
   let profileUsername = useParams().username
   const [tweets, loadMore] = useTweetList('/api/profileTweets', {
     username: profileUsername,
@@ -36,10 +26,6 @@ const Profile = props => {
   const buttonClass = isFollowed
     ? 'follow-btn followed'
     : 'follow-btn not-followed'
-
-  const backButtonHandler = () => {
-    history.goBack()
-  }
 
   const followingRedirect = () => {
     history.push(`/following/${profileUsername}`)
@@ -113,134 +99,84 @@ const Profile = props => {
   }, [])
 
   return (
-    <div className='main-app'>
-      <div className='side-section-left-wrapper'>
-        <div className='side-section left'>
-          <Navbar />
-        </div>
-      </div>
-      <div className='middle-section'>
-        <div className='middle-sections-container'>
-          <div className='middle-section-left'>
-            <TopBar
-              Left={
-                <div className='back-button-wrapper'>
-                  <div className='back-button' onClick={backButtonHandler}>
-                    <BackIcon style={{ fontSize: '1.25em' }} />
-                  </div>
-                </div>
-              }
-              Middle={
-                <div className='top-bar-profile'>
-                  <div className='top-bar-displayName'>
-                    {profile.displayName}
-                  </div>
-                  <div className='top-bar-tweetCount'>
-                    {profile.tweetsCount} Tweets
-                  </div>
-                </div>
-              }
-              Right={<div></div>}
-            />
-            <div className='profile-stats-wrapper'>
-              <div className='profile-stats-box'>
-                <div className='user-stats-box'>
-                  <div className='profile-avatar-box'>
-                    <div className='avatar-box'>
-                      <Avatar username={profileUsername} size='128' />
-                    </div>
-                  </div>
-                  <div className='profile-text-box'>
-                    <div className='profile-displayName-box'>
-                      {profile.displayName}
-                    </div>
-                    <div className='profile-username-box'>
-                      @{profileUsername}
-                    </div>
-                    <div className='profile-bio-box'>{profile.bio}</div>
-                  </div>
-                </div>
-                <div className='follow-stats-box'>
-                  <div className='follow-stats-item'>
-                    <div
-                      onClick={followersRedirect}
-                      style={{ cursor: 'pointer' }}
+    <>
+      <TopBar
+        Middle={
+          <div className='top-bar-profile'>
+            <div className='top-bar-displayName'>
+              {profile.displayName || ''}
+            </div>
+            <div className='top-bar-tweetCount'>
+              {profile.tweetsCount || 0} Tweets
+            </div>
+          </div>
+        }
+      />
+      <div className='profile-stats-wrapper'>
+        <div className='profile-stats-box'>
+          <div className='user-stats-box'>
+            <div className='profile-avatar-box'>
+              <Avatar username={profileUsername} size='128' wrap />
+            </div>
+            <div className='profile-text-box'>
+              <div className='profile-displayName-box'>
+                {profile.displayName || ''}
+              </div>
+              <div className='profile-username-box'>@{profileUsername}</div>
+              <div className='profile-bio-box'>{profile.bio || ''}</div>
+            </div>
+          </div>
+          <div className='follow-stats-box'>
+            <div className='follow-stats-item'>
+              <div onClick={followersRedirect} style={{ cursor: 'pointer' }}>
+                <div className='follow-stat'>Followers</div>
+                <div className='follow-num'>{profile.followersCount || 0}</div>
+              </div>
+            </div>
+            <div className='follow-stats-item'>
+              <div onClick={followingRedirect} style={{ cursor: 'pointer' }}>
+                <div className='follow-stat'>Following</div>
+                <div className='follow-num'>{profile.followingsCount || 0}</div>
+              </div>
+            </div>
+            <div className='follow-stats-item'>
+              <div>
+                <div className='follow-button'>
+                  {isUserProfile ? (
+                    <button className='edit-profile-btn'>Edit profile</button>
+                  ) : (
+                    <button
+                      className={buttonClass}
+                      onClick={clickHandler}
+                      onMouseOver={onMouseOver}
+                      onMouseOut={onMouseOut}
                     >
-                      <div className='follow-stat'>Followers</div>
-                      <div className='follow-num'>{profile.followersCount}</div>
-                    </div>
-                  </div>
-                  <div className='follow-stats-item'>
-                    <div
-                      onClick={followingRedirect}
-                      style={{ cursor: 'pointer' }}
-                    >
-                      <div className='follow-stat'>Following</div>
-                      <div className='follow-num'>
-                        {profile.followingsCount}
-                      </div>
-                    </div>
-                  </div>
-                  <div className='follow-stats-item'>
-                    <div>
-                      <div className='follow-button'>
-                        {isUserProfile ? (
-                          <button className='edit-profile-btn'>
-                            Edit profile
-                          </button>
-                        ) : (
-                          <button
-                            className={buttonClass}
-                            onClick={clickHandler}
-                            onMouseOver={onMouseOver}
-                            onMouseOut={onMouseOut}
-                          >
-                            {isFollowed ? buttonText : 'Follow'}
-                          </button>
-                        )}
-                      </div>
-                    </div>
-                  </div>
+                      {isFollowed ? buttonText : 'Follow'}
+                    </button>
+                  )}
                 </div>
               </div>
             </div>
-            <TweetList
-              tweets={tweets}
-              alt={
-                <div className='alt-container'>
-                  <div className='alt-flex'>
-                    <div className='alt-item-wrapper'>
-                      <span className='alt-item-big'>
-                        {isUserProfile
-                          ? "You haven't Tweeted yet"
-                          : "This user hasn't Tweeted yet"}
-                      </span>
-                    </div>
-                    <div className='alt-item-wrapper'>
-                      <span className='alt-item-small'>
-                        {isUserProfile
-                          ? "When you post a Tweet, it'll show up here"
-                          : ''}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              }
-            />
-            {tweets.length < 10 ? null : (
-              <button className='load-more' onClick={loadMore}>
-                load more tweets
-              </button>
-            )}
-          </div>
-          <div className='middle-section-right'>
-            <div className='side-section right'>
-              <FollowSuggestion />
-            </div>
           </div>
         </div>
       </div>
-    </div>
+      <List
+        tweets={tweets}
+        alt={{
+          big: isUserProfile
+            ? "You haven't Tweeted yet"
+            : "This user hasn't Tweeted yet",
+          small: isUserProfile
+            ? "When you post a Tweet, it'll show up here"
+            : '',
+        }}
+      />
+      {tweets.length < 10 ? null : (
+        <button className='load-more' onClick={loadMore}>
+          load more tweets
+        </button>
+      )}
+    </>
   )
 }
 
