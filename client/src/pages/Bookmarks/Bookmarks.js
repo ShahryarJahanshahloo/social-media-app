@@ -5,6 +5,7 @@ import Avatar from '../../components/Avatar/Avatar'
 import List from '../../components/List/List'
 import TopBar from '../../components/TopBar/TopBar'
 import useTweetList from '../../hooks/useTweetList'
+import TopBarStyles from '../../components/TopBar/Profile/Profile.module.css'
 
 const Bookmarks = props => {
   const navigate = useNavigate()
@@ -22,7 +23,7 @@ const Bookmarks = props => {
       <TopBar
         desktop
         Left={<Avatar username={username} size="32" wrap />}
-        Middle={<div className="title-box">Bookmarks</div>}
+        Middle={<div className={TopBarStyles.titleBox}>Bookmarks</div>}
       />
       <List
         items={tweets}

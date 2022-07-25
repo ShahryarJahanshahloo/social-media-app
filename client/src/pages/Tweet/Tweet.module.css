@@ -1,4 +1,4 @@
-.tweet-title {
+.tweetWrapper {
   height: 100%;
   width: 100%;
   font-size: 1.25em;
@@ -9,12 +9,12 @@
   justify-content: left;
 }
 
-.tweet-title > div {
+.tweet {
   font-size: inherit;
   padding-bottom: 5px;
 }
 
-.compose-reply-box {
+.reply {
   width: 100%;
   min-height: 100px;
   border-top: 1px solid rgba(223, 223, 223, 0.4);

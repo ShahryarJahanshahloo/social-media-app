@@ -7,6 +7,7 @@ import List from '../../components/List/List'
 import useTweetList from '../../hooks/useTweetList'
 import TopBar from '../../components/TopBar/TopBar'
 import s from './Home.module.css'
+import TopBarStyles from '../../components/TopBar/Profile/Profile.module.css'
 
 import { AiFillEdit as ComposeIcon } from 'react-icons/ai'
 
@@ -34,7 +35,7 @@ const Home = () => {
       <TopBar
         desktop
         Left={<Avatar username={username} size="32" wrap />}
-        Middle={<div className="title-box">Home</div>}
+        Middle={<div className={TopBarStyles.titleBox}>Home</div>}
         Right={
           <div className="composeIcon" onClick={composeHandler}>
             <ComposeIcon style={iconStyle} />

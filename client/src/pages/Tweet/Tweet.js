@@ -8,6 +8,7 @@ import TweetCompact from '../../components/TweetCompact/TweetCompact'
 import useTweetList from '../../hooks/useTweetList'
 import TopBar from '../../components/TopBar/TopBar'
 import { GetTweetInfo } from '../../api/api'
+import s from './Tweet.module.css'
 
 const TweetExtended = props => {
   const { tweetID } = useParams()
@@ -45,13 +46,13 @@ const TweetExtended = props => {
     <>
       <TopBar
         Middle={
-          <div className="tweet-title">
-            <div>Tweet</div>
+          <div className={s.tweetWrapper}>
+            <div className={s.tweet}>Tweet</div>
           </div>
         }
       />
       {!tweet || user.username === '' ? null : <TweetCompact tweet={tweet} extend={true} />}
-      <div className="compose-reply-box">
+      <div className={s.reply}>
         {!tweet || user.username === '' ? null : (
           <ComposeCompact
             setTweets={addReply}

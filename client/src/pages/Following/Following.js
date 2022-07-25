@@ -27,12 +27,7 @@ const Following = () => {
   return (
     <>
       <TopBar
-        Middle={
-          <div className="top-bar-profile">
-            <div className="top-bar-displayName">{displayName || ''}</div>
-            <div className="top-bar-tweetCount">{profileUsername}</div>
-          </div>
-        }
+        Middle={<TopBarProfile displayName={displayName || ''} tweetsCount={profileUsername} />}
       />
       <List
         items={users}

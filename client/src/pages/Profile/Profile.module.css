@@ -1,4 +1,4 @@
-.profile-stats-wrapper {
+.wrapper {
   width: 100%;
   min-height: 220px;
   flex-shrink: 0;
@@ -7,58 +7,58 @@
   padding: 10px 10px;
 }
 
-.profile-stats-box {
+.container {
   width: 100%;
   height: 90%;
   display: flex;
   flex-flow: column nowrap;
 }
 
-.user-stats-box {
+.user {
   width: 100%;
   height: 80%;
   display: flex;
   flex-flow: row nowrap;
 }
 
-.profile-avatar-box {
+.avatar {
   height: 100%;
   width: 148px;
   padding-left: 10px;
   padding-right: 10px;
 }
 
-.profile-text-box {
+.text {
   height: 100%;
   width: 100%;
   padding-bottom: 10px;
 }
 
-.profile-username-box {
+.username {
   color: rgb(83, 100, 113);
   font-size: 15px;
 }
 
-.profile-displayName-box {
+.displayName {
   color: rgb(15, 20, 25);
   font-size: 20px;
   font-weight: 800;
 }
 
-.profile-bio-box {
+.bio {
   padding-top: 10px;
   overflow: auto;
   font-size: 14px;
 }
 
-.follow-stats-box {
+.follow {
   width: 100%;
   height: 20%;
   display: flex;
   flex-flow: row nowrap;
 }
 
-.follow-stats-item {
+.item {
   height: 100%;
   width: 33.3%;
   display: flex;
@@ -67,17 +67,17 @@
   align-items: center;
 }
 
-.follow-stat {
+.stat {
   color: rgb(83, 100, 113);
   font-size: 14px;
 }
 
-.follow-num {
+.num {
   font-size: 20px;
   font-weight: 700;
 }
 
-.follow-stats-item > div {
+.item > div {
   height: 100%;
   width: 100%;
   display: flex;
@@ -86,30 +86,7 @@
   align-items: center;
 }
 
-.top-bar-profile {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-flow: column wrap;
-  justify-content: center;
-  padding: 5px 10px 10px 20px;
-}
-
-.top-bar-displayName {
-  width: 100%;
-  height: 50%;
-  font-weight: 700;
-  font-size: 17px;
-}
-
-.top-bar-tweetCount {
-  width: 100%;
-  height: 50%;
-  color: rgb(83, 100, 113);
-  font-size: 13px;
-}
-
-.edit-profile-btn {
+.button {
   width: 115px;
   height: 32px;
   border: none;
@@ -121,13 +98,13 @@
   border: 1px solid rgb(211, 211, 211);
 }
 
-.edit-profile-btn:hover {
+.button:hover {
   background-color: rgba(15, 20, 25, 0.1);
   transition: background-color 0.2s ease-out;
 }
 
 @media only screen and (min-width: 480px) {
-  .profile-avatar-box {
+  .avatar {
     padding-left: 20px;
     padding-right: 20px;
     width: 168px;
