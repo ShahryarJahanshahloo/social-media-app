@@ -1,6 +1,6 @@
 import s from './Profile.module.css'
 
-export default function (displayName, tweetsCount) {
+export default function Profile(displayName, tweetsCount) {
   return (
     <div className={s.container}>
       <div className={s.displayName}>{displayName}</div>

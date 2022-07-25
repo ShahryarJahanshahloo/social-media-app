@@ -6,6 +6,7 @@ import List from '../../components/List/List'
 import TopBar from '../../components/TopBar/TopBar'
 import useUserList from '../../hooks/useUserList'
 import { GetProfileInfo } from '../../api/api'
+import TopBarProfile from '../../components/TopBar/Profile/Profile.module.css'
 
 const Followers = () => {
   const [displayName, setDisplayName] = useState()
