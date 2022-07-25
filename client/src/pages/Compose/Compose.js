@@ -11,9 +11,7 @@ const ComposeExtended = () => {
   const username = useSelector(state => state.userReducer.username)
   const navigate = useNavigate()
   const [tweetBody, setTweetBody] = useState('')
-  const [tweetBtnClass, setTweetBtnClass] = useState(
-    'tweet-button disabledButton'
-  )
+  const [tweetBtnClass, setTweetBtnClass] = useState('tweet-button disabledButton')
 
   const tweetBtnHandler = async () => {
     //validate tweet body!
@@ -43,11 +41,7 @@ const ComposeExtended = () => {
       <TopBar
         Middle={<div></div>}
         Right={
-          <button
-            className={tweetBtnClass}
-            disabled={tweetBody === ''}
-            onClick={tweetBtnHandler}
-          >
+          <button className={tweetBtnClass} disabled={tweetBody === ''} onClick={tweetBtnHandler}>
             Tweet
           </button>
         }
@@ -56,7 +50,7 @@ const ComposeExtended = () => {
         <div className={s.box}>
           <div className={s.avatarBar}>
             <div className={s.avatar}>
-              <Avatar username={username} size='48' />
+              <Avatar username={username} size="48" />
             </div>
           </div>
           <div className={s.areaWrapper}>

@@ -7,10 +7,7 @@ import Avatar from '../Avatar/Avatar'
 import s from './Navbar.module.css'
 
 import { FiHome as HomeIcon, FiSearch as ExploreIcon } from 'react-icons/fi'
-import {
-  CgBookmark as BookmarkIcon,
-  CgProfile as ProfileIcon,
-} from 'react-icons/cg'
+import { CgBookmark as BookmarkIcon, CgProfile as ProfileIcon } from 'react-icons/cg'
 import { SiTwitter as BirdIcon } from 'react-icons/si'
 
 const Navbar = props => {
@@ -39,7 +36,7 @@ const Navbar = props => {
 
   const iconStyle = {
     fontSize: '1.6em',
-    color: 'black',
+    color: 'black'
   }
 
   return (
@@ -53,9 +50,7 @@ const Navbar = props => {
                 navigate('/home')
               }}
             >
-              <BirdIcon
-                style={{ fontSize: '2em', color: 'rgb(29, 155, 240)' }}
-              />
+              <BirdIcon style={{ fontSize: '2em', color: 'rgb(29, 155, 240)' }} />
             </div>
           </div>
           <div className={s.itemWrapper}>
@@ -105,7 +100,7 @@ const Navbar = props => {
         </div>
         <div className={s.bottom}>
           <div className={s.avatar}>
-            <Avatar username={user.username} size='40' wrap />
+            <Avatar username={user.username} size="40" wrap />
           </div>
         </div>
       </div>

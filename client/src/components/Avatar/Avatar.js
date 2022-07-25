@@ -12,7 +12,7 @@ const Avatar = ({ username, size, wrap = false }) => {
           image={`/api/getAvatar?username=${username}`}
           imageWidth={size}
           imageHeight={size}
-          roundedSize=''
+          roundedSize=""
         />
       </div>
     </div>

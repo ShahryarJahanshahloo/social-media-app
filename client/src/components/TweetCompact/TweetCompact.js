@@ -12,7 +12,7 @@ import { PatchFollow, PatchLike } from '../../api/api'
 
 const iconStyle = {
   fontSize: '17px',
-  color: 'rgb(83, 100, 113)',
+  color: 'rgb(83, 100, 113)'
 }
 
 const heartStyle = {
@@ -20,12 +20,12 @@ const heartStyle = {
   color: 'rgb(83, 100, 113)',
   fill: 'none',
   strokeWidth: '1.3',
-  width: '100%',
+  width: '100%'
 }
 
 const dotStyle = {
   color: 'rgb(83, 100, 113)',
-  fontSize: '20px',
+  fontSize: '20px'
 }
 
 const TweetCompact = ({ tweet, extend = false }) => {
@@ -37,16 +37,16 @@ const TweetCompact = ({ tweet, extend = false }) => {
 
   const [likeState, setLikeState] = useState({
     likesCount: tweetContent.likesCount,
-    isLiked: user.likedTweets.includes(tweetContent._id),
+    isLiked: user.likedTweets.includes(tweetContent._id)
   })
   const [retweetState, setRetweetState] = useState({
     retweetCount: tweetContent.retweetCount,
-    isRetweeted: user.retweets.includes(tweetContent._id),
+    isRetweeted: user.retweets.includes(tweetContent._id)
   })
 
   const buttonHandler = async operation => {
     const data = {
-      tweetID: tweetContent._id,
+      tweetID: tweetContent._id
     }
     let res
     if (operation === 'Like') {
@@ -59,22 +59,22 @@ const TweetCompact = ({ tweet, extend = false }) => {
       setLikeState(prevState => {
         return {
           likesCount: prevState.likesCount + (isAdded ? 1 : -1),
-          isLiked: isAdded,
+          isLiked: isAdded
         }
       })
     } else {
       setRetweetState(prevState => {
         return {
           retweetCount: prevState.retweetCount + (isAdded ? 1 : -1),
-          isRetweeted: isAdded,
+          isRetweeted: isAdded
         }
       })
     }
     dispatch({
       type: isAdded ? `add${operation}` : `removeLike${operation}`,
       payload: {
-        tweetID: tweetContent._id,
-      },
+        tweetID: tweetContent._id
+      }
     })
   }
 
@@ -92,15 +92,15 @@ const TweetCompact = ({ tweet, extend = false }) => {
         <DotsIcon style={dotStyle} />
       </div>
       <div className={s.sidebar} onClick={redirectToProfile}>
-        <Avatar username={tweetContent.user.username} size='48' />
+        <Avatar username={tweetContent.user.username} size="48" />
       </div>
       <div className={s.main}>
         <div className={s.box}>
           <div className={s.info}>
             {isRetweet ? (
               <div style={{ color: 'rgb(83, 100, 113)', fontSize: '0.8em' }}>
-                <RetweetIcon style={{ color: 'rgb(83, 100, 113)' }} />{' '}
-                {tweet.user.displayName} retweeted
+                <RetweetIcon style={{ color: 'rgb(83, 100, 113)' }} /> {tweet.user.displayName}{' '}
+                retweeted
               </div>
             ) : null}
           </div>
@@ -122,9 +122,7 @@ const TweetCompact = ({ tweet, extend = false }) => {
               <CommentIcon style={iconStyle} />
             </div>
             <div className={s.num}>
-              {tweetContent.repliesCount !== 0
-                ? tweetContent.repliesCount
-                : null}
+              {tweetContent.repliesCount !== 0 ? tweetContent.repliesCount : null}
             </div>
           </div>
           <div className={s.wrapper} onClick={buttonHandler('Retweet')}>
@@ -137,13 +135,8 @@ const TweetCompact = ({ tweet, extend = false }) => {
                 }
               />
             </div>
-            <div
-              className={s.num}
-              style={retweetState.isRetweeted ? { color: 'green' } : null}
-            >
-              {retweetState.retweetCount !== 0
-                ? retweetState.retweetCount
-                : null}
+            <div className={s.num} style={retweetState.isRetweeted ? { color: 'green' } : null}>
+              {retweetState.retweetCount !== 0 ? retweetState.retweetCount : null}
             </div>
           </div>
           <div className={s.wrapper} onClick={buttonHandler('Like')}>
@@ -155,16 +148,13 @@ const TweetCompact = ({ tweet, extend = false }) => {
                         ...heartStyle,
                         color: 'red',
                         fill: 'red ',
-                        stroke: 'none',
+                        stroke: 'none'
                       }
                     : heartStyle
                 }
               />
             </div>
-            <div
-              className={s.num}
-              style={likeState.isLiked ? { color: 'red' } : null}
-            >
+            <div className={s.num} style={likeState.isLiked ? { color: 'red' } : null}>
               {likeState.likesCount !== 0 ? likeState.likesCount : null}
             </div>
           </div>

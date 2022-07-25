@@ -19,9 +19,7 @@ const UserCompact = ({ userContent }) => {
   const [isFollowed, setIsFollowed] = useState(
     user.followings.some(e => e.username === userContent.username)
   )
-  const buttonClass = isFollowed
-    ? `${s.btn} ${s.followed}`
-    : `${s.btn} ${s.notFollowed}`
+  const buttonClass = isFollowed ? `${s.btn} ${s.followed}` : `${s.btn} ${s.notFollowed}`
 
   const redirectToProfile = () => {
     navigate(`/profile/${userContent.username}`)
@@ -41,7 +39,7 @@ const UserCompact = ({ userContent }) => {
     const isAdded = res.data.message === 'added'
     dispatch({
       type: isAdded ? 'addFollowing' : 'removeFollowing',
-      payload: { username: userContent.username },
+      payload: { username: userContent.username }
     })
     setIsFollowed(isAdded)
   }
@@ -49,7 +47,7 @@ const UserCompact = ({ userContent }) => {
   return (
     <div className={s.container}>
       <div className={s.sidebar} onClick={redirectToProfile}>
-        <Avatar username={userContent.username} size='48' />
+        <Avatar username={userContent.username} size="48" />
       </div>
       <div className={s.main}>
         <div className={s.author}>

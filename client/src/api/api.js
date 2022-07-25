@@ -24,16 +24,16 @@ export const GetSearch = (skip, query) => {
   return request.get('/api/search', {
     params: {
       skip,
-      query,
-    },
+      query
+    }
   })
 }
 
 export const GetProfileInfo = username => {
   return request.get('/api/profileInfo', {
     params: {
-      username,
-    },
+      username
+    }
   })
 }
 
@@ -52,8 +52,8 @@ export const PostSignUp = data => {
 export const GetTweetInfo = tweetID => {
   return request.get('/api/tweetInfo', {
     params: {
-      tweetID,
-    },
+      tweetID
+    }
   })
 }
 

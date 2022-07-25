@@ -7,10 +7,7 @@ import Avatar from '../../components/Avatar/Avatar'
 import s from './Explore.module.css'
 import { GetSearch } from '../../api/api'
 
-import {
-  BiSearchAlt as SearchIcon,
-  BiDotsHorizontalRounded as DotsIcon,
-} from 'react-icons/bi'
+import { BiSearchAlt as SearchIcon, BiDotsHorizontalRounded as DotsIcon } from 'react-icons/bi'
 
 const Explore = () => {
   const [query, setQuery] = useState('')
@@ -49,13 +46,13 @@ const Explore = () => {
     <>
       <TopBar
         desktop
-        Left={<Avatar username={user.username} size='32' wrap />}
+        Left={<Avatar username={user.username} size="32" wrap />}
         Middle={
           <div className={s.search}>
             <input
               className={s.input}
               onChange={searchInputOnChange}
-              placeholder='Search User'
+              placeholder="Search User"
             ></input>
             <div onClick={searchButtonHandler} style={{ paddingRight: '5px' }}>
               <SearchIcon style={{ color: '#a9a9a9' }} />
@@ -78,14 +75,14 @@ const Explore = () => {
                     have The term you entered did not bring up any results. You
                     may have The term you entered did not bring up any results.
                     You may have mistyped your term or the username you are
-                    looking for doesn't exist.`,
+                    looking for doesn't exist.`
               }
             : null
         }
-        type='user'
+        type="user"
       />
       {users.length < 10 ? null : (
-        <button className='load-more' onClick={loadMore}>
+        <button className="load-more" onClick={loadMore}>
           load more users
         </button>
       )}

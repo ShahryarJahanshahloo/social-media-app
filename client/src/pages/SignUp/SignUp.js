@@ -23,18 +23,18 @@ const Signup = props => {
       email,
       username,
       displayName,
-      password,
+      password
     }
     const res = await PostSignUp(data)
     dispatch({
-      type: 'updateLoginStatus',
+      type: 'updateLoginStatus'
     })
     dispatch({
       type: 'setUser',
       payload: {
         username: res.data.username,
-        displayName: res.data.displayName,
-      },
+        displayName: res.data.displayName
+      }
     })
     localStorage.setItem('jwt', res.data.token)
     navigate('/home')
@@ -66,42 +66,32 @@ const Signup = props => {
         <label className={s.topic}>Sign Up</label>
 
         <div className={s.form}>
+          <input type="text" onChange={onEmailChange} placeholder="Email" className={s.input} />
           <input
-            type='text'
-            onChange={onEmailChange}
-            placeholder='Email'
-            className={s.input}
-          />
-          <input
-            type='text'
+            type="text"
             onChange={onUsernameChange}
-            placeholder='Username'
+            placeholder="Username"
             className={s.input}
           />
           <input
-            type='text'
+            type="text"
             onChange={onDisplayNameChange}
-            placeholder='Display Name'
+            placeholder="Display Name"
             className={s.input}
           />
           <input
-            type='text'
+            type="text"
             onChange={onPasswordChange}
-            placeholder='Password'
+            placeholder="Password"
             className={s.input}
           />
           <input
-            type='text'
+            type="text"
             onChange={onPassword2Change}
-            placeholder='Repeat Password'
+            placeholder="Repeat Password"
             className={s.input}
           />
-          <input
-            type='submit'
-            value='create account'
-            onClick={handleSignup}
-            className={s.submit}
-          />
+          <input type="submit" value="create account" onClick={handleSignup} className={s.submit} />
         </div>
 
         <div className={s.alt}>

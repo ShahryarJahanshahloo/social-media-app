@@ -11,9 +11,9 @@ const useUserList = (URL, PARAMS) => {
       method: 'GET',
       headers: {
         'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Credentials': true,
+        'Access-Control-Allow-Credentials': true
       },
-      params: { skip: (skip + 1) * 10, ...PARAMS },
+      params: { skip: (skip + 1) * 10, ...PARAMS }
     })
       .then(response => {
         setUsers(prevState => {
@@ -35,9 +35,9 @@ const useUserList = (URL, PARAMS) => {
       method: 'GET',
       headers: {
         'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Credentials': true,
+        'Access-Control-Allow-Credentials': true
       },
-      params: { skip: 0, ...PARAMS },
+      params: { skip: 0, ...PARAMS }
     })
       .then(res => {
         if (res.data.users.length !== 0) {

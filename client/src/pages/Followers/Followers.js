@@ -13,7 +13,7 @@ const Followers = () => {
   const user = useSelector(state => state.userReducer)
   const isUserProfile = profileUsername === user.username
   const [users, loadMore] = useUserList('/api/followers', {
-    username: profileUsername,
+    username: profileUsername
   })
 
   useEffect(() => {
@@ -28,9 +28,9 @@ const Followers = () => {
     <>
       <TopBar
         Middle={
-          <div className='top-bar-profile'>
-            <div className='top-bar-displayName'>{displayName || ''}</div>
-            <div className='top-bar-tweetCount'>{profileUsername}</div>
+          <div className="top-bar-profile">
+            <div className="top-bar-displayName">{displayName || ''}</div>
+            <div className="top-bar-tweetCount">{profileUsername}</div>
           </div>
         }
       />
@@ -42,12 +42,12 @@ const Followers = () => {
             : `@${profileUsername} doesn’t have any followers`,
           small: isUserProfile
             ? 'When someone follows you, you’ll see them here.'
-            : 'When someone follows them, they’ll be listed here.',
+            : 'When someone follows them, they’ll be listed here.'
         }}
-        type='user'
+        type="user"
       />
       {users.length < 10 ? null : (
-        <button className='load-more' onClick={loadMore}>
+        <button className="load-more" onClick={loadMore}>
           load more users
         </button>
       )}

@@ -17,9 +17,9 @@ const useTweetList = (URL, PARAMS) => {
       headers: {
         Authorization: `Bearer ${jwt}`,
         'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Credentials': true,
+        'Access-Control-Allow-Credentials': true
       },
-      params: { skip: (skip + 1) * 10, ...PARAMS },
+      params: { skip: (skip + 1) * 10, ...PARAMS }
     })
       .then(response => {
         setTweets(prevState => {
@@ -42,9 +42,9 @@ const useTweetList = (URL, PARAMS) => {
       headers: {
         Authorization: `Bearer ${jwt}`,
         'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Credentials': true,
+        'Access-Control-Allow-Credentials': true
       },
-      params: { skip: 0, ...PARAMS },
+      params: { skip: 0, ...PARAMS }
     })
       .then(res => {
         if (res.data.tweets.length !== 0) {

@@ -1,3 +1,4 @@
+import React from 'react'
 import { useEffect } from 'react'
 import { useNavigate, Routes, Route } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
@@ -44,33 +45,33 @@ function App() {
           likedTweets: res.data.likes,
           retweets: retweets,
           followings: res.data.followings,
-          bookmarks: res.data.bookmarks,
-        },
+          bookmarks: res.data.bookmarks
+        }
       })
       dispatch({
-        type: 'updateLoginStatus',
+        type: 'updateLoginStatus'
       })
     }
     if (!jwt) fetch()
   }, [])
 
   return (
-    <div className='App'>
+    <div className="App">
       <Routes>
-        <Route path='/login' element={<Login />} />
-        <Route path='/signup' element={<Signup />} />
-        <Route path='/compose' element={<ComposeExtended />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/compose" element={<ComposeExtended />} />
         <Route element={<Layout />}>
-          <Route path='/home' element={<Home />} />
-          <Route path='/bookmarks' element={<Bookmarks />} />
-          <Route path='/explore' element={<Explore />} />
-          <Route path='/tweet/:tweetID' element={<TweetExtended />} />
-          <Route path='/profile/:username' element={<Profile />} />
-          <Route path='/following/:username' element={<Following />} />
-          <Route path='/followers/:username' element={<Followers />} />
+          <Route path="/home" element={<Home />} />
+          <Route path="/bookmarks" element={<Bookmarks />} />
+          <Route path="/explore" element={<Explore />} />
+          <Route path="/tweet/:tweetID" element={<TweetExtended />} />
+          <Route path="/profile/:username" element={<Profile />} />
+          <Route path="/following/:username" element={<Following />} />
+          <Route path="/followers/:username" element={<Followers />} />
         </Route>
-        <Route exact path='/' element={<Redirect />} />
-        <Route path='*' element={<Page404 />} />
+        <Route exact path="/" element={<Redirect />} />
+        <Route path="*" element={<Page404 />} />
       </Routes>
     </div>
   )

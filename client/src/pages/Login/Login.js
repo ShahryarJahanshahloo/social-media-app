@@ -18,18 +18,18 @@ const Login = props => {
   const handleLogin = async () => {
     const data = {
       email: emailInput.current.value,
-      password: passwordInput.current.value,
+      password: passwordInput.current.value
     }
     const res = await PostSignIn(data)
     dispatch({
-      type: 'updateLoginStatus',
+      type: 'updateLoginStatus'
     })
     dispatch({
       type: 'setUser',
       payload: {
         username: res.data.username,
-        displayName: res.data.displayName,
-      },
+        displayName: res.data.displayName
+      }
     })
     localStorage.setItem('jwt', res.data.token)
   }
@@ -40,24 +40,9 @@ const Login = props => {
         <label className={s.topic}>Sign In</label>
 
         <div className={s.form}>
-          <input
-            type='text'
-            ref={emailInput}
-            placeholder='Email'
-            className={s.input}
-          />
-          <input
-            type='text'
-            ref={passwordInput}
-            placeholder='Password'
-            className={s.input}
-          />
-          <input
-            type='submit'
-            value='Sign in'
-            onClick={handleLogin}
-            className={s.submit}
-          />
+          <input type="text" ref={emailInput} placeholder="Email" className={s.input} />
+          <input type="text" ref={passwordInput} placeholder="Password" className={s.input} />
+          <input type="submit" value="Sign in" onClick={handleLogin} className={s.submit} />
         </div>
 
         <div className={s.alt}>

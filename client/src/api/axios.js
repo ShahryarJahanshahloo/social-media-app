@@ -4,7 +4,7 @@ const baseURL = 'http://localhost:8000/'
 
 const request = axios.create({
   baseURL,
-  timeout: 50000,
+  timeout: 50000
 })
 
 request.interceptors.response.use(

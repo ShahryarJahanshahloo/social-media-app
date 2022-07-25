@@ -4,7 +4,7 @@ const initialState = {
   likedTweets: [],
   retweets: [],
   followings: [{ username: '' }],
-  bookmarks: [],
+  bookmarks: []
   // add profile pic later
 }
 
@@ -18,7 +18,7 @@ const reducer = (state = initialState, action) => {
         likedTweets: action.payload.likedTweets,
         retweets: action.payload.retweets,
         followings: action.payload.followings,
-        bookmarks: action.payload.bookmarks,
+        bookmarks: action.payload.bookmarks
       }
     }
     case 'addLike': {
@@ -26,7 +26,7 @@ const reducer = (state = initialState, action) => {
       likedTweets.push(action.payload.tweetID)
       return {
         ...state,
-        likedTweets,
+        likedTweets
       }
     }
     case 'removeLike': {
@@ -34,7 +34,7 @@ const reducer = (state = initialState, action) => {
         ...state,
         likedTweets: state.likedTweets.filter(i => {
           return i !== action.payload.tweetID
-        }),
+        })
       }
     }
     case 'addRetweet': {
@@ -42,7 +42,7 @@ const reducer = (state = initialState, action) => {
       retweets.push(action.payload.tweetID)
       return {
         ...state,
-        retweets,
+        retweets
       }
     }
     case 'removeRetweet': {
@@ -50,7 +50,7 @@ const reducer = (state = initialState, action) => {
         ...state,
         retweets: state.retweets.filter(i => {
           return i !== action.payload.tweetID
-        }),
+        })
       }
     }
     case 'addFollowing': {
@@ -58,7 +58,7 @@ const reducer = (state = initialState, action) => {
       followings.push({ username: action.payload.username })
       return {
         ...state,
-        followings,
+        followings
       }
     }
     case 'removeFollowing': {
@@ -66,7 +66,7 @@ const reducer = (state = initialState, action) => {
         ...state,
         followings: state.followings.filter(i => {
           return i.username !== action.payload.username
-        }),
+        })
       }
     }
     case 'addBookmark': {
@@ -74,7 +74,7 @@ const reducer = (state = initialState, action) => {
       bookmarks.push(action.payload.tweetID)
       return {
         ...state,
-        bookmarks,
+        bookmarks
       }
     }
     case 'removeBookmark': {
@@ -82,7 +82,7 @@ const reducer = (state = initialState, action) => {
         ...state,
         bookmarks: state.bookmarks.filter(i => {
           return i !== action.payload.tweetID
-        }),
+        })
       }
     }
     default:

@@ -12,7 +12,7 @@ import { AiFillEdit as ComposeIcon } from 'react-icons/ai'
 
 const iconStyle = {
   fontSize: '1.6em',
-  color: 'rgb(29, 155, 240)',
+  color: 'rgb(29, 155, 240)'
 }
 
 const Home = () => {
@@ -33,10 +33,10 @@ const Home = () => {
     <>
       <TopBar
         desktop
-        Left={<Avatar username={username} size='32' wrap />}
-        Middle={<div className='title-box'>Home</div>}
+        Left={<Avatar username={username} size="32" wrap />}
+        Middle={<div className="title-box">Home</div>}
         Right={
-          <div className='composeIcon' onClick={composeHandler}>
+          <div className="composeIcon" onClick={composeHandler}>
             <ComposeIcon style={iconStyle} />
           </div>
         }
@@ -49,11 +49,11 @@ const Home = () => {
         alt={{
           big: 'What? No Tweets yet?',
           small: `This empty timeline won't be around for long. Start following
-                  people and you'll see Tweets show up here.`,
+                  people and you'll see Tweets show up here.`
         }}
       />
       {tweets.length < 10 ? null : (
-        <button className='load-more' onClick={loadMore}>
+        <button className="load-more" onClick={loadMore}>
           load more tweets
         </button>
       )}

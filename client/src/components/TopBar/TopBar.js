@@ -3,12 +3,7 @@ import React from 'react'
 import s from './TopBar.module.css'
 import BackButton from '../BackButton/BackButton'
 
-const TopBar = ({
-  Left = BackButton,
-  Middle,
-  Right = <div></div>,
-  desktop = false,
-}) => {
+const TopBar = ({ Left = BackButton, Middle, Right = <div></div>, desktop = false }) => {
   const leftClass = desktop ? `${s.side} ${s.desktop}` : s.side
 
   return (

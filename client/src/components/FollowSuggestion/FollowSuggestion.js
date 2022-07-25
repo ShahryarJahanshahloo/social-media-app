@@ -15,12 +15,12 @@ const FollowSuggestion = props => {
           <span>About me</span>
         </div>
         <div className={s.section}>
-          <Avatar username='mamad1234' size='48' wrap />
+          <Avatar username="mamad1234" size="48" wrap />
           <div className={s.title}>Hi! &#128075;</div>
         </div>
         <div className={s.section} style={{ lineHeight: '30px' }}>
-          I'm Shahryar Jahanshahloo, CE student @Tabriz university. I'm
-          currently learning Nodejs and React.
+          Im Shahryar Jahanshahloo, CE student @Tabriz university. Im currently learning Nodejs and
+          React.
         </div>
         <div className={s.section}>
           <CityIcon />
@@ -41,21 +41,21 @@ const FollowSuggestion = props => {
             userContent={{
               username: 'mamad1234',
               displayName: 'mamad',
-              bio: '',
+              bio: ''
             }}
           />
           <UserCompact
             userContent={{
               username: 'abbas1234',
               displayName: 'abbas',
-              bio: '',
+              bio: ''
             }}
           />
           <UserCompact
             userContent={{
               username: 'mamad1234',
               displayName: 'mamad',
-              bio: '',
+              bio: ''
             }}
           />
         </div>
