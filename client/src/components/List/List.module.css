@@ -19,7 +19,6 @@
 
 .container {
   width: 100%;
-  /* min-width: 300px; */
   max-width: 600px;
   padding-top: 30px;
   display: flex;

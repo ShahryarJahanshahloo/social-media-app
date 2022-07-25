@@ -1,7 +1,6 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-// import axios from 'axios'
 
 import Avatar from '../Avatar/Avatar'
 import s from './Navbar.module.css'
@@ -12,7 +11,6 @@ import { SiTwitter as BirdIcon } from 'react-icons/si'
 
 const Navbar = props => {
   const user = useSelector(state => state.userReducer)
-  // const jwt = localStorage.getItem('jwt')
   const navigate = useNavigate()
 
   // const logoutHandler = () => {

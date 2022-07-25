@@ -6,11 +6,6 @@ import Avatar from '../Avatar/Avatar'
 import s from './UserCompact.module.css'
 import { PatchFollow } from '../../api/api'
 
-// const iconStyle = {
-//   fontSize: '15px',
-//   color: 'rgb(83, 100, 113)',
-// }
-
 const UserCompact = ({ userContent }) => {
   const navigate = useNavigate()
   const user = useSelector(state => state.userReducer)
