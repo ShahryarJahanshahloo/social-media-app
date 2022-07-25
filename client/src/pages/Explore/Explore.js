@@ -1,7 +1,5 @@
 import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import axios from 'axios'
 
 import List from '../../components/List/List'
 import TopBar from '../../components/TopBar/TopBar'
@@ -16,66 +14,35 @@ import {
 
 const Explore = () => {
   const [query, setQuery] = useState('')
-  const navigate = useNavigate()
   const user = useSelector(state => state.userReducer)
 
   const [users, setUsers] = useState([])
   const [skip, setSkip] = useState(0)
   const [emptyRes, setEmptyRes] = useState(false)
 
-  const searchButtonHandler = () => {
-    axios({
-      url: '/api/search',
-      method: 'GET',
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Credentials': true,
-      },
-      params: { skip: 0, query },
-    })
-      .then(res => {
-        if (res.data.users.length !== 0) {
-          setUsers(() => {
-            return res.data.users
-          })
-          setSkip(() => 0)
-        } else if (res.data.users.length == 0) {
-          setEmptyRes(true)
-        }
-      })
-      .catch(e => {
-        console.log(e)
-      })
+  const searchButtonHandler = async () => {
+    const res = await GetSearch(0, query)
+    if (!res.data.users) {
+      setUsers(res.data.users)
+      setSkip(0)
+    } else {
+      setEmptyRes(true)
+    }
   }
 
   const searchInputOnChange = e => {
-    setQuery(() => {
-      return e.target.value
-    })
+    setQuery(e.target.value)
   }
 
-  const loadMore = () => {
-    axios({
-      url: '/api/search',
-      method: 'GET',
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Credentials': true,
-      },
-      params: { skip: (skip + 1) * 10, query: query },
+  const loadMore = async () => {
+    const res = await GetSearch((skip + 1) * 10, query)
+    setUsers(prevState => {
+      const newState = []
+      newState.push(...prevState)
+      newState.push(...res.data.users)
+      return newState
     })
-      .then(response => {
-        setUsers(prevState => {
-          const newState = []
-          newState.push(...prevState)
-          newState.push(...response.data.users)
-          return newState
-        })
-        setSkip(prevState => prevState + 1)
-      })
-      .catch(e => {
-        console.log(e)
-      })
+    setSkip(prevState => prevState + 1)
   }
 
   return (

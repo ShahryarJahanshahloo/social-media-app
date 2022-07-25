@@ -11,14 +11,17 @@ const Followers = () => {
   const [displayName, setDisplayName] = useState()
   let profileUsername = useParams().username
   const user = useSelector(state => state.userReducer)
-  const isUserProfile = profileUsername == user.username
+  const isUserProfile = profileUsername === user.username
   const [users, loadMore] = useUserList('/api/followers', {
     username: profileUsername,
   })
 
-  useEffect(async () => {
-    const res = await GetProfileInfo(profileUsername)
-    setDisplayName(res.data.displayName)
+  useEffect(() => {
+    async function fetch() {
+      const res = await GetProfileInfo(profileUsername)
+      setDisplayName(res.data.displayName)
+    }
+    fetch()
   }, [])
 
   return (

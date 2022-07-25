@@ -7,8 +7,8 @@ const Redirect = props => {
   const navigate = useNavigate()
   const jwt = localStorage.getItem('jwt')
 
-  useEffect(async () => {
-    if (jwt !== null) {
+  useEffect( () => {
+    async function fetch() {if (jwt !== null) {
       try {
         const res = await PostAuthenticate()
         if (res.data.isAuthenticated) {
@@ -21,7 +21,8 @@ const Redirect = props => {
       }
     } else {
       navigate('/login')
-    }
+    }}
+    fetch()
   }, [])
 
   return <div>please wait...</div>

@@ -1,10 +1,8 @@
 import { useEffect } from 'react'
 import { useNavigate, Routes, Route } from 'react-router-dom'
-import axios from 'axios'
 import { useDispatch } from 'react-redux'
 
 import './App.css'
-
 import Layout from './layout/Layout'
 import Login from './pages/Login/Login'
 import Signup from './pages/SignUp/SignUp'
@@ -18,55 +16,42 @@ import ComposeExtended from './pages/Compose/Compose'
 import TweetExtended from './pages/Tweet/Tweet'
 import Following from './pages/Following/Following'
 import Followers from './pages/Followers/Followers'
+import { GetUserInfo } from './api/api'
 
 function App() {
   const jwt = localStorage.getItem('jwt')
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
-  const appHeight = () =>
-    document.documentElement.style.setProperty(
-      '--app-height',
-      `${window.innerHeight}px`
-    )
-  window.addEventListener('resize', appHeight)
-  appHeight()
+  window.addEventListener('resize', () => {
+    let vh = window.innerHeight * 0.01
+    document.documentElement.style.setProperty('--vh', `${vh}px`)
+  })
 
   useEffect(() => {
-    if (jwt !== null) {
-      axios({
-        method: 'get',
-        url: '/api/userInfo',
-        headers: {
-          Authorization: `Bearer ${jwt}`,
-          'Access-Control-Allow-Origin': '*',
-          'Access-Control-Allow-Credentials': true,
+    async function fetch() {
+      const res = await GetUserInfo()
+      if (res.status !== 200) return navigate('/login')
+      const retweets = []
+      for (const i of res.data.retweets) {
+        retweets.push(i.retweetData)
+      }
+      dispatch({
+        type: 'setUser',
+        payload: {
+          username: res.data.username,
+          displayName: res.data.displayName,
+          likedTweets: res.data.likes,
+          retweets: retweets,
+          followings: res.data.followings,
+          bookmarks: res.data.bookmarks,
         },
       })
-        .then(res => {
-          const retweets = []
-          for (const i of res.data.retweets) {
-            retweets.push(i.retweetData)
-          }
-          dispatch({
-            type: 'setUser',
-            payload: {
-              username: res.data.username,
-              displayName: res.data.displayName,
-              likedTweets: res.data.likes,
-              retweets: retweets,
-              followings: res.data.followings,
-              bookmarks: res.data.bookmarks,
-            },
-          })
-          dispatch({
-            type: 'updateLoginStatus',
-          })
-        })
-        .catch(e => {
-          navigate('/login')
-        })
+      dispatch({
+        type: 'updateLoginStatus',
+      })
     }
+    if (!jwt) fetch()
   }, [])
 
   return (

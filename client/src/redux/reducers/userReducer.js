@@ -33,7 +33,7 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         likedTweets: state.likedTweets.filter(i => {
-          return i != action.payload.tweetID
+          return i !== action.payload.tweetID
         }),
       }
     }
@@ -49,7 +49,7 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         retweets: state.retweets.filter(i => {
-          return i != action.payload.tweetID
+          return i !== action.payload.tweetID
         }),
       }
     }
@@ -65,7 +65,7 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         followings: state.followings.filter(i => {
-          return i.username != action.payload.username
+          return i.username !== action.payload.username
         }),
       }
     }
@@ -81,7 +81,7 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         bookmarks: state.bookmarks.filter(i => {
-          return i != action.payload.tweetID
+          return i !== action.payload.tweetID
         }),
       }
     }

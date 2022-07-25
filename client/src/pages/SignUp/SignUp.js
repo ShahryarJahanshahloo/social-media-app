@@ -11,7 +11,7 @@ const Signup = props => {
   const [username, setUsername] = useState()
   const [displayName, setDisplayName] = useState()
   const [password, setPassword] = useState()
-  const [password2, setPassword2] = useState()
+  // const [password2, setPassword2] = useState()
   const dispatch = useDispatch()
 
   const handleRedirectClick = () => {
@@ -57,7 +57,7 @@ const Signup = props => {
   }
 
   const onPassword2Change = e => {
-    setPassword2(e.target.value)
+    // setPassword2(e.target.value)
   }
 
   return (

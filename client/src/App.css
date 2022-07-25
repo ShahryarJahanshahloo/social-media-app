@@ -5,7 +5,8 @@ html {
 }
 
 .App {
-  height: var(--app-height);
+  height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
   overflow: hidden;
 }
 

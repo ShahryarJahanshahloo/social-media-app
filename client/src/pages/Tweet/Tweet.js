@@ -25,17 +25,20 @@ const TweetExtended = props => {
     })
   }
 
-  useEffect(async () => {
-    const res = await GetTweetInfo(tweetID)
-    setTweet({
-      body: res.data.body,
-      likesCount: res.data.likesCount,
-      retweetCount: res.data.retweetCount,
-      repliesCount: res.data.repliesCount,
-      createdAt: res.data.createdAt,
-      user: res.data.user,
-      _id: res.data._id,
-    })
+  useEffect(() => {
+    async function fetch() {
+      const res = await GetTweetInfo(tweetID)
+      setTweet({
+        body: res.data.body,
+        likesCount: res.data.likesCount,
+        retweetCount: res.data.retweetCount,
+        repliesCount: res.data.repliesCount,
+        createdAt: res.data.createdAt,
+        user: res.data.user,
+        _id: res.data._id,
+      })
+    }
+    fetch()
   }, [])
 
   return (
@@ -47,11 +50,11 @@ const TweetExtended = props => {
           </div>
         }
       />
-      {!tweet || user.username == '' ? null : (
+      {!tweet || user.username === '' ? null : (
         <TweetCompact tweet={tweet} extend={true} />
       )}
       <div className='compose-reply-box'>
-        {!tweet || user.username == '' ? null : (
+        {!tweet || user.username === '' ? null : (
           <ComposeCompact
             setTweets={addReply}
             replyTo={{

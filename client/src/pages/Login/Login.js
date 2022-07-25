@@ -1,6 +1,5 @@
 import React, { useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
-import axios from 'axios'
 import { useDispatch } from 'react-redux'
 
 import s from '../SignUp/SignUp.module.css'

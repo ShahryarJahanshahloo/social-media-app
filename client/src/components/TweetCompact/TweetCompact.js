@@ -32,7 +32,6 @@ const TweetCompact = ({ tweet, extend = false }) => {
   const navigate = useNavigate()
   const user = useSelector(state => state.userReducer)
   const dispatch = useDispatch()
-  const jwt = localStorage.getItem('jwt')
   const isRetweet = tweet.retweetData != null
   const tweetContent = isRetweet ? tweet.retweetData : tweet
 

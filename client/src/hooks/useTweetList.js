@@ -7,9 +7,7 @@ const useTweetList = (URL, PARAMS) => {
   const [skip, setSkip] = useState(0)
 
   const setTweetsHandler = response => {
-    setTweets(() => {
-      return response.data.tweets
-    })
+    setTweets(response.data.tweets)
   }
 
   const loadMore = () => {

@@ -15,7 +15,7 @@ const Profile = props => {
     username: profileUsername,
   })
   const user = useSelector(state => state.userReducer)
-  const isUserProfile = profileUsername == user.username
+  const isUserProfile = profileUsername === user.username
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const [buttonText, setButtonText] = useState('Followed')
@@ -45,7 +45,7 @@ const Profile = props => {
   const clickHandler = async () => {
     const data = { username: profileUsername }
     const res = await PatchFollow(data)
-    const isAdded = res.data.message == 'added'
+    const isAdded = res.data.message === 'added'
     dispatch({
       type: isAdded ? 'addFollowing' : 'removeFollowing',
       payload: { username: profileUsername },
@@ -53,15 +53,18 @@ const Profile = props => {
     setIsFollowed(isAdded)
   }
 
-  useEffect(async () => {
-    const res = await GetProfileInfo(profileUsername)
-    setProfile({
-      displayName: res.data.displayName,
-      bio: res.data.bio,
-      tweetsCount: res.data.tweetsCount,
-      followersCount: res.data.followersCount,
-      followingsCount: res.data.followingsCount,
-    })
+  useEffect(() => {
+    async function fetch() {
+      const res = await GetProfileInfo(profileUsername)
+      setProfile({
+        displayName: res.data.displayName,
+        bio: res.data.bio,
+        tweetsCount: res.data.tweetsCount,
+        followersCount: res.data.followersCount,
+        followingsCount: res.data.followingsCount,
+      })
+    }
+    fetch()
   }, [])
 
   return (

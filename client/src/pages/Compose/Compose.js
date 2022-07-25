@@ -9,7 +9,6 @@ import { PostCompose } from '../../api/api'
 
 const ComposeExtended = () => {
   const username = useSelector(state => state.userReducer.username)
-  const jwt = localStorage.getItem('jwt')
   const navigate = useNavigate()
   const [tweetBody, setTweetBody] = useState('')
   const [tweetBtnClass, setTweetBtnClass] = useState(

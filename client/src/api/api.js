@@ -1,9 +1,5 @@
 import request from './axios'
 
-// export const GetHirings = () => {
-//     return request.get('api/lab /hiring/')
-//   }
-
 export const PostCompose = data => {
   return request.post('/api/compose', data)
 }
@@ -24,8 +20,13 @@ export const PostRetweet = data => {
   return request.post('/api/retweet', data)
 }
 
-export const GetSearch = () => {
-  return request.get('/api/search')
+export const GetSearch = (skip, query) => {
+  return request.get('/api/search', {
+    params: {
+      skip,
+      query,
+    },
+  })
 }
 
 export const GetProfileInfo = username => {
@@ -54,4 +55,8 @@ export const GetTweetInfo = tweetID => {
       tweetID,
     },
   })
+}
+
+export const GetUserInfo = () => {
+  return request.get('/api/profileInfo')
 }

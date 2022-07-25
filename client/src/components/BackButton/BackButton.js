@@ -1,4 +1,3 @@
-import s from './BackButton.module.css'
 import { useNavigate } from 'react-router-dom'
 
 import { BiArrowBack as BackIcon } from 'react-icons/bi'
