@@ -4,11 +4,11 @@ import TweetCompact from '../TweetCompact/TweetCompact'
 import UserCompact from '../UserCompact/UserCompact'
 import s from './List.module.css'
 
-const List = ({ tweets, alt, type = 'tweet' }) => {
-  let tweetList = <div className={s.alert}></div>
+const List = ({ items, alt, type = 'tweet' }) => {
+  let list = <div className={s.alert}></div>
 
   if (alt != null)
-    tweetList = (
+    list = (
       <div className={s.container}>
         <div className={s.flex}>
           <div className={s.item}>
@@ -22,8 +22,8 @@ const List = ({ tweets, alt, type = 'tweet' }) => {
     )
 
   if (type === 'tweet') {
-    if (tweets.length !== 0) {
-      tweetList = tweets.map((value, index) => {
+    if (items.length !== 0) {
+      list = items.map((value, index) => {
         return (
           <div key={index} className={s.tweetItem}>
             <TweetCompact tweet={value} />
@@ -32,12 +32,12 @@ const List = ({ tweets, alt, type = 'tweet' }) => {
       })
     }
 
-    return <div className={s.tweet}>{tweetList}</div>
+    return <div className={s.tweet}>{list}</div>
   }
 
   if (type === 'user') {
-    if (users.length !== 0) {
-      userList = users.map((value, index) => {
+    if (items.length !== 0) {
+      list = items.map((value, index) => {
         return (
           <div key={index}>
             <UserCompact userContent={value} />
@@ -46,7 +46,7 @@ const List = ({ tweets, alt, type = 'tweet' }) => {
       })
     }
 
-    return <div>{userList}</div>
+    return <div>{list}</div>
   }
 }
 

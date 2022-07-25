@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import Avatar from '../../components/Avatar/Avatar'
 import ComposeCompact from '../../components/ComposeCompact/ComposeCompact'
@@ -16,16 +16,16 @@ const iconStyle = {
 }
 
 const Home = () => {
-  const history = useHistory()
+  const navigate = useNavigate()
   const isLoggedIn = useSelector(state => state.loginStatusReducer)
   const username = useSelector(state => state.userReducer.username)
 
   if (!isLoggedIn) {
-    history.push('/login')
+    navigate('/login')
   }
 
   const composeHandler = () => {
-    history.push('/compose')
+    navigate('/compose')
   }
   const [tweets, loadMore, setTweets] = useTweetList('/api/home', {})
 
@@ -45,7 +45,7 @@ const Home = () => {
         <ComposeCompact setTweets={setTweets} />
       </div>
       <List
-        tweets={tweets}
+        items={tweets}
         alt={{
           big: 'What? No Tweets yet?',
           small: `This empty timeline won't be around for long. Start following

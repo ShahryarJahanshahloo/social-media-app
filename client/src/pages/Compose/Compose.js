@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
-import axios from 'axios'
-import { useHistory } from 'react-router'
+import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
 import Avatar from '../../components/Avatar/Avatar'
@@ -11,7 +10,7 @@ import { PostCompose } from '../../api/api'
 const ComposeExtended = () => {
   const username = useSelector(state => state.userReducer.username)
   const jwt = localStorage.getItem('jwt')
-  const history = useHistory()
+  const navigate = useNavigate()
   const [tweetBody, setTweetBody] = useState('')
   const [tweetBtnClass, setTweetBtnClass] = useState(
     'tweet-button disabledButton'
@@ -21,7 +20,7 @@ const ComposeExtended = () => {
     //validate tweet body!
     const data = { body: tweetBody }
     const res = await PostCompose(data)
-    if (res.status === 200) history.push('/home')
+    if (res.status === 200) navigate('/home')
   }
 
   const textAreaOnChange = e => {

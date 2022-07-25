@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import axios from 'axios'
 
@@ -16,7 +16,7 @@ import {
 
 const Explore = () => {
   const [query, setQuery] = useState('')
-  const history = useHistory()
+  const navigate = useNavigate()
   const user = useSelector(state => state.userReducer)
 
   const [users, setUsers] = useState([])
@@ -102,7 +102,7 @@ const Explore = () => {
         }
       />
       <List
-        users={users}
+        items={users}
         alt={
           emptyRes
             ? {

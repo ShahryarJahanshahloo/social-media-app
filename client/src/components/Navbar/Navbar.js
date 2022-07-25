@@ -1,5 +1,5 @@
 import React from 'react'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 // import axios from 'axios'
 
@@ -16,7 +16,7 @@ import { SiTwitter as BirdIcon } from 'react-icons/si'
 const Navbar = props => {
   const user = useSelector(state => state.userReducer)
   // const jwt = localStorage.getItem('jwt')
-  const history = useHistory()
+  const navigate = useNavigate()
 
   // const logoutHandler = () => {
   //   axios({
@@ -30,7 +30,7 @@ const Navbar = props => {
   //   })
   //     .then(() => {
   //       localStorage.removeItem('jwt')
-  //       history.push('/')
+  //       navigate('/')
   //     })
   //     .catch(e => {
   //       console.log(e)
@@ -50,7 +50,7 @@ const Navbar = props => {
             <div
               className={s.item}
               onClick={() => {
-                history.push('/home')
+                navigate('/home')
               }}
             >
               <BirdIcon
@@ -62,7 +62,7 @@ const Navbar = props => {
             <div
               className={s.item}
               onClick={() => {
-                history.push('/home')
+                navigate('/home')
               }}
             >
               <HomeIcon style={iconStyle} />
@@ -73,7 +73,7 @@ const Navbar = props => {
             <div
               className={s.item}
               onClick={() => {
-                history.push('/bookmarks')
+                navigate('/bookmarks')
               }}
             >
               <BookmarkIcon style={iconStyle} />
@@ -84,7 +84,7 @@ const Navbar = props => {
             <div
               className={s.item}
               onClick={() => {
-                history.push('/explore')
+                navigate('/explore')
               }}
             >
               <ExploreIcon style={iconStyle} />
@@ -95,7 +95,7 @@ const Navbar = props => {
             <div
               className={s.item}
               onClick={() => {
-                history.push(`/profile/${user.username}`)
+                navigate(`/profile/${user.username}`)
               }}
             >
               <ProfileIcon style={iconStyle} />

@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
-import { useHistory } from 'react-router'
+import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import axios from 'axios'
 
 import Avatar from '../Avatar/Avatar'
 import s from './UserCompact.module.css'
@@ -13,7 +12,7 @@ import { PatchFollow } from '../../api/api'
 // }
 
 const UserCompact = ({ userContent }) => {
-  const history = useHistory()
+  const navigate = useNavigate()
   const user = useSelector(state => state.userReducer)
   const dispatch = useDispatch()
   const [buttonText, setButtonText] = useState('Followed')
@@ -25,7 +24,7 @@ const UserCompact = ({ userContent }) => {
     : `${s.btn} ${s.notFollowed}`
 
   const redirectToProfile = () => {
-    history.push(`/profile/${userContent.username}`)
+    navigate(`/profile/${userContent.username}`)
   }
 
   const onMouseOver = e => {

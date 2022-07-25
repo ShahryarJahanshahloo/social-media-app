@@ -1,4 +1,4 @@
-import request from '../axios'
+import request from './axios'
 
 // export const GetHirings = () => {
 //     return request.get('api/lab /hiring/')

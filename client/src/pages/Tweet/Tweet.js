@@ -60,7 +60,7 @@ const TweetExtended = props => {
           />
         )}
       </div>
-      {tweet && <List tweets={tweets} />}
+      {tweet && <List items={tweets} />}
       {tweets.length < 10 ? null : (
         <button className='load-more' onClick={loadMore}>
           load more replies

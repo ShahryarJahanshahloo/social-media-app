@@ -1,13 +1,13 @@
 import s from './BackButton.module.css'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import { BiArrowBack as BackIcon } from 'react-icons/bi'
 
 const BackButton = () => {
-  const history = useHistory()
+  const navigate = useNavigate()
 
   const backButtonHandler = () => {
-    history.goBack()
+    navigate.goBack()
   }
 
   return (

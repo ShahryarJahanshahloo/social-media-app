@@ -1,11 +1,10 @@
 import React, { useEffect } from 'react'
-import { useHistory } from 'react-router-dom'
-import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 
 import { PostAuthenticate } from '../../api/api'
 
 const Redirect = props => {
-  const history = useHistory()
+  const navigate = useNavigate()
   const jwt = localStorage.getItem('jwt')
 
   useEffect(async () => {
@@ -13,15 +12,15 @@ const Redirect = props => {
       try {
         const res = await PostAuthenticate()
         if (res.data.isAuthenticated) {
-          history.push('/home')
+          navigate('/home')
         } else {
-          history.push('/login')
+          navigate('/login')
         }
       } catch (e) {
-        history.push('/login')
+        navigate('/login')
       }
     } else {
-      history.push('/login')
+      navigate('/login')
     }
   }, [])
 

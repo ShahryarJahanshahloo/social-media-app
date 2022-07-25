@@ -18,7 +18,7 @@ const Following = () => {
 
   useEffect(async () => {
     const res = await GetProfileInfo(profileUsername)
-    setProfile(res.data.displayName)
+    setDisplayName(res.data.displayName)
   }, [])
 
   return (
@@ -32,7 +32,7 @@ const Following = () => {
         }
       />
       <List
-        users={users}
+        items={users}
         alt={{
           big: isUserProfile
             ? 'You aren’t following anyone yet'

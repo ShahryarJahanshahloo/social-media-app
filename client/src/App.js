@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { useHistory, Switch, Route } from 'react-router-dom'
+import { useNavigate, Routes, Route } from 'react-router-dom'
 import axios from 'axios'
 import { useDispatch } from 'react-redux'
 
@@ -21,7 +21,7 @@ import Followers from './pages/Followers/Followers'
 
 function App() {
   const jwt = localStorage.getItem('jwt')
-  let history = useHistory()
+  const navigate = useNavigate()
   const dispatch = useDispatch()
 
   const appHeight = () =>
@@ -64,29 +64,29 @@ function App() {
           })
         })
         .catch(e => {
-          history.push('/login')
+          navigate('/login')
         })
     }
   }, [])
 
   return (
     <div className='App'>
-      <Switch>
-        <Route path='/login' component={Login} />
-        <Route path='/signup' component={Signup} />
-        <Route path='/compose' component={ComposeExtended}></Route>
-        <Layout>
-          <Route path='/home' component={Home} />
-          <Route path='/bookmarks' component={Bookmarks}></Route>
-          <Route path='/explore' component={Explore}></Route>
-          <Route path='/tweet/:tweetID' component={TweetExtended}></Route>
-          <Route path='/profile/:username' component={Profile}></Route>
-          <Route path='/following/:username' component={Following}></Route>
-          <Route path='/followers/:username' component={Followers}></Route>
-        </Layout>
-        <Route exact path='/' component={Redirect} />
-        <Route path='*' component={Page404}></Route>
-      </Switch>
+      <Routes>
+        <Route path='/login' element={<Login />} />
+        <Route path='/signup' element={<Signup />} />
+        <Route path='/compose' element={<ComposeExtended />} />
+        <Route element={<Layout />}>
+          <Route path='/home' element={<Home />} />
+          <Route path='/bookmarks' element={<Bookmarks />} />
+          <Route path='/explore' element={<Explore />} />
+          <Route path='/tweet/:tweetID' element={<TweetExtended />} />
+          <Route path='/profile/:username' element={<Profile />} />
+          <Route path='/following/:username' element={<Following />} />
+          <Route path='/followers/:username' element={<Followers />} />
+        </Route>
+        <Route exact path='/' element={<Redirect />} />
+        <Route path='*' element={<Page404 />} />
+      </Routes>
     </div>
   )
 }

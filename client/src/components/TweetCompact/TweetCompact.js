@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
-import { useHistory } from 'react-router'
+import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import axios from 'axios'
 
 import Avatar from '../Avatar/Avatar'
 import { AiOutlineRetweet as RetweetIcon } from 'react-icons/ai'
@@ -30,7 +29,7 @@ const dotStyle = {
 }
 
 const TweetCompact = ({ tweet, extend = false }) => {
-  const history = useHistory()
+  const navigate = useNavigate()
   const user = useSelector(state => state.userReducer)
   const dispatch = useDispatch()
   const jwt = localStorage.getItem('jwt')
@@ -81,11 +80,11 @@ const TweetCompact = ({ tweet, extend = false }) => {
   }
 
   const redirectToProfile = () => {
-    history.push(`/profile/${tweetContent.user.username}`)
+    navigate(`/profile/${tweetContent.user.username}`)
   }
 
   const redirectToTweet = () => {
-    history.push(`/tweet/${tweetContent._id}`)
+    navigate(`/tweet/${tweetContent._id}`)
   }
 
   return (

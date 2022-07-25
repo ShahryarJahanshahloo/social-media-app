@@ -1,6 +1,6 @@
 import s from './Layout.module.css'
-import Navbar from '../../components/Navbar/Navbar'
-import FollowSuggestion from '../../components/FollowSuggestion/FollowSuggestion'
+import Navbar from '../components/Navbar/Navbar'
+import FollowSuggestion from '../components/FollowSuggestion/FollowSuggestion'
 
 const Layout = props => {
   return (

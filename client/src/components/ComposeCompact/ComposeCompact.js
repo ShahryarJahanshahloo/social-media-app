@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
-import axios from 'axios'
-import { useHistory } from 'react-router'
+import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
 import Avatar from '../Avatar/Avatar'
@@ -13,10 +12,10 @@ const ComposeCompact = ({ setTweets, replyTo = null }) => {
     'tweet-button disabledButton'
   )
   const user = useSelector(state => state.userReducer)
-  const history = useHistory()
+  const navigate = useNavigate()
 
   const profileRedirect = () => {
-    history.push(`/profile/${user.username}`)
+    navigate(`/profile/${user.username}`)
   }
 
   const tweetBtnHandler = async () => {

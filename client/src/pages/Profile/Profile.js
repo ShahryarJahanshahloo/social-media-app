@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import { useParams, useHistory } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import axios from 'axios'
 
 import Avatar from '../../components/Avatar/Avatar'
 import List from '../../components/List/List'
@@ -17,7 +16,7 @@ const Profile = props => {
   })
   const user = useSelector(state => state.userReducer)
   const isUserProfile = profileUsername == user.username
-  const history = useHistory()
+  const navigate = useNavigate()
   const dispatch = useDispatch()
   const [buttonText, setButtonText] = useState('Followed')
   const [isFollowed, setIsFollowed] = useState(
@@ -28,11 +27,11 @@ const Profile = props => {
     : 'follow-btn not-followed'
 
   const followingRedirect = () => {
-    history.push(`/following/${profileUsername}`)
+    navigate(`/following/${profileUsername}`)
   }
 
   const followersRedirect = () => {
-    history.push(`/followers/${profileUsername}`)
+    navigate(`/followers/${profileUsername}`)
   }
 
   const onMouseOver = e => {
@@ -128,7 +127,7 @@ const Profile = props => {
         </div>
       </div>
       <List
-        tweets={tweets}
+        items={tweets}
         alt={{
           big: isUserProfile
             ? "You haven't Tweeted yet"

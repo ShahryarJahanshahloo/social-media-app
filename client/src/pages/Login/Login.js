@@ -1,5 +1,5 @@
 import React, { useRef } from 'react'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { useDispatch } from 'react-redux'
 
@@ -7,13 +7,13 @@ import s from '../SignUp/SignUp.module.css'
 import { PostSignIn } from '../../api/api'
 
 const Login = props => {
-  let history = useHistory()
+  let navigate = useNavigate()
   const emailInput = useRef(null)
   const passwordInput = useRef(null)
   const dispatch = useDispatch()
 
   const handleRedirectClick = () => {
-    history.push('/signup')
+    navigate.push('/signup')
   }
 
   const handleLogin = async () => {

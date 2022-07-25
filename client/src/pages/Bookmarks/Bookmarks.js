@@ -1,6 +1,6 @@
 // import React, { useState, useEffect } from 'react'
 // import axios from 'axios'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
 import Avatar from '../../components/Avatar/Avatar'
@@ -9,12 +9,12 @@ import TopBar from '../../components/TopBar/TopBar'
 import useTweetList from '../../hooks/useTweetList'
 
 const Bookmarks = props => {
-  const history = useHistory()
+  const navigate = useNavigate()
   const isLoggedIn = useSelector(state => state.loginStatusReducer)
   const username = useSelector(state => state.userReducer.username)
 
   if (!isLoggedIn) {
-    history.push('/login')
+    navigate('/login')
   }
 
   const [tweets, loadMore] = useTweetList('/api/bookmarks', {})
@@ -27,7 +27,7 @@ const Bookmarks = props => {
         Middle={<div className='title-box'>Bookmarks</div>}
       />
       <List
-        tweets={tweets}
+        items={tweets}
         alt={{
           big: 'You haven’t added any Tweets to your Bookmarks yet',
           small: 'When you do, they’ll show up here.',

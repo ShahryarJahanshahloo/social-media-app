@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 
 import s from './SignUp.module.css'
 import { PostSignUp } from '../../api/api'
 
 const Signup = props => {
-  let history = useHistory()
+  let navigate = useNavigate()
   const [email, setEmail] = useState()
   const [username, setUsername] = useState()
   const [displayName, setDisplayName] = useState()
@@ -15,7 +15,7 @@ const Signup = props => {
   const dispatch = useDispatch()
 
   const handleRedirectClick = () => {
-    history.push('/login')
+    navigate('/login')
   }
 
   const handleSignup = async () => {
@@ -37,7 +37,7 @@ const Signup = props => {
       },
     })
     localStorage.setItem('jwt', res.data.token)
-    history.push('/home')
+    navigate('/home')
   }
 
   const onEmailChange = e => {
