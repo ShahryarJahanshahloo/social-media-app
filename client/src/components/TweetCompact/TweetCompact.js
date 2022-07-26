@@ -9,6 +9,7 @@ import { FaRegComment as CommentIcon } from 'react-icons/fa'
 import { BiDotsHorizontalRounded as DotsIcon } from 'react-icons/bi'
 import s from './TweetCompact.module.css'
 import { PatchFollow, PatchLike } from '../../api/api'
+import { addLike, removeLike, addRetweet, removeRetweet } from '../../redux/slices/UserSlice'
 
 const iconStyle = {
   fontSize: '17px',
@@ -30,7 +31,7 @@ const dotStyle = {
 
 const TweetCompact = ({ tweet, extend = false }) => {
   const navigate = useNavigate()
-  const user = useSelector(state => state.userReducer)
+  const user = useSelector(state => state.user)
   const dispatch = useDispatch()
   const isRetweet = tweet.retweetData != null
   const tweetContent = isRetweet ? tweet.retweetData : tweet
@@ -55,6 +56,9 @@ const TweetCompact = ({ tweet, extend = false }) => {
       res = await PatchFollow(data)
     }
     const isAdded = res.data.message === 'added'
+    const paylaod = {
+      tweetID: tweetContent._id
+    }
     if (operation === 'Like') {
       setLikeState(prevState => {
         return {
@@ -62,6 +66,7 @@ const TweetCompact = ({ tweet, extend = false }) => {
           isLiked: isAdded
         }
       })
+      isAdded ? addLike(paylaod) : removeLike(paylaod)
     } else {
       setRetweetState(prevState => {
         return {
@@ -69,13 +74,8 @@ const TweetCompact = ({ tweet, extend = false }) => {
           isRetweeted: isAdded
         }
       })
+      isAdded ? addRetweet(paylaod) : removeRetweet(paylaod)
     }
-    dispatch({
-      type: isAdded ? `add${operation}` : `removeLike${operation}`,
-      payload: {
-        tweetID: tweetContent._id
-      }
-    })
   }
 
   const redirectToProfile = () => {

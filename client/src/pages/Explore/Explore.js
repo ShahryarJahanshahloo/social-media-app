@@ -11,7 +11,7 @@ import { BiSearchAlt as SearchIcon, BiDotsHorizontalRounded as DotsIcon } from '
 
 const Explore = () => {
   const [query, setQuery] = useState('')
-  const user = useSelector(state => state.userReducer)
+  const user = useSelector(state => state.user)
 
   const [users, setUsers] = useState([])
   const [skip, setSkip] = useState(0)

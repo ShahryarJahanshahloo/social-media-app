@@ -11,7 +11,7 @@ import TopBarProfile from '../../components/TopBar/Profile/Profile.module.css'
 const Following = () => {
   const [displayName, setDisplayName] = useState()
   let profileUsername = useParams().username
-  const user = useSelector(state => state.userReducer)
+  const user = useSelector(state => state.user)
   const isUserProfile = profileUsername === user.username
   const [users, loadMore] = useUserList('/api/followings', {
     username: profileUsername

@@ -18,6 +18,8 @@ import TweetExtended from './pages/Tweet/Tweet'
 import Following from './pages/Following/Following'
 import Followers from './pages/Followers/Followers'
 import { GetUserInfo } from './api/api'
+import { login } from './redux/slices/LoginSlice'
+import { setUser } from './redux/slices/UserSlice'
 
 function App() {
   const jwt = localStorage.getItem('jwt')
@@ -37,22 +39,19 @@ function App() {
       for (const i of res.data.retweets) {
         retweets.push(i.retweetData)
       }
-      dispatch({
-        type: 'setUser',
-        payload: {
+      dispatch(
+        setUser({
           username: res.data.username,
           displayName: res.data.displayName,
           likedTweets: res.data.likes,
           retweets: retweets,
           followings: res.data.followings,
           bookmarks: res.data.bookmarks
-        }
-      })
-      dispatch({
-        type: 'updateLoginStatus'
-      })
+        })
+      )
+      dispatch(login())
     }
-    if (!jwt) fetch()
+    if (jwt) fetch()
   }, [])
 
   return (

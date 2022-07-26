@@ -8,7 +8,7 @@ import s from './Compose.module.css'
 import { PostCompose } from '../../api/api'
 
 const ComposeExtended = () => {
-  const username = useSelector(state => state.userReducer.username)
+  const username = useSelector(state => state.user.username)
   const navigate = useNavigate()
   const [tweetBody, setTweetBody] = useState('')
   const [tweetBtnClass, setTweetBtnClass] = useState('tweet-button disabledButton')

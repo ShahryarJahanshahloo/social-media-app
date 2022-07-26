@@ -10,7 +10,7 @@ import { CgBookmark as BookmarkIcon, CgProfile as ProfileIcon } from 'react-icon
 import { SiTwitter as BirdIcon } from 'react-icons/si'
 
 const Navbar = props => {
-  const user = useSelector(state => state.userReducer)
+  const user = useSelector(state => state.user)
   const navigate = useNavigate()
 
   // const logoutHandler = () => {

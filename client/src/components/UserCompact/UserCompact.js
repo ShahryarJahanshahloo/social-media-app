@@ -5,10 +5,11 @@ import { useSelector, useDispatch } from 'react-redux'
 import Avatar from '../Avatar/Avatar'
 import s from './UserCompact.module.css'
 import { PatchFollow } from '../../api/api'
+import { addFollowing, removeFollowing } from '../../redux/slices/UserSlice'
 
 const UserCompact = ({ userContent }) => {
   const navigate = useNavigate()
-  const user = useSelector(state => state.userReducer)
+  const user = useSelector(state => state.user)
   const dispatch = useDispatch()
   const [buttonText, setButtonText] = useState('Followed')
   const [isFollowed, setIsFollowed] = useState(
@@ -32,10 +33,11 @@ const UserCompact = ({ userContent }) => {
     const data = { username: userContent.username }
     const res = await PatchFollow(data)
     const isAdded = res.data.message === 'added'
-    dispatch({
-      type: isAdded ? 'addFollowing' : 'removeFollowing',
-      payload: { username: userContent.username }
-    })
+    dispatch(
+      isAdded
+        ? addFollowing({ username: userContent.username })
+        : removeFollowing({ username: userContent.username })
+    )
     setIsFollowed(isAdded)
   }
 

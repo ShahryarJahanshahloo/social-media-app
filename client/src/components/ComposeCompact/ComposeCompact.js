@@ -9,7 +9,7 @@ import { PostCompose, PostReply } from '../../api/api'
 const ComposeCompact = ({ setTweets, replyTo = null }) => {
   const [tweetBody, setTweetBody] = useState('')
   const [tweetBtnClass, setTweetBtnClass] = useState('tweet-button disabledButton')
-  const user = useSelector(state => state.userReducer)
+  const user = useSelector(state => state.user)
   const navigate = useNavigate()
 
   const profileRedirect = () => {

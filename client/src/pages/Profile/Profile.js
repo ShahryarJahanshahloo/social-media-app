@@ -9,6 +9,7 @@ import TopBar from '../../components/TopBar/TopBar'
 import { PatchFollow, GetProfileInfo } from '../../api/api'
 import s from './Profile.module.css'
 import TopBarProfile from '../../components/TopBar/Profile/Profile'
+import { addFollowing, removeFollowing } from '../../redux/slices/UserSlice'
 
 const Profile = props => {
   const [profile, setProfile] = useState()
@@ -16,7 +17,7 @@ const Profile = props => {
   const [tweets, loadMore] = useTweetList('/api/profileTweets', {
     username: profileUsername
   })
-  const user = useSelector(state => state.userReducer)
+  const user = useSelector(state => state.user)
   const isUserProfile = profileUsername === user.username
   const navigate = useNavigate()
   const dispatch = useDispatch()
@@ -46,10 +47,11 @@ const Profile = props => {
     const data = { username: profileUsername }
     const res = await PatchFollow(data)
     const isAdded = res.data.message === 'added'
-    dispatch({
-      type: isAdded ? 'addFollowing' : 'removeFollowing',
-      payload: { username: profileUsername }
-    })
+    dispatch(
+      isAdded
+        ? addFollowing({ username: profileUsername })
+        : removeFollowing({ username: profileUsername })
+    )
     setIsFollowed(isAdded)
   }
 

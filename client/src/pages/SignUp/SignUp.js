@@ -4,6 +4,8 @@ import { useDispatch } from 'react-redux'
 
 import s from './SignUp.module.css'
 import { PostSignUp } from '../../api/api'
+import { login } from '../../redux/slices/LoginSlice'
+import { setUser } from '../../redux/slices/UserSlice'
 
 const Signup = props => {
   let navigate = useNavigate()
@@ -26,16 +28,13 @@ const Signup = props => {
       password
     }
     const res = await PostSignUp(data)
-    dispatch({
-      type: 'updateLoginStatus'
-    })
-    dispatch({
-      type: 'setUser',
-      payload: {
+    dispatch(login())
+    dispatch(
+      setUser({
         username: res.data.username,
         displayName: res.data.displayName
-      }
-    })
+      })
+    )
     localStorage.setItem('jwt', res.data.token)
     navigate('/home')
   }

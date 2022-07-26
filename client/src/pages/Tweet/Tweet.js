@@ -12,7 +12,7 @@ import s from './Tweet.module.css'
 
 const TweetExtended = props => {
   const { tweetID } = useParams()
-  const user = useSelector(state => state.userReducer)
+  const user = useSelector(state => state.user)
   const [tweets, loadMore, setTweets] = useTweetList('/api/getReplies', {
     tweetID
   })

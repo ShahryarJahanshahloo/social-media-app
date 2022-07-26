@@ -9,8 +9,8 @@ import TopBarStyles from '../../components/TopBar/Profile/Profile.module.css'
 
 const Bookmarks = props => {
   const navigate = useNavigate()
-  const isLoggedIn = useSelector(state => state.loginStatusReducer)
-  const username = useSelector(state => state.userReducer.username)
+  const isLoggedIn = useSelector(state => state.login)
+  const username = useSelector(state => state.user.username)
 
   if (!isLoggedIn) {
     navigate('/login')
